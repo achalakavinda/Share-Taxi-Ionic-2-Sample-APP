@@ -5,7 +5,7 @@ import { IonicPage, NavController, AlertController, LoadingController, Loading,N
 //import auth service
 //import home and login pages
 import { AuthService } from '../../providers/auth-service';
-import { HomePage } from '../home/home';
+import { Tabs } from '../tabs/tabs';
 import { Register } from '../register/register';
 
 /**
@@ -38,7 +38,7 @@ export class Login {
         if (allowed) {
           setTimeout(() => {
             this.loading.dismiss();
-            this.nav.setRoot(HomePage)
+            this.nav.setRoot(Tabs);
           });
         } else {
           this.showError("Access Denied");

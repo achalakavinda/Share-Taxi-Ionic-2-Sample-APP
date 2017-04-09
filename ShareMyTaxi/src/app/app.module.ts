@@ -5,22 +5,42 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
+
+
+/*custom imports
+  All Custome Import are added bellow
+*/
+
+//login page
+import { Login } from '../pages/login/login';
+
+//register page
+import { Register } from '../pages/register/register';
+
+//tabs 
+import { Tabs } from '../pages/tabs/tabs';
+
+//home page
 import { HomePage } from '../pages/home/home';
 
-//custom imports
+//payemnet page
+import { Payment }  from '../pages/payment/payment';
+
+//profile
+import { Profile } from '../pages/profile/profile'; 
+
 // login Auth Service
 import { AuthService } from '../providers/auth-service';
-//import login page
-import { Login } from '../pages/login/login';
-//import register page
-import { Register } from '../pages/register/register';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     Login,
-    Register
+    Register,
+    Tabs,
+    Payment,
+    Profile
   ],
   imports: [
     BrowserModule,
@@ -31,7 +51,10 @@ import { Register } from '../pages/register/register';
     MyApp,
     HomePage,
     Login,
-    Register
+    Register,
+    Tabs,
+    Payment,
+    Profile
   ],
   providers: [
     StatusBar,
