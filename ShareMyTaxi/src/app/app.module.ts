@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule  } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -25,9 +25,17 @@ import { HomePage } from '../pages/home/home';
 
 //payemnet page
 import { Payment }  from '../pages/payment/payment';
+//payment history
+import { PaymentHistory } from '../pages/payment-history/payment-history';
+//payment packages
+import { PayementPackages } from '../pages/payement-packages/payement-packages';
+
 
 //profile
 import { Profile } from '../pages/profile/profile'; 
+
+//share ride
+import { ShareRatio } from '../pages/share-ratio/share-ratio';
 
 // login Auth Service
 import { AuthService } from '../providers/auth-service';
@@ -40,12 +48,17 @@ import { AuthService } from '../providers/auth-service';
     Register,
     Tabs,
     Payment,
+    PaymentHistory,
+    PayementPackages,
+    ShareRatio,
     Profile
   ],
+
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp)
   ],
+  
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -54,6 +67,9 @@ import { AuthService } from '../providers/auth-service';
     Register,
     Tabs,
     Payment,
+    PaymentHistory,
+    PayementPackages,
+    ShareRatio,
     Profile
   ],
   providers: [

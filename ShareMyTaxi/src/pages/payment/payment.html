@@ -4,5 +4,13 @@
 </ion-navbar>
 </ion-header>
 <ion-content padding>
-
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="itemTapped(item.id)">
+      <ion-icon [name]="item.icon" item-left></ion-icon>
+      {{item.title}}
+      <div class="item-note" item-right>
+        {{item.note}}
+      </div>
+    </button>
+  </ion-list>
 </ion-content>

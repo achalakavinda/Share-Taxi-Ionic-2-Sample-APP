@@ -21,7 +21,7 @@ import { Register } from '../register/register';
 })
 export class Login {
   loading: Loading;
-  registerCredentials = {email: '', password: ''};
+  registerCredentials = {email: 'test', password: 'test'};
 
   constructor(public nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController,public navParams: NavParams) {
   }
