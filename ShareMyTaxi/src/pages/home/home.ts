@@ -1,5 +1,6 @@
 import { Component,ViewChild, ElementRef } from '@angular/core';
 import { NavController , NavParams  } from 'ionic-angular';
+import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google;
 
@@ -10,13 +11,16 @@ declare var google;
 export class HomePage {
   
   todo: String;
+  homeMap={from:'',to:''};
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
+  directionsService: any;
+  directionsDisplay: any;
  
 
-  constructor(public navCtrl: NavController,public NavParams:NavParams) {
-    
+  constructor(public navCtrl: NavController,public NavParams:NavParams,public geolocation:Geolocation) {
+    this.getGeolocation();
   }
 
   ionViewDidLoad(){
@@ -27,8 +31,10 @@ export class HomePage {
  
     let latLng = new google.maps.LatLng(6.9271,79.8612);
 
-    let directionsService = new google.maps.DirectionsService;
-    let directionsDisplay = new google.maps.DirectionsRenderer; 
+    this.directionsService = new google.maps.DirectionsService;
+    this.directionsDisplay = new google.maps.DirectionsRenderer({
+      draggable: true
+    }); 
 
     let mapOptions = {
       center: latLng,
@@ -39,22 +45,16 @@ export class HomePage {
  
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-    directionsDisplay.setMap(this.map);
+    this.directionsDisplay.setMap(this.map);
 
-    this.calcDisplayRoute(directionsService,directionsDisplay);
+   //this.calcDisplayRoute(this.directionsService,this.directionsDisplay);
   }
 
   calcDisplayRoute(directionService,directionDisplay){
     console.log("calcDisplay");
-    let z= directionService.route({
-          origin:{
-          "lat": 6.9271,
-          "lng": 79.8612
-        },
-          destination: {
-          "lat":6.8940,
-          "lng":79.9052
-        },
+    directionService.route({
+          origin:this.homeMap.from,
+          destination: this.homeMap.to,
           travelMode: 'DRIVING'
         },function(response,status){
           if(status == 'OK'){
@@ -64,6 +64,18 @@ export class HomePage {
           }
           
         });
+  }
+
+  homeMapSearchBtn(){
+    console.log("hi");
+    this.calcDisplayRoute(this.directionsService,this.directionsDisplay);
+  }
+
+  getGeolocation(){
+    this.geolocation.getCurrentPosition().then((position)=>{
+      console.log(position.coords.latitude+" "+position.coords.longitude);
+    }
+    );
   }
 
 

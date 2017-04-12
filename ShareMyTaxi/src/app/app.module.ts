@@ -40,6 +40,8 @@ import { ShareRatio } from '../pages/share-ratio/share-ratio';
 // login Auth Service
 import { AuthService } from '../providers/auth-service';
 
+import { Geolocation } from '@ionic-native/geolocation';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -76,7 +78,8 @@ import { AuthService } from '../providers/auth-service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthService
+    AuthService,
+    Geolocation
   ]
 })
 export class AppModule {}
