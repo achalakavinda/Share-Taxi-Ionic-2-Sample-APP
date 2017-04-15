@@ -19,15 +19,26 @@
             <ion-item>
               <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
             </ion-item>
-
+            <ion-item>
+              <ion-input type="text" placeholder="Username" name="username" [(ngModel)]="registerCredentials.username" required></ion-input>
+            </ion-item>
             <ion-item>
               <ion-input type="password" placeholder="Password" name="password" [(ngModel)]="registerCredentials.password" required></ion-input>
             </ion-item>
-
+            <ion-item>
+              <ion-input type="password" placeholder="Comfirmation Password" name="comfirmPassword" [(ngModel)]="registerCredentials.comfirmPassword" required></ion-input>
+            </ion-item>
+            <ion-item>
+            <ion-label>Gender</ion-label>
+            <ion-select name="gender" [(ngModel)]="registerCredentials.gender" required>
+              <ion-option value="f" selected="true">Female</ion-option>
+              <ion-option value="m">Male</ion-option>
+            </ion-select>
+          </ion-item>  
+          
           </ion-list>
         </ion-col>
       </ion-row>
-
       <ion-row>
         <ion-col class="signup-col">
           <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Register</button>

@@ -4,6 +4,20 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+//anuglar fire import
+import {  AngularFireModule } from 'angularfire2';
+/**
+ * Firebase configurations
+ */
+export const firebaseConfig = {
+    apiKey: "AIzaSyB-KCKrSIswArC3WTOOyKPBmNUihVhTglQ",
+    authDomain: "sharetaxi-cdc6f.firebaseapp.com",
+    databaseURL: "https://sharetaxi-cdc6f.firebaseio.com",
+    projectId: "sharetaxi-cdc6f",
+    storageBucket: "sharetaxi-cdc6f.appspot.com",
+    messagingSenderId: "787464864609"
+}
+
 import { MyApp } from './app.component';
 
 
@@ -58,6 +72,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(firebaseConfig),
     IonicModule.forRoot(MyApp)
   ],
   

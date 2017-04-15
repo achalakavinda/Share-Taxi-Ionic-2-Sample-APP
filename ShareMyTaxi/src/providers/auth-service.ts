@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
+import { auth } from 'firebase';
 import 'rxjs/add/operator/map';
 
 /*
