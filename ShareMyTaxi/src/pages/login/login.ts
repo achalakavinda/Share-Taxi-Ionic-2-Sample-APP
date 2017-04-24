@@ -8,6 +8,7 @@ import { AuthService } from '../../providers/auth-service';
 import { AuthHttpService } from '../../providers/auth-http-service'
 import { Tabs } from '../tabs/tabs';
 import { Register } from '../register/register';
+import {HomePage} from "../home/home";
 
 /**
  * Generated class for the Login page.
@@ -54,7 +55,10 @@ export class Login {
 */
 
   public login(){
-    this.httpAuth.httpTest();
+     // this.loading.dismiss();
+      this.nav.push(HomePage);
+      this.httpAuth.httpTest();
+    ;
   }
 
   //show loading

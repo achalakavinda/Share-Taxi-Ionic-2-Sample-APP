@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http , Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -16,9 +16,11 @@ export class AuthHttpService {
   }
 
   httpTest(){
+    let headers = new Headers();
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
     console.log("this is called");
-    this.http.get("http://localhost/http/",{}).map(res => res.json()).subscribe(data=>{
-      console.log(data);
+    this.http.get("https://newsapi.org/v1/articles?source=techcrunch&apiKey=b604a485219b45a59e8ac483431c8221",{headers: headers}).subscribe(data=>{
+      console.log("Hellow world");
     },(err)=>{
       console.log("Oops!");
     });

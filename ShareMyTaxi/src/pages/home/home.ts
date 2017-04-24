@@ -9,15 +9,14 @@ declare var google;
   templateUrl: 'home.html'
 })
 export class HomePage {
-  
-  todo: String;
-  homeMap={from:'',to:''};
+
+  homeMap ={from:'',to:''};
 
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   directionsService: any;
   directionsDisplay: any;
- 
+
 
   constructor(public navCtrl: NavController,public NavParams:NavParams,public geolocation:Geolocation) {
     this.getGeolocation();
@@ -26,15 +25,15 @@ export class HomePage {
   ionViewDidLoad(){
     this.loadMap();
   }
-  
+
   loadMap(){
- 
+
     let latLng = new google.maps.LatLng(6.9271,79.8612);
 
     this.directionsService = new google.maps.DirectionsService;
     this.directionsDisplay = new google.maps.DirectionsRenderer({
-      draggable: true
-    }); 
+      draggable: false
+    });
 
     let mapOptions = {
       center: latLng,
@@ -42,7 +41,7 @@ export class HomePage {
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
- 
+
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
     this.directionsDisplay.setMap(this.map);
@@ -62,7 +61,7 @@ export class HomePage {
           }else{
             console.log(status);
           }
-          
+
         });
   }
 
