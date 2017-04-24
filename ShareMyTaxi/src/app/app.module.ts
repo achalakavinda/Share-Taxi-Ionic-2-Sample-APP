@@ -3,20 +3,7 @@ import { ErrorHandler, NgModule  } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
-//anuglar fire import
-import {  AngularFireModule } from 'angularfire2';
-/**
- * Firebase configurations
- */
-export const firebaseConfig = {
-    apiKey: "AIzaSyB-KCKrSIswArC3WTOOyKPBmNUihVhTglQ",
-    authDomain: "sharetaxi-cdc6f.firebaseapp.com",
-    databaseURL: "https://sharetaxi-cdc6f.firebaseio.com",
-    projectId: "sharetaxi-cdc6f",
-    storageBucket: "sharetaxi-cdc6f.appspot.com",
-    messagingSenderId: "787464864609"
-}
+import { HttpModule } from "@angular/http";
 
 import { MyApp } from './app.component';
 
@@ -31,7 +18,7 @@ import { Login } from '../pages/login/login';
 //register page
 import { Register } from '../pages/register/register';
 
-//tabs 
+//tabs
 import { Tabs } from '../pages/tabs/tabs';
 
 //home page
@@ -46,13 +33,15 @@ import { PayementPackages } from '../pages/payement-packages/payement-packages';
 
 
 //profile
-import { Profile } from '../pages/profile/profile'; 
+import { Profile } from '../pages/profile/profile';
 
 //share ride
 import { ShareRatio } from '../pages/share-ratio/share-ratio';
 
 // login Auth Service
 import { AuthService } from '../providers/auth-service';
+
+import { AuthHttpService } from '../providers/auth-http-service';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -72,10 +61,10 @@ import { Geolocation } from '@ionic-native/geolocation';
 
   imports: [
     BrowserModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule
   ],
-  
+
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
@@ -94,6 +83,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
+    AuthHttpService,
     Geolocation
   ]
 })

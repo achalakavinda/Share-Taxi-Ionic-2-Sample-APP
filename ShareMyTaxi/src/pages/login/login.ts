@@ -5,6 +5,7 @@ import { IonicPage, NavController, AlertController, LoadingController, Loading,N
 //import auth service
 //import home and login pages
 import { AuthService } from '../../providers/auth-service';
+import { AuthHttpService } from '../../providers/auth-http-service'
 import { Tabs } from '../tabs/tabs';
 import { Register } from '../register/register';
 
@@ -23,7 +24,7 @@ export class Login {
   loading: Loading;
   registerCredentials = {email: 'test', password: 'test'};
 
-  constructor(public nav: NavController, private auth: AuthService, private alertCtrl: AlertController, private loadingCtrl: LoadingController,public navParams: NavParams) {
+  constructor(public nav: NavController, private auth: AuthService,private httpAuth :AuthHttpService, private alertCtrl: AlertController, private loadingCtrl: LoadingController,public navParams: NavParams) {
   }
 
   //client registration new page
@@ -32,6 +33,8 @@ export class Login {
   }
 
   //user login
+
+  /*
   public login() {
     this.showLoading();
     this.auth.login(this.registerCredentials).subscribe(allowed => {
@@ -47,6 +50,11 @@ export class Login {
       error => {
         this.showError(error);
       });
+  }
+*/
+
+  public login(){
+    this.httpAuth.httpTest();
   }
 
   //show loading

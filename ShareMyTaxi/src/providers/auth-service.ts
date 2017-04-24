@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import { auth } from 'firebase';
 import 'rxjs/add/operator/map';
 
 /*
-  Generated class for the AuthService provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
-*/
+ Generated class for the AuthService provider.
+ See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+ for more info on providers and Angular 2 DI.
+ */
 
 export class User {
   name:String;
@@ -28,13 +26,12 @@ export class AuthService {
 
   public login(credentials) {
     /*
-    if (credentials.email === null || credentials.password === null) {
-
-      return Observable.throw("Please insert credentials");
-    } */
+     if (credentials.email === null || credentials.password === null) {
+     return Observable.throw("Please insert credentials");
+     } */
 
     if( credentials.email!=null && credentials.password!=null ) {
-       return Observable.create(observer => {
+      return Observable.create(observer => {
         // At this point make a request to your backend to make a real check!
         let access = (credentials.password === "test" && credentials.email === "test");
         //this.currentUser = new User('admin', 'admin@test.com');
