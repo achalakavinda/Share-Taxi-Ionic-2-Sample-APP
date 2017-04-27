@@ -1,0 +1,11 @@
+<ion-menu [content]="HomeContent">
+  <ion-content>
+    <ion-list>
+      <button ion-item menuClose (click)="openPage('Payment')">
+        Payment
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+<ion-nav #HomeContent [root]="rootPage"></ion-nav>

@@ -4,10 +4,11 @@ page-home {
         position: fixed;
         width: 70%;
         margin-left:15%;
-        margin-top:20px;  
+        margin-top:20px;
     }
-    
+
    #map {
+        position:absolute;
         width: 100%;
         height: 100%;
         z-index: -100;
