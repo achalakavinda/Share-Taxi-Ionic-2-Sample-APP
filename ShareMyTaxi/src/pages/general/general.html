@@ -12,24 +12,18 @@
     </button>
   </ion-navbar>
 </ion-header>
-<ion-content class="">
 
-  <div class="background-page">
-    <div style="" class="dot">
-      <div class="centraldot"></div>
-      <div class="wave"></div>
-      <div class="wave2"></div>
-    </div>
-    <div style="margin-left: -100px;" class="dot">
-      <div class="centraldot"></div>
-      <div class="wave"></div>
-      <div class="wave2"></div>
-    </div>
-    <div style="margin-left: -50px;" class="dot">
-      <div class="centraldot"></div>
-      <div class="wave"></div>
-      <div class="wave2"></div>
-    </div>
-  </div>
-  <h1>Achala </h1>
+<ion-content>
+  <ion-row  id="homeInputContainer">
+    <ion-item>
+      <ion-label fixed>From</ion-label>
+      <ion-input [(ngModel)]="homeMap.from" type="text" value=""></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label fixed>To</ion-label>
+      <ion-input [(ngModel)]="homeMap.to" type="text"></ion-input>
+    </ion-item>
+    <button (click)="homeMapSearchBtn()" ion-button icon-right outline>Pick</button>
+  </ion-row>
+  <div #map id="map"> </div>
 </ion-content>
