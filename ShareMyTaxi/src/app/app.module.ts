@@ -44,9 +44,11 @@ import { PaymentHistory } from '../pages/payment-history/payment-history';
 import { PayementPackages } from '../pages/payement-packages/payement-packages';
 //profile
 import { Profile } from '../pages/profile/profile';
+
 //share ride
 import { ShareRatio } from '../pages/share-ratio/share-ratio';
-
+//share home
+import { ShareHome } from '../pages/share-home/share-home';
 
 
 /*
@@ -54,11 +56,8 @@ import { ShareRatio } from '../pages/share-ratio/share-ratio';
 *
 * */
 import { AuthService } from '../providers/auth-service';
-
 import { AuthHttpService } from '../providers/auth-http-service';
-
 import { LocalVariables } from '../providers/local-variables';
-
 import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
@@ -73,6 +72,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     Payment,
     PaymentHistory,
     PayementPackages,
+    ShareHome,
     ShareRatio,
     Profile
   ],
@@ -96,6 +96,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     Payment,
     PaymentHistory,
     PayementPackages,
+    ShareHome,
     ShareRatio,
     Profile
   ],
