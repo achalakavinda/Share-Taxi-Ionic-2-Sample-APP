@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams , Platform, ActionSheetController ,
 import { Geolocation } from '@ionic-native/geolocation';
 import { HomePage } from '../home/home';
 import { ShareHome } from  '../share-home/share-home';
+import { PickHome } from '../pick-home/pick-home';
 import { AuthService } from '../../providers/auth-service';
 import { FireLoader } from '../../providers/fire-loader';
 declare var google;
@@ -124,11 +125,11 @@ export class General {
       title: 'Booking',
       buttons: [
        {
-          text: 'Book Ride',
+          text: 'Pick Ride',
           role: 'destructive',
           handler: () => {
             console.log('Action sheet Share Taxi');
-            this.navCtrl.push(ShareHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
+            this.pickRideValidator();
           }
         },
         {
@@ -156,15 +157,12 @@ export class General {
     let count=0;
     this.UID = this.Auth.getUserInfo();
     console.log(this.UID.uid)
+    //this.fireLoader.getActiveRiders().push({uid:this.UID.uid});   
+    this.navCtrl.push(ShareHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
+  }
 
-    //this.fireLoader.getActiveRiders().push({uid:this.UID.uid});
-    this.fireLoader.getActiveRiders().forEach((x)=>{
-      console.log(x.uid)
-      count=count+1;
-      console.log(x);
-    })
-    console.log(count);
-    //this.navCtrl.push(ShareHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
+  pickRideValidator(){
+     this.navCtrl.push(PickHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
   }
 
 //show loading

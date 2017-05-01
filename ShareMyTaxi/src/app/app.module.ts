@@ -23,7 +23,6 @@ import { AngularFireModule } from 'angularfire2';
   All Custom Import are added bellow
 */
 import { HttpModule } from "@angular/http";
-
 import { Storage } from  '@ionic/storage';
 //main page includes main menu
 import { Main } from '../pages/main/main';
@@ -44,7 +43,7 @@ import { PaymentHistory } from '../pages/payment-history/payment-history';
 //payment packages
 import { PayementPackages } from '../pages/payement-packages/payement-packages';
 //profile
-import { Profile } from '../pages/profile/profile';
+import { ProfileHome } from '../pages/profile-home/profile-home';
 //share ride
 import { ShareRatio } from '../pages/share-ratio/share-ratio';
 //share home
@@ -59,6 +58,9 @@ import { DriverShareRide } from '../pages/driver-share-ride/driver-share-ride';
 import { DriverShareRideUpcoming } from '../pages/driver-share-ride-upcoming/driver-share-ride-upcoming';
 //share ride driver selected
 import { DriverShareRideSelected } from '../pages/driver-share-ride-selected/driver-share-ride-selected';
+
+//pick home
+import { PickHome } from '../pages/pick-home/pick-home';
 
 
 /*
@@ -90,7 +92,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     DriverShareRide,
     DriverShareRideUpcoming,
     DriverShareRideSelected,
-    Profile
+    ProfileHome,
+    PickHome
   ],
 
   imports: [
@@ -119,7 +122,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     DriverShareRide,
     DriverShareRideUpcoming,
     DriverShareRideSelected,
-    Profile
+    ProfileHome,
+    PickHome
   ],
   providers: [
     StatusBar,

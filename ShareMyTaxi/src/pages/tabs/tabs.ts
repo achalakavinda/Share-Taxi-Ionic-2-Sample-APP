@@ -4,7 +4,7 @@ import { IonicPage} from 'ionic-angular';
 //import pages Home,Payments,Profile
 import { HomePage } from '../home/home';
 import { Payment } from '../payment/payment';
-import { Profile } from '../profile/profile';
+import { ProfileHome } from '../profile-home/profile-home';
 
 
 /**
@@ -23,6 +23,6 @@ export class Tabs {
   constructor(){}
   homePage = HomePage;
   paymentPage = Payment;
-  proflePage = Profile;
+  proflePage = ProfileHome;
 
 }

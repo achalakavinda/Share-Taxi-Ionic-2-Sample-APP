@@ -29,6 +29,7 @@ export class ShareHome {
   distanceDetails:any;
   buttonDisabled:false;
   UID:any;
+  bookingView:{booking_btn:'booking'};
 
 
 //share home constructor
@@ -150,13 +151,13 @@ export class ShareHome {
         status:'active'
       };*/
 
-      let x= {        
+      let x= {
             primary_UID:this.UID,
             primary_distance:this.distanceDetails.distance.text,
             primary_duration:this.distanceDetails.duration.text,
             primary_from:this.wayPoint.from,
             primary_to:this.wayPoint.to,
-            primary_distance_amount:0,            
+            primary_distance_amount:0,
             primary_tot_amount:0,
             primary_profit:0,
             primary_payment_verified:false,
