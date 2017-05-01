@@ -16,7 +16,7 @@ export class HomePage {
   map: any;
   directionsService: any;
   directionsDisplay: any;
-
+  longLat:{lng:'',lat:''};
 
   constructor(public navCtrl: NavController,public NavParams:NavParams,public geolocation:Geolocation) {
     this.getGeolocation();

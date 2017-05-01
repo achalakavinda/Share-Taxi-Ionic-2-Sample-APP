@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
-import * as firebase from 'firebase';
 
 
 
@@ -16,22 +15,30 @@ export class FireLoader {
 
   share_ride:FirebaseListObservable<any>;
   users:FirebaseListObservable<any>;
+  active_riders:FirebaseListObservable<any>
 
 
-    constructor(
-    private angFire:AngularFire,
-
-  ) {
+    constructor(private angFire:AngularFire) {
     this.share_ride = this.angFire.database.list('/share_ride');
-    this.users = this.angFire.database.list('/users');;
+    this.users = this.angFire.database.list('/users');
+    this.active_riders = this.angFire.database.list('/active_riders');
     console.log('Hello FireLoader Provider');
   }
+
 
 public pushShareRide(elVal){
   return this.share_ride.push(elVal);
 }
 
+//active riders
 
+  public pushActiveRiders(elVal){
+    return this.active_riders.push(elVal);
+  }
+
+public getActiveRiders(){
+    return this.active_riders;
+}
 
 
 

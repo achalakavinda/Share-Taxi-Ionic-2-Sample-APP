@@ -7,12 +7,33 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>driver-share-ride-upcoming</ion-title>
+    <ion-title></ion-title>
   </ion-navbar>
 
 </ion-header>
 
-
 <ion-content padding>
+
+   <ion-card  *ngFor="let shareRide of ShareRides  | async" >
+
+      <div no-padding>
+        <ion-item>
+          <span item-left>From :</span>
+          <span item-left>{{ shareRide.primary_from }}</span>
+          <span item-right>To :</span>
+          <span item-right>{{ shareRide.primary_to }}</span>
+        </ion-item>
+        <ion-item>
+          <span item-left >Distance: </span>
+          <span item-left>{{ shareRide.primary_distance }}</span>        
+        </ion-item>
+        <ion-item>
+          <span item-left>Estimation :</span>
+          <span item-left>{{shareRide.primary_distance_amount}}/=</span>  
+        </ion-item>  
+
+        <button (click)="onClick(shareRide)" ion-button full color="danger"> PICk </button>
+      </div>
+    </ion-card>
 
 </ion-content>

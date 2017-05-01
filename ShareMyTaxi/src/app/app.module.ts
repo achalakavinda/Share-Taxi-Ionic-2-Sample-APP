@@ -49,6 +49,8 @@ import { Profile } from '../pages/profile/profile';
 import { ShareRatio } from '../pages/share-ratio/share-ratio';
 //share home
 import { ShareHome } from '../pages/share-home/share-home';
+//driver
+import { DriverMapView } from '../pages/driver-map-view/driver-map-view';
 //share ride driver tabs
 import { DriverShareTabs } from '../pages/driver-share-tabs/driver-share-tabs';
 //share ride driver
@@ -83,6 +85,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     PayementPackages,
     ShareHome,
     ShareRatio,
+    DriverMapView,
     DriverShareTabs,
     DriverShareRide,
     DriverShareRideUpcoming,
@@ -111,6 +114,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     PayementPackages,
     ShareHome,
     ShareRatio,
+    DriverMapView,
     DriverShareTabs,
     DriverShareRide,
     DriverShareRideUpcoming,

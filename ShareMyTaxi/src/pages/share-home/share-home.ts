@@ -123,6 +123,7 @@ export class ShareHome {
     console.log(this.response);
 
     let promise = new Promise((resolve,reject)=>{
+      /*
       let x= {
         primary:{
             UID:this.UID,
@@ -147,7 +148,35 @@ export class ShareHome {
         waypoint:this.wayPoint,
         time:'12:01"05',
         status:'active'
+      };*/
+
+      let x= {        
+            primary_UID:this.UID,
+            primary_distance:this.distanceDetails.distance.text,
+            primary_duration:this.distanceDetails.duration.text,
+            primary_from:this.wayPoint.from,
+            primary_to:this.wayPoint.to,
+            primary_distance_amount:0,            
+            primary_tot_amount:0,
+            primary_profit:0,
+            primary_payment_verified:false,
+
+            secondary_UID:this.UID,
+            secondary_distance:'',
+            secondary_duration:'',
+            secondary_from:this.wayPoint.from,
+            secondary_to:this.wayPoint.to,
+            secondary_distance_amount:0,
+            secondary_tot_amount:0,
+            secondary_profit:0,
+            secondary_payment_verified:false,
+            secondary_allocated:false,
+            driver_allocated:false,
+            driver_UID:'',
+            time:'12:01"05',
+            status:'active'
       };
+
       console.log(x);
       this.fireLoader.pushShareRide(x).then((success)=>{
         console.log(success)

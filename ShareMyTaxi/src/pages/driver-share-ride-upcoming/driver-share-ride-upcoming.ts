@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component,Pipe } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { DriverMapView } from '../driver-map-view/driver-map-view';
 
 /**
  * Generated class for the DriverShareRideUpcoming page.
@@ -12,13 +14,38 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   selector: 'page-driver-share-ride-upcoming',
   templateUrl: 'driver-share-ride-upcoming.html',
 })
+
 export class DriverShareRideUpcoming {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  orginShareRides: FirebaseListObservable<any>;
+  ShareRides:any;
+  Share
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,public angFire: AngularFire) {
+    this.orginShareRides = angFire.database.list('/share_ride');
+    this.filterData();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DriverShareRideUpcoming');
   }
+
+  dataValues(){
+    //console.log(this.shareRides);
+  }
+
+  filterData(){
+    this.ShareRides=this.orginShareRides;
+    console.log(this.orginShareRides);
+      this.orginShareRides.subscribe((response)=>{
+
+      });
+
+    }
+
+    onClick(key){
+      console.log(key);
+      this.navCtrl.push(DriverMapView,{'location':key});
+    }
 
 }

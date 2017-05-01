@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { HomePage } from '../home/home';
 import { ShareHome } from  '../share-home/share-home';
 import { AuthService } from '../../providers/auth-service';
+import { FireLoader } from '../../providers/fire-loader';
 declare var google;
 /**
  * Generated class for the General page.
@@ -22,8 +23,6 @@ declare var google;
 export class General {
   private rootPage;
   homeMap ={from:'malabe',to:'kotte'};
-
-
   @ViewChild('map') mapElement: ElementRef;
   map: any;
   mapRouteResponse:any;
@@ -31,6 +30,7 @@ export class General {
   directionsDisplay: any;
   auth:any;
   loading:any;
+  UID:any;
 
   constructor(
     public navCtrl: NavController,
@@ -39,7 +39,9 @@ export class General {
     public geolocation: Geolocation,
     public actionSheetCtrl: ActionSheetController,
     public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private Auth: AuthService,
+    private fireLoader:FireLoader
     ) {
 
     this.rootPage = HomePage;
@@ -134,7 +136,7 @@ export class General {
           role: 'destructive',
           handler: () => {
             console.log('Action sheet Share Taxi');
-            this.navCtrl.push(ShareHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
+            this.shareRideValidator();
           }
         },{
           text: 'Cancel',
@@ -146,6 +148,23 @@ export class General {
       ]
     });
     actionSheet.present();
+  }
+
+  //active record validator
+
+  shareRideValidator(){
+    let count=0;
+    this.UID = this.Auth.getUserInfo();
+    console.log(this.UID.uid)
+
+    //this.fireLoader.getActiveRiders().push({uid:this.UID.uid});
+    this.fireLoader.getActiveRiders().forEach((x)=>{
+      console.log(x.uid)
+      count=count+1;
+      console.log(x);
+    })
+    console.log(count);
+    //this.navCtrl.push(ShareHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
   }
 
 //show loading
