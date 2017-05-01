@@ -7,15 +7,18 @@
 
 <ion-content>
   <ion-row  id="homeInputContainer">
+
     <ion-item>
       <ion-label fixed>From</ion-label>
-      <ion-input [(ngModel)]="homeMap.from" type="text" value=""></ion-input>      
+      <ion-input [(ngModel)]="homeMap.from" type="text" value=""></ion-input>
     </ion-item>
+
     <ion-item>
       <ion-label fixed>To</ion-label>
       <ion-input [(ngModel)]="homeMap.to" type="text"></ion-input>
     </ion-item>
-      <button (click)="homeMapSearchBtn()" ion-button icon-right outline>Pick</button>
-  </ion-row>  
+
+     <button (click)="homeMapSearchBtn()" ion-button icon-right outline>Pick</button>
+  </ion-row>
   <div #map id="map"> </div>
 </ion-content>

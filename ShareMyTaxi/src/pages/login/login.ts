@@ -8,9 +8,8 @@ import { AuthService } from '../../providers/auth-service';
 import { AuthHttpService } from '../../providers/auth-http-service'
 import { Register } from '../register/register';
 import { Main } from "../main/main";
-import { LocalVariables } from '../../providers/local-variables';
 import { Storage } from '@ionic/storage';
-import {main} from "@angular/compiler-cli/src/main";
+import { AngularFire } from 'angularfire2';
 
 
 /**
@@ -27,6 +26,7 @@ import {main} from "@angular/compiler-cli/src/main";
 export class Login {
   loading: Loading;
   registerCredentials = {email: 'achalakavinda25r@gmail.com', password: 'Zte0811!'};
+  UID:any;
 
   constructor(
     public nav: NavController,
@@ -35,34 +35,18 @@ export class Login {
     private alertCtrl: AlertController,
     private loadingCtrl: LoadingController,
     public navParams: NavParams,
-    public storage:Storage
+    public storage:Storage,
+    public angFire: AngularFire
   ) {
+
   }
+
+
 
   //client registration new page
-  public createAccount(){
+public createAccount(){
     this.nav.push(Register);
-  }
-
-  //user login
-
-/*
-  public login() {
-    this.showLoading();
-    this.auth.login(this.registerCredentials).subscribe(allowed => {
-        if (allowed) {
-          setTimeout(() => {
-            this.loading.dismiss();
-            this.nav.setRoot(Main);
-          });
-        } else {
-          this.showError("Access Denied");
-        }
-      },
-      error => {
-        this.showError(error);
-      });
-  }*/
+}
 
 public login(){
   this.showLoading();
@@ -76,15 +60,14 @@ public login(){
     this.loading.dismiss;
     this.showError("Invalide user!");
   });
-  console.log();
 }
 
 
   //show loading
-  public showLoading(){
+public showLoading(){
     this.loading = this.loadingCtrl.create({content: 'Please wait...'});
     this.loading.present();
-  }
+}
 
   private showError(text) {
     setTimeout(() => {
@@ -96,6 +79,12 @@ public login(){
       buttons: ['OK']
     });
     alert.present(prompt);
+  }
+
+  public checkUSerStatus(){
+    let x=this.angFire.auth.getAuth();
+    console.log(x);
+    this.UID=x;
   }
 
 

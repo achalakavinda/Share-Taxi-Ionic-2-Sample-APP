@@ -23,6 +23,7 @@ import { AngularFireModule } from 'angularfire2';
   All Custom Import are added bellow
 */
 import { HttpModule } from "@angular/http";
+
 import { Storage } from  '@ionic/storage';
 //main page includes main menu
 import { Main } from '../pages/main/main';
@@ -44,11 +45,18 @@ import { PaymentHistory } from '../pages/payment-history/payment-history';
 import { PayementPackages } from '../pages/payement-packages/payement-packages';
 //profile
 import { Profile } from '../pages/profile/profile';
-
 //share ride
 import { ShareRatio } from '../pages/share-ratio/share-ratio';
 //share home
 import { ShareHome } from '../pages/share-home/share-home';
+//share ride driver tabs
+import { DriverShareTabs } from '../pages/driver-share-tabs/driver-share-tabs';
+//share ride driver
+import { DriverShareRide } from '../pages/driver-share-ride/driver-share-ride';
+//share ride selected
+import { DriverShareRideUpcoming } from '../pages/driver-share-ride-upcoming/driver-share-ride-upcoming';
+//share ride driver selected
+import { DriverShareRideSelected } from '../pages/driver-share-ride-selected/driver-share-ride-selected';
 
 
 /*
@@ -58,6 +66,7 @@ import { ShareHome } from '../pages/share-home/share-home';
 import { AuthService } from '../providers/auth-service';
 import { AuthHttpService } from '../providers/auth-http-service';
 import { LocalVariables } from '../providers/local-variables';
+import { FireLoader } from '../providers/fire-loader';
 import { Geolocation } from '@ionic-native/geolocation';
 
 @NgModule({
@@ -74,6 +83,10 @@ import { Geolocation } from '@ionic-native/geolocation';
     PayementPackages,
     ShareHome,
     ShareRatio,
+    DriverShareTabs,
+    DriverShareRide,
+    DriverShareRideUpcoming,
+    DriverShareRideSelected,
     Profile
   ],
 
@@ -98,6 +111,10 @@ import { Geolocation } from '@ionic-native/geolocation';
     PayementPackages,
     ShareHome,
     ShareRatio,
+    DriverShareTabs,
+    DriverShareRide,
+    DriverShareRideUpcoming,
+    DriverShareRideSelected,
     Profile
   ],
   providers: [
@@ -108,6 +125,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     AuthHttpService,
     Geolocation,
     LocalVariables,
+    FireLoader,
     Storage
   ]
 })

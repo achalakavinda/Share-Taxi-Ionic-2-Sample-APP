@@ -4,6 +4,7 @@ import { LocalVariables } from '../../providers/local-variables';
 //page import
 import { General } from '../general/general';
 import { Payment } from  '../payment/payment';
+import { DriverShareTabs } from '../driver-share-tabs/driver-share-tabs';
 
 /**
  * Generated class for the Main page.
@@ -32,6 +33,8 @@ export class Main {
 
     if(PageName==='Payment' && this.USER){
       this.navCtrl.push(Payment);
+    }else if(PageName=='DriverShareTabs'){
+      this.navCtrl.push(DriverShareTabs);
     }
 
   }
