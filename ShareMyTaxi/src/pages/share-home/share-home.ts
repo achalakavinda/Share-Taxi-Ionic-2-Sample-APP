@@ -30,6 +30,7 @@ export class ShareHome {
   buttonDisabled:false;
   UID:any;
   bookingView:{booking_btn:'booking'};
+  passingValues = {username: '',distance:'',duration:'',type:'Shared',amount:''};
 
 
 //share home constructor
@@ -48,8 +49,13 @@ export class ShareHome {
     this.initMap();
     this.getDistance();
     this.getUID();
+
   }
 
+  initFields(){
+    this.response.distance=this.distanceDetails.distance.text
+    this.response.duration=this.distanceDetails.duration.text;
+  }
 
 //initialize share taxi map view
   initMap(){
@@ -105,6 +111,7 @@ export class ShareHome {
       });
     }).then((s)=>{
       this.distanceDetails=s;
+      this.initFields();
     });
 
 

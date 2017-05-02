@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage} from 'ionic-angular';
-
 //import pages Home,Payments,Profile
 import { HomePage } from '../home/home';
-import { Payment } from '../payment/payment';
 import { ProfileHome } from '../profile-home/profile-home';
 
 
@@ -22,7 +20,7 @@ export class Tabs {
 
   constructor(){}
   homePage = HomePage;
-  paymentPage = Payment;
+  paymentPage = HomePage;
   proflePage = ProfileHome;
 
 }

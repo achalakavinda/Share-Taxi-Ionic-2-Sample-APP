@@ -13,4 +13,5 @@ import { Payment } from './payment';
     Payment
   ]
 })
+
 export class PaymentModule {}

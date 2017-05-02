@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LocalVariables } from '../../providers/local-variables';
+
 //page import
 import { General } from '../general/general';
-import { Payment } from  '../payment/payment';
 import { DriverShareTabs } from '../driver-share-tabs/driver-share-tabs';
 import { ProfileHome } from  '../profile-home/profile-home';
+import { PaymentNormal } from '../payment-normal/payment-normal';
+import { PaymentDriver } from '../payment-driver/payment-driver';
+import { PaymentShared } from '../payment-shared/payment-shared';
 
 /**
  * Generated class for the Main page.
@@ -19,10 +22,10 @@ import { ProfileHome } from  '../profile-home/profile-home';
   templateUrl: 'main.html',
 })
 export class Main {
-  private USER =true;
+  private USER = true;
   private rootPage: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private localVariables: LocalVariables) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private localVariables: LocalVariables) {
     this.rootPage = General;
   }
 
@@ -30,15 +33,19 @@ export class Main {
     console.log('ionViewDidLoad Main');
   }
 
-  openPage(PageName){
+  openPage(PageName) {
 
-    if(PageName==='Payment' && this.USER){
-      this.navCtrl.push(Payment);
-    }else if(PageName=='DriverShareTabs'){
+    if (PageName == 'DriverShareTabs') {
       this.navCtrl.push(DriverShareTabs);
-    }else if (PageName==='Profile'){
+    } else if (PageName === 'Profile') {
       this.navCtrl.push(ProfileHome);
+    } else if (PageName === 'DriverPayment') {
+      this.navCtrl.push(PaymentDriver);
+    }else if (PageName === 'PaymentShared') {
+      this.navCtrl.push(PaymentShared);
+    } else if (PageName === 'Payment') {
+      this.navCtrl.push(PaymentNormal);
     }
-
   }
+
 }

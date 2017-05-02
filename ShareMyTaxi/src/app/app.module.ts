@@ -36,12 +36,6 @@ import { Register } from '../pages/register/register';
 import { Tabs } from '../pages/tabs/tabs';
 //home page
 import { HomePage } from '../pages/home/home';
-//payment page
-import { Payment }  from '../pages/payment/payment';
-//payment history
-import { PaymentHistory } from '../pages/payment-history/payment-history';
-//payment packages
-import { PayementPackages } from '../pages/payement-packages/payement-packages';
 //profile
 import { ProfileHome } from '../pages/profile-home/profile-home';
 //share ride
@@ -58,6 +52,13 @@ import { DriverShareRide } from '../pages/driver-share-ride/driver-share-ride';
 import { DriverShareRideUpcoming } from '../pages/driver-share-ride-upcoming/driver-share-ride-upcoming';
 //share ride driver selected
 import { DriverShareRideSelected } from '../pages/driver-share-ride-selected/driver-share-ride-selected';
+
+/*
+* Payemnet part import module
+* */
+import { PaymentNormal } from '../pages/payment-normal/payment-normal';
+import { PaymentDriver } from '../pages/payment-driver/payment-driver';
+import { PaymentShared } from '../pages/payment-shared/payment-shared';
 
 //pick home
 import { PickHome } from '../pages/pick-home/pick-home';
@@ -82,9 +83,6 @@ import { Geolocation } from '@ionic-native/geolocation';
     Login,
     Register,
     Tabs,
-    Payment,
-    PaymentHistory,
-    PayementPackages,
     ShareHome,
     ShareRatio,
     DriverMapView,
@@ -93,7 +91,10 @@ import { Geolocation } from '@ionic-native/geolocation';
     DriverShareRideUpcoming,
     DriverShareRideSelected,
     ProfileHome,
-    PickHome
+    PickHome,
+    PaymentNormal,
+    PaymentDriver,
+    PaymentShared
   ],
 
   imports: [
@@ -112,9 +113,6 @@ import { Geolocation } from '@ionic-native/geolocation';
     Login,
     Register,
     Tabs,
-    Payment,
-    PaymentHistory,
-    PayementPackages,
     ShareHome,
     ShareRatio,
     DriverMapView,
@@ -123,7 +121,10 @@ import { Geolocation } from '@ionic-native/geolocation';
     DriverShareRideUpcoming,
     DriverShareRideSelected,
     ProfileHome,
-    PickHome
+    PickHome,
+    PaymentNormal,
+    PaymentDriver,
+    PaymentShared
   ],
   providers: [
     StatusBar,

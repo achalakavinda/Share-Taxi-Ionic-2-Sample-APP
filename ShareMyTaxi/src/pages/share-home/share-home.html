@@ -17,13 +17,13 @@
   <div #maps id="map"></div>
 
 
-  <div no-padding>   
+  <div no-padding>
     <ion-item>
       <ion-avatar item-left>
         <img src="http://www.betera.es/fileadmin/Archivos/Areas_tematicas/Mujer/LOGOS/logos_material_design/skype2512x512.png">
       </ion-avatar>
-      <h2>Test Value </h2>
-    </ion-item>   
+      <h2> {{ passingValues.username }} </h2>
+    </ion-item>
   </div>
    <ion-card>
     <button  (click)="addBooking()" color="danger" ion-button full>Book</button>
@@ -34,15 +34,15 @@
       <ion-item>
         <ion-icon name="cash" item-left></ion-icon>
         <span left>Cash : </span>
-        <span right> 2000 /= </span>
+        <span right> {{ passingValues.amount}} /= </span>
       </ion-item>
       <ion-item>
         <ion-icon name="alarm" item-left></ion-icon>
         <span left>
-          Time : 
+          Time :
         </span>
         <span right>
-          24 min
+          {{ passingValues.duration }}
         </span>
       </ion-item>
       <ion-item>
@@ -53,7 +53,7 @@
         </ion-select>
       </ion-item>
     </ion-list>
-    
+
   </ion-card>
 
 </ion-content>

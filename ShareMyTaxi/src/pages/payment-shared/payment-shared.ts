@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheet } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { FireLoader } from '../../providers/fire-loader';
 /**
  * Generated class for the PaymentShared page.
  *
@@ -14,12 +16,28 @@ import { Platform, ActionSheetController } from 'ionic-angular';
 })
 export class PaymentShared {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public actionsheetCtrl: ActionSheetController,public platform: Platform) {
+  shared_ride_payment:FirebaseListObservable<any>;;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams,
+     public actionsheetCtrl: ActionSheetController,
+     public platform: Platform,
+     public angFire:AngularFire,
+     public fireLoader:FireLoader
+     ) {
+       this.shared_ride_payment=this.angFire.database.list('/share_ride_payments'); 
+       console.log(this.shared_ride_payment);
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PaymentShared');
+    this.viewDetails();
   }
+
+viewDetails(){
+}
+
    openMenu() {
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Rate Me..',
