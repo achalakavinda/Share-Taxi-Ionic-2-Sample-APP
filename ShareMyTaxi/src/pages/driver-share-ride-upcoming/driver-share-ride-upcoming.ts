@@ -16,10 +16,10 @@ import { DriverMapView } from '../driver-map-view/driver-map-view';
 })
 
 export class DriverShareRideUpcoming {
-
+  searchBar:'';
+  showCancelButton:true;
   orginShareRides: FirebaseListObservable<any>;
   ShareRides:any;
-  Share
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public angFire: AngularFire) {
     this.orginShareRides = angFire.database.list('/share_ride');
@@ -48,4 +48,10 @@ export class DriverShareRideUpcoming {
       this.navCtrl.push(DriverMapView,{'location':key});
     }
 
+    onInput($event){
+
+    }
+    onCancel($event){
+
+    }
 }

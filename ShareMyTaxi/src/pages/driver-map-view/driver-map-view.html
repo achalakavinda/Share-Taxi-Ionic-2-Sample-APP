@@ -5,15 +5,44 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar color="AppColour">
     <ion-title></ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <div #map id="map"></div>
+  <ion-card>
+  <ion-card-header>
+    Estimations
+  </ion-card-header>
+  <ion-list>
+    <ion-item>
+      <ion-icon name="cash" item-left></ion-icon>
+      <span left>Cash : </span>
+      <span right> 2000 /= </span>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="alarm" item-left></ion-icon>
+      <span left>
+        Time : 
+      </span>
+      <span right>
+        24 min
+      </span>
+    </ion-item>
 
+    <ion-item>
+      <ion-icon name="contacts" item-left></ion-icon>
+      <span left>
+        Type : 
+      </span>
+      <span right>
+        Shared
+      </span>
+    </ion-item>
+  </ion-list>
+  <button ion-button full color="danger">Comfirm</button>
+</ion-card>
 </ion-content>

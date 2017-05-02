@@ -45,29 +45,19 @@
       <!--segements of book ride-->
       <ion-list *ngSwitchCase="'book'">
         <ion-item>
-          <ion-icon name="person" item-left large></ion-icon>
-          <h2>Driver</h2>
-          <p>Driver name and identification.</p>
-        </ion-item>
-        <ion-item>
           <ion-icon name="speedometer" item-left large></ion-icon>
           <h2>Milege</h2>
-          <p>Total milege of tour aprx</p>
+          <p>Total milege of tour aprx : 20KM</p>
         </ion-item>
         <ion-item>
           <ion-icon name="cash" item-left large></ion-icon>
           <h2>Aproximate Fee</h2>
-          <p>Aproximate fee range</p>
+          <p>Aproximate fee range : 2800/=</p>
         </ion-item>
         <ion-item>
           <ion-icon name="calendar" item-left large></ion-icon>
-          <h2>Due Date</h2>
-          <p>booking date</p>
-        </ion-item>
-        <ion-item>
-          <ion-icon name="clock" item-left large></ion-icon>
-          <h2>Due Time</h2>
-          <p>Booking time</p>
+           <h2>Date</h2> 
+          <ion-datetime displayFormat="MMM DD, YYYY HH:mm"></ion-datetime>
         </ion-item>
         <ion-item>
           <span item-left>

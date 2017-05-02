@@ -13,22 +13,29 @@
 </ion-header>
 
 <ion-content padding>
-
-   <ion-card  *ngFor="let shareRide of ShareRides  | async" >
-
+  <ion-searchbar>
+  
+</ion-searchbar>
+   <ion-card  *ngFor="let shareRide of ShareRides  | async" >    
       <div no-padding>
         <ion-item>
           <span item-left>From :</span>
-          <span item-left>{{ shareRide.primary_from }}</span>
-          <span item-right>To :</span>
-          <span item-right>{{ shareRide.primary_to }}</span>
+          <span item-left>{{ shareRide.primary_from }}</span>          
+        </ion-item>
+        <ion-item>
+          <span item-left>To :</span>
+          <span item-left>{{ shareRide.primary_to }}</span>
         </ion-item>
         <ion-item>
           <span item-left >Distance: </span>
           <span item-left>{{ shareRide.primary_distance }}</span>        
         </ion-item>
         <ion-item>
-          <span item-left>Estimation :</span>
+          <span item-left>Duration :</span>
+          <span item-left>{{shareRide.primary_duration}}</span>  
+        </ion-item> 
+        <ion-item>
+          <span item-left>Amount :</span>
           <span item-left>{{shareRide.primary_distance_amount}}/=</span>  
         </ion-item>  
 
