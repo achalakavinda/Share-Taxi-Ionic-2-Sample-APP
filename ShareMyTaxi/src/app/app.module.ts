@@ -17,13 +17,17 @@ export const firebaseConfig={
 };
 
 import { AngularFireModule } from 'angularfire2';
-
+import { HttpModule } from "@angular/http";
+import { Storage } from  '@ionic/storage';
 
 /*
   All Custom Import are added bellow
 */
-import { HttpModule } from "@angular/http";
-import { Storage } from  '@ionic/storage';
+
+//active pannels
+import { ActiveShareRide } from '../pages/active-share-ride/active-share-ride';
+import { ActivePickRide } from '../pages/active-pick-ride/active-pick-ride';
+
 //main page includes main menu
 import { Main } from '../pages/main/main';
 //general page
@@ -42,6 +46,8 @@ import { ProfileHome } from '../pages/profile-home/profile-home';
 import { ShareRatio } from '../pages/share-ratio/share-ratio';
 //share home
 import { ShareHome } from '../pages/share-home/share-home';
+
+
 //driver
 import { DriverMapView } from '../pages/driver-map-view/driver-map-view';
 //share ride driver tabs
@@ -62,7 +68,7 @@ import { PaymentShared } from '../pages/payment-shared/payment-shared';
 
 //pick home
 import { PickHome } from '../pages/pick-home/pick-home';
-
+import { DriverPickRide } from '../pages/driver-pick-ride/driver-pick-ride';
 
 /*
 *Services
@@ -79,6 +85,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     MyApp,
     Main,
     General,
+    ActiveShareRide,
+    ActivePickRide,
     HomePage,
     Login,
     Register,
@@ -90,6 +98,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     DriverShareRide,
     DriverShareRideUpcoming,
     DriverShareRideSelected,
+    DriverPickRide,
     ProfileHome,
     PickHome,
     PaymentNormal,
@@ -109,6 +118,8 @@ import { Geolocation } from '@ionic-native/geolocation';
     MyApp,
     Main,
     General,
+    ActiveShareRide,
+    ActivePickRide,
     HomePage,
     Login,
     Register,
@@ -120,6 +131,7 @@ import { Geolocation } from '@ionic-native/geolocation';
     DriverShareRide,
     DriverShareRideUpcoming,
     DriverShareRideSelected,
+    DriverPickRide,
     ProfileHome,
     PickHome,
     PaymentNormal,

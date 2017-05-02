@@ -5,10 +5,12 @@ import { LocalVariables } from '../../providers/local-variables';
 //page import
 import { General } from '../general/general';
 import { DriverShareTabs } from '../driver-share-tabs/driver-share-tabs';
+import { DriverPickRide } from '../driver-pick-ride/driver-pick-ride';
 import { ProfileHome } from  '../profile-home/profile-home';
 import { PaymentNormal } from '../payment-normal/payment-normal';
 import { PaymentDriver } from '../payment-driver/payment-driver';
 import { PaymentShared } from '../payment-shared/payment-shared';
+
 
 /**
  * Generated class for the Main page.
@@ -45,6 +47,8 @@ export class Main {
       this.navCtrl.push(PaymentShared);
     } else if (PageName === 'Payment') {
       this.navCtrl.push(PaymentNormal);
+    }else if (PageName ==='PickRide'){
+      this.navCtrl.push(DriverPickRide);
     }
   }
 

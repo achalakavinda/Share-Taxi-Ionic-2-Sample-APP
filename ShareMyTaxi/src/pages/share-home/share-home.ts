@@ -1,6 +1,7 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import {map} from "rxjs/operator/map";
+import { ActiveShareRide } from '../active-share-ride/active-share-ride';
 import {FireLoader } from '../../providers/fire-loader';
 import { AuthService } from '../../providers/auth-service';
 
@@ -19,7 +20,6 @@ export class ShareHome {
 
   //init Variables
   loading:any;
-  alertBox:any
   response:any;
   map:any;
   directionsService: any;
@@ -30,7 +30,7 @@ export class ShareHome {
   buttonDisabled:false;
   UID:any;
   bookingView:{booking_btn:'booking'};
-  passingValues = {username: '',distance:'',duration:'',type:'Shared',amount:''};
+  passingValues = {username:'Achala Kavinda',distance:'75 KM',duration:'1 hr 24 min',type:'Shared',amount:'2500'};
 
 
 //share home constructor
@@ -38,7 +38,9 @@ export class ShareHome {
     public navCtrl: NavController,
     public navParams: NavParams,
     private Auth: AuthService,
-    private fireLoader:FireLoader
+    private fireLoader:FireLoader,
+    private loadingCtrl: LoadingController,
+    public alertCtrl: AlertController
     ) {
     this.response =this.navParams.get('response');
     this.wayPoint.from = this.navParams.get('from');
@@ -49,7 +51,6 @@ export class ShareHome {
     this.initMap();
     this.getDistance();
     this.getUID();
-
   }
 
   initFields(){
@@ -59,6 +60,10 @@ export class ShareHome {
 
 //initialize share taxi map view
   initMap(){
+    this.showLoading();
+    setTimeout(()=>{
+      this.loading.dismiss();
+    },1000);
     let latLng = new google.maps.LatLng(6.9271,79.8612);
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       center:latLng,
@@ -129,6 +134,7 @@ export class ShareHome {
   //add booking
   addBooking(){
     console.log(this.response);
+    this.showLoading();
 
     let promise = new Promise((resolve,reject)=>{
       /*
@@ -189,8 +195,11 @@ export class ShareHome {
       this.fireLoader.pushShareRide(x).then((success)=>{
         console.log(success)
         resolve(success);
+        this.loading.dismiss();
+        this.navCtrl.setRoot(ActiveShareRide,{'from':this.wayPoint.from,'to':this.wayPoint.to});
       },(error)=>{
         reject(error);
+        this.showError("Please Try Again request cannot be done !");
       });
     });
 
@@ -207,4 +216,21 @@ export class ShareHome {
   test(){
     //console.log(this.fireLoader.getUserDetails(''));
   }
+  //show loading
+  public showLoading(){
+    this.loading = this.loadingCtrl.create({content: 'Please wait...'});
+    this.loading.present();
+  }
+  private showError(text) {
+    setTimeout(() => {
+      this.loading.dismiss();
+    });
+    let alert = this.alertCtrl.create({
+      title: 'Fail',
+      subTitle: text,
+      buttons: ['OK']
+    });
+    alert.present(prompt);
+  }
+
 }

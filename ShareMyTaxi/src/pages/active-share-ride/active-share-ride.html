@@ -1,0 +1,56 @@
+<!--
+  Generated template for the ActiveShareRide page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar  color="AppColor">
+    <ion-title>Active Share Ride </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <div #maps id="map"></div>
+  <ion-card>
+    <ion-card-header>
+      Details
+    </ion-card-header>
+    <div no-padding>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="http://www.betera.es/fileadmin/Archivos/Areas_tematicas/Mujer/LOGOS/logos_material_design/skype2512x512.png">
+        </ion-avatar>
+        <h2> Driver : test name </h2>
+      </ion-item>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="http://www.betera.es/fileadmin/Archivos/Areas_tematicas/Mujer/LOGOS/logos_material_design/skype2512x512.png">
+        </ion-avatar>
+        <h2> Partner : Not Join Yet </h2>
+      </ion-item>
+    </div>
+    <ion-list>
+
+      <ion-item>
+        <span left>From : </span>
+        <span right>Malabe</span>
+      </ion-item>
+
+      <ion-item>
+        <span left>To : </span>
+        <span right> Sliit </span>
+      </ion-item>
+
+      <ion-item>
+        <span left>Amount  : </span>
+        <span right> 120 /= </span>
+      </ion-item>
+
+    </ion-list>
+    <button  (click)="gooBack()" color="danger" ion-button full>Cancel</button>
+  </ion-card>
+</ion-content>
