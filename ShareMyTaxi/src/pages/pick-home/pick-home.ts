@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {FireLoader } from '../../providers/fire-loader';
 import { AuthService } from '../../providers/auth-service';
 import { Main } from '../main/main';
+import { ActiveShareRide } from '../active-share-ride/active-share-ride';
 
 /**
  * Generated class for the PickHome page.
@@ -30,6 +31,9 @@ export class PickHome {
   wayPoint={from:'',to:''};
   distanceDetails:any;
   buttonDisabled:false;
+  UID:any;
+  ride:'pick';
+  dateTime:'';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private Auth: AuthService,private fireLoader:FireLoader) {
     this.response =this.navParams.get('response');
@@ -40,6 +44,7 @@ export class PickHome {
   ionViewDidLoad() {
     console.log('ionViewDidLoad PickHome');
     this.initMap();
+    this.getUID();
     this.getDistance();
   }
 
@@ -64,6 +69,63 @@ export class PickHome {
   setRoute(){
     this.directionsDisplay.setMap(this.map);
     this.directionsDisplay.setDirections(this.response);
+  }
+
+
+  addRide(){
+    console.log('add ride method called');
+    let promise = new Promise((resolve,reject)=>{
+      let x= {
+        UID:this.UID,
+        distance:this.distanceDetails.distance.text,
+        duration:this.distanceDetails.duration.text,
+        from:this.wayPoint.from,
+        to:this.wayPoint.to,
+        distance_amount:0,
+        tot_amount:0,
+        payment_verified:false,
+        driver_allocated:false,
+        driver_UID:'',
+        time:'12:01"05',
+        status:'active'
+      }
+      console.log(x);
+      this.fireLoader.pushPickRide(x).then((succes)=>{
+        console.log('add ride sucess');
+        this.navCtrl.setRoot(ActiveShareRide);
+      },(err)=>{
+        console.log('add rides unsucessful'+err);
+      });
+    });
+
+  }
+
+ addBook(){
+   console.log('Book ride method called');
+   let promise = new Promise((resolve,reject)=>{
+     let x= {
+       UID:this.UID,
+       distance:this.distanceDetails.distance.text,
+       duration:this.distanceDetails.duration.text,
+       from:this.wayPoint.from,
+       to:this.wayPoint.to,
+       distance_amount:0,
+       tot_amount:0,
+       payment_verified:false,
+       driver_allocated:false,
+       driver_UID:'',
+       date:'tomorrow',
+       time:'12:01"05',
+       status:'active'
+     }
+     console.log(x);
+     this.fireLoader.pushBookRide(x).then((succes)=>{
+       console.log('book ride ride sucess');
+
+     },(err)=>{
+       console.log('add rides unsucessful'+err);
+     });
+   });
   }
 
   getDistance(){
@@ -92,10 +154,17 @@ export class PickHome {
 
 
 
+
   }
   cancelation(){
-    this.navCtrl.popToRoot();
+    this.navCtrl.setRoot(Main);
     console.log("cancelation called");
+  }
+
+  getUID(){
+    let uid=this.Auth.getUserInfo();
+    console.log(uid);
+    this.UID=uid.uid;
   }
 
 }

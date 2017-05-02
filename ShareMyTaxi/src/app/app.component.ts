@@ -11,7 +11,7 @@ import { Main } from '../pages/main/main';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = Main;
+  rootPage:any = Login;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

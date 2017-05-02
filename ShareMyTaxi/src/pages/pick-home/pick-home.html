@@ -11,39 +11,47 @@
 </ion-header>
 
 <ion-content>
-
   <ion-card>
+    <ion-item>
+      <ion-segment [(ngModel)]="ride" color="secondary">
+        <ion-segment-button  value="pick">
+          Pick
+        </ion-segment-button>
+        <ion-segment-button value="book">
+          Booking
+        </ion-segment-button>
+      </ion-segment>
+    </ion-item>
+
     <div #map id="map"></div>
-    <!--segements of pick or book ride-->
+
     <div [ngSwitch]="ride">
-      <!--segements of pick ride-->
       <ion-list *ngSwitchCase="'pick'">
         <ion-item>
           <ion-icon name="person" item-left large></ion-icon>
           <h2>Driver</h2>
-          <p>Driver name and identification.</p>
+          <p>Not Allocated Yet.</p>
         </ion-item>
         <ion-item>
           <ion-icon name="speedometer" item-left large></ion-icon>
           <h2>Milege</h2>
-          <p>Total milege of tour aprx.</p>
+          <p>Total milege of tour aprx : 10Km</p>
         </ion-item>
         <ion-item>
           <ion-icon name="cash" item-left large></ion-icon>
           <h2>Aproximate Fee</h2>
-          <p>Aproximate fee range.</p>
+          <p>Aproximate fee range: 2000</p>
         </ion-item>
         <ion-item>
           <span item-left>
-          <button colspan ion-button icon-left item-right small color="primary">Confirmation</button>
+          <button (click)="addRide()"  colspan ion-button icon-left item-right small color="primary">Confirmation</button>
           </span>
           <button (click)="cancelation()"  ion-button icon-left item-right small color="danger">Cancelation</button>
         </ion-item>
       </ion-list>
 
 
-      <!--segements of book ride-->
-      <ion-list *ngSwitchCase="'book'">
+     <ion-list *ngSwitchCase="'book'">
         <ion-item>
           <ion-icon name="speedometer" item-left large></ion-icon>
           <h2>Milege</h2>
@@ -61,22 +69,11 @@
         </ion-item>
         <ion-item>
           <span item-left>
-          <button colspan ion-button icon-left item-right small color="primary">Confirmation</button>
+          <button (click)="addBook()" colspan ion-button icon-left item-right small color="primary">Confirmation</button>
           </span>
           <button (click)="cancelation()"  ion-button icon-left item-right small color="danger">Cancelation</button>
         </ion-item>
       </ion-list>
     </div>
-    <!--ride type picker btn-->
-    <ion-item>
-      <ion-segment [(ngModel)]="ride" color="secondary">
-        <ion-segment-button value="pick">
-          Pick
-        </ion-segment-button>
-        <ion-segment-button value="book">
-          Booking
-        </ion-segment-button>
-      </ion-segment>
-    </ion-item>
   </ion-card>
 </ion-content>
