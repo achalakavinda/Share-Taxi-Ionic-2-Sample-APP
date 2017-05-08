@@ -1,7 +1,7 @@
-import { Component,Pipe } from '@angular/core';
+import { Component} from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { DriverMapView } from '../driver-map-view/driver-map-view';
+import { FirebaseHandler } from '../../providers/firebase-handler';
 
 /**
  * Generated class for the DriverShareRideUpcoming page.
@@ -18,34 +18,39 @@ import { DriverMapView } from '../driver-map-view/driver-map-view';
 export class DriverShareRideUpcoming {
   searchBar:'';
   showCancelButton:true;
-  orginShareRides: FirebaseListObservable<any>;
-  ShareRides:any;
+  ShareRides = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public angFire: AngularFire) {
-    this.orginShareRides = angFire.database.list('/share_ride');
-    this.filterData();
+  constructor(public navCtrl: NavController, public navParams: NavParams,private fireHandler:FirebaseHandler) {
+      
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DriverShareRideUpcoming');
+    this.getAllActiveShareRideForDrivers();
   }
 
   dataValues(){
-    //console.log(this.shareRides);
+    
   }
 
-  filterData(){
-    this.ShareRides=this.orginShareRides;
-    console.log(this.orginShareRides);
-      this.orginShareRides.subscribe((response)=>{
-
+   getAllActiveShareRideForDrivers(){      
+    let shareRide = this.fireHandler.getFirebase().database().ref('share_ride');
+    let query = shareRide.orderByChild('status').equalTo('active_!driver');
+    query.on('value',(snap)=>{
+      this.ShareRides=[];
+      console.log('called',snap);
+      query.once('value').then((snap)=>{
+      snap.forEach((child)=>{         
+          this.ShareRides.push(child.val());          
       });
+    });
+    });    
+  } 
 
-    }
 
     onClick(key){
       console.log(key);
-      this.navCtrl.push(DriverMapView,{'location':key});
+      this.navCtrl.push(DriverMapView,{'data':key});
     }
 
     onInput($event){

@@ -4,53 +4,62 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
-/*
-* Fire Base Configuration
-* */
-export const firebaseConfig={
-  apiKey: "AIzaSyB-KCKrSIswArC3WTOOyKPBmNUihVhTglQ",
-  authDomain: "sharetaxi-cdc6f.firebaseapp.com",
-  databaseURL: "https://sharetaxi-cdc6f.firebaseio.com",
-  projectId: "sharetaxi-cdc6f",
-  storageBucket: "sharetaxi-cdc6f.appspot.com",
-  messagingSenderId: "787464864609"
-};
 
+/*
+ * All the important services are imports in here
+ *
+ * */
 import { AngularFireModule } from 'angularfire2';
 import { HttpModule } from "@angular/http";
 import { Storage } from  '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation';
 
-/*
-  All Custom Import are added bellow
-*/
+import { AuthService } from '../providers/auth-service';
+import { DynamicMap } from '../providers/dynamic-map';
+import { FireLoader } from '../providers/fire-loader';
+import { FirebaseHandler } from '../providers/firebase-handler';
+import { FirebaseGetter } from '../providers/firebase-getter';
+import { FirebaseSetter } from '../providers/firebase-setter';
+import { FirebasePusher } from '../providers/firebase-pusher';
+import { FirebaseDelete } from '../providers/firebase-delete';
+import { LocalVariables } from '../providers/local-variables';
+import { MessageHander } from '../providers/message-hander';
+import { PaymentGenerator } from '../providers/payment-generator';
+import { UserHandler } from '../providers/user-handler';
 
-//active pannels
+
+
+
+
+
+
+//Active panels for the both of passenger and driver are imported bellow!
 import { ActiveShareRide } from '../pages/active-share-ride/active-share-ride';
 import { ActivePickRide } from '../pages/active-pick-ride/active-pick-ride';
 
-//main page includes main menu
+//Main page
 import { Main } from '../pages/main/main';
-//general page
+//General Page
 import { General } from '../pages/general/general';
-//login page
+//Login Page
 import { Login } from '../pages/login/login';
-//register page
+//Register Page
 import { Register } from '../pages/register/register';
-//tabs
+//Tabs
 import { Tabs } from '../pages/tabs/tabs';
-//home page
+//Home Page
 import { HomePage } from '../pages/home/home';
-//profile
+//Profile
 import { ProfileHome } from '../pages/profile-home/profile-home';
-//share ride
+//Share Ratio
 import { ShareRatio } from '../pages/share-ratio/share-ratio';
-//share home
+//Share Home
 import { ShareHome } from '../pages/share-home/share-home';
 
 
-//driver
+//Driver Map View
 import { DriverMapView } from '../pages/driver-map-view/driver-map-view';
-//share ride driver tabs
+//Driver Share Tabs
 import { DriverShareTabs } from '../pages/driver-share-tabs/driver-share-tabs';
 //share ride driver
 import { DriverShareRide } from '../pages/driver-share-ride/driver-share-ride';
@@ -70,15 +79,9 @@ import { PaymentShared } from '../pages/payment-shared/payment-shared';
 import { PickHome } from '../pages/pick-home/pick-home';
 import { DriverPickRide } from '../pages/driver-pick-ride/driver-pick-ride';
 
-/*
-*Services
-*
-* */
-import { AuthService } from '../providers/auth-service';
-import { AuthHttpService } from '../providers/auth-http-service';
-import { LocalVariables } from '../providers/local-variables';
-import { FireLoader } from '../providers/fire-loader';
-import { Geolocation } from '@ionic-native/geolocation';
+import { TestView } from '../pages/test-view/test-view';
+
+
 
 @NgModule({
   declarations: [
@@ -103,13 +106,14 @@ import { Geolocation } from '@ionic-native/geolocation';
     PickHome,
     PaymentNormal,
     PaymentDriver,
-    PaymentShared
+    PaymentShared,
+    TestView
   ],
 
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
+    // AngularFireModule.initializeApp(firebaseConfig),
     HttpModule
   ],
 
@@ -136,17 +140,26 @@ import { Geolocation } from '@ionic-native/geolocation';
     PickHome,
     PaymentNormal,
     PaymentDriver,
-    PaymentShared
+    PaymentShared,
+    TestView
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
-    AuthHttpService,
+    FirebaseHandler,
+    FirebaseSetter,
+    FirebaseGetter,
+    FirebasePusher,
+    FirebaseDelete,
     Geolocation,
     LocalVariables,
+    MessageHander,
     FireLoader,
+    DynamicMap,
+    PaymentGenerator,
+    UserHandler,
     Storage
   ]
 })

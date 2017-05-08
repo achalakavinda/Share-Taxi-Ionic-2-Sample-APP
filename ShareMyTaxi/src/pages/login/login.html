@@ -2,11 +2,11 @@
   <ion-row class="logo-row animated bounceInLeft">
     <ion-col col-4></ion-col>
     <ion-col col-4>
-      <img  src="https://scontent.fcmb1-1.fna.fbcdn.net/v/t1.0-9/17352499_1435482699829151_8588648477144115733_n.jpg?oh=13efa1ae29c9577e0a9a21352541d929&oe=599694CC"/>
+      <img (click)="aboutPage()"  src="https://scontent.fcmb1-1.fna.fbcdn.net/v/t1.0-9/17352499_1435482699829151_8588648477144115733_n.jpg?oh=13efa1ae29c9577e0a9a21352541d929&oe=599694CC"/>
     </ion-col>
     <ion-col col-4></ion-col>
   </ion-row>
-  <div class="login-box animated bounceInLeft">
+  <div class="login-box">
     <form (ngSubmit)="login()" #registerForm="ngForm">
       <ion-row>
         <ion-col>
@@ -30,7 +30,6 @@
           <button ion-button class="register-btn" type="button" block clear (click)="createAccount()">Create New Account</button>
         </ion-col>
       </ion-row>
-
     </form>
   </div>
 </ion-content>

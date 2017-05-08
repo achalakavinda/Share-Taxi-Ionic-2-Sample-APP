@@ -90,12 +90,12 @@ export class PickHome {
         status:'active'
       }
       console.log(x);
-      this.fireLoader.pushPickRide(x).then((succes)=>{
-        console.log('add ride sucess');
-        this.navCtrl.setRoot(ActiveShareRide);
-      },(err)=>{
-        console.log('add rides unsucessful'+err);
-      });
+      // this.fireLoader.pushPickRide(x).then((succes)=>{
+      //   console.log('add ride sucess');
+      //   this.navCtrl.setRoot(ActiveShareRide);
+      // },(err)=>{
+      //   console.log('add rides unsucessful'+err);
+      // });
     });
 
   }
@@ -119,12 +119,12 @@ export class PickHome {
        status:'active'
      }
      console.log(x);
-     this.fireLoader.pushBookRide(x).then((succes)=>{
-       console.log('book ride ride sucess');
+    //  this.fireLoader.pushBookRide(x).then((succes)=>{
+    //    console.log('book ride ride sucess');
 
-     },(err)=>{
-       console.log('add rides unsucessful'+err);
-     });
+    //  },(err)=>{
+    //    console.log('add rides unsucessful'+err);
+    //  });
    });
   }
 
@@ -164,7 +164,7 @@ export class PickHome {
   getUID(){
     let uid=this.Auth.getUserInfo();
     console.log(uid);
-    this.UID=uid.uid;
+    // this.UID=uid.uid;
   }
 
 }

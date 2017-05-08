@@ -5,7 +5,8 @@ import { HomePage } from '../home/home';
 import { ShareHome } from  '../share-home/share-home';
 import { PickHome } from '../pick-home/pick-home';
 import { AuthService } from '../../providers/auth-service';
-import { FireLoader } from '../../providers/fire-loader';
+import { MessageHander } from '../../providers/message-hander';
+
 declare var google;
 /**
  * Generated class for the General page.
@@ -34,15 +35,13 @@ export class General {
   UID:any;
 
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    public platform: Platform,
-    public geolocation: Geolocation,
-    public actionSheetCtrl: ActionSheetController,
-    public loadingCtrl: LoadingController,
-    public alertCtrl: AlertController,
+    private navCtrl: NavController,
+    private navParams: NavParams,
+    private platform: Platform,
+    private geolocation: Geolocation,
+    private actionSheetCtrl: ActionSheetController,
     private Auth: AuthService,
-    private fireLoader:FireLoader
+    private msgHandler:MessageHander
     ) {
 
     this.rootPage = HomePage;
@@ -98,14 +97,14 @@ export class General {
   }
 
   homeMapSearchBtn(){
-    this.showLoading();
+    this.msgHandler.showLoading();
     this.calcDisplayRoute(this.directionsService,this.directionsDisplay).then((succes)=>{
-      this.loading.dismiss();
+      this.msgHandler.dissmisLoading();
      console.log(succes);
       this.mapRouteResponse=succes;
       this.showAction();
     },(error)=>{
-      this.showError("Sorry There were some error , Try Again later! ");
+      this.msgHandler.showError("Sorry There were some error , Try Again later! ");
       console.log(error);
       console.log("homeMap Search response error "+error);
       this.mapRouteResponse=error;
@@ -151,13 +150,10 @@ export class General {
     actionSheet.present();
   }
 
+
   //active record validator
 
   shareRideValidator(){
-    let count=0;
-    this.UID = this.Auth.getUserInfo();
-    console.log(this.UID.uid)
-    //this.fireLoader.getActiveRiders().push({uid:this.UID.uid});   
     this.navCtrl.push(ShareHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
   }
 
@@ -165,23 +161,7 @@ export class General {
      this.navCtrl.push(PickHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
   }
 
-//show loading
-public showLoading(){
-    this.loading = this.loadingCtrl.create({content: 'Please wait...'});
-    this.loading.present();
-}
 
-private showError(text) {
-    setTimeout(() => {
-      this.loading.dismiss();
-    });
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present(prompt);
-  }
 
 
 }

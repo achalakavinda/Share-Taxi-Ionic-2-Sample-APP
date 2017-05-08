@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { FirebaseGetter } from '../../providers/firebase-getter';
+
 /**
  * Generated class for the TestView page.
  *
@@ -14,11 +16,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TestView {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private fireGetter:FirebaseGetter) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad TestView');
+    console.log(this.fireGetter.getAllActiveShareRideForDrivers());
   }
 
 }

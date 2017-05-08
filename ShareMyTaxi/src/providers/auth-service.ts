@@ -1,38 +1,18 @@
 import { Injectable } from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import { AngularFire , AuthProviders, AuthMethods } from 'angularfire2';
+import { FirebaseHandler } from '../providers/firebase-handler';
 
 
-
-export class User {
-  name:String;
-  email:String;
-  constructor( name:string , email: string){
-    this.name;
-    this.email;
-  }
-
-}
 
 @Injectable()
 export class AuthService {
 
-  fireAuth
-
-  constructor(public angFire:AngularFire){
+  constructor(private fireHandler:FirebaseHandler){
 
   }
-  currentUser:User;
-
-  public login(credentials){
-       return this.angFire.auth.login({
-         email:credentials.email,
-         password:credentials.password
-       },{
-         provider:AuthProviders.Password,
-         method:AuthMethods.Password
-       });
+ login(credentials){      
+      return this.fireHandler.getFirebase().auth().signInWithEmailAndPassword(credentials.email,credentials.password);
    }
 
   public register(credentials) {
@@ -40,20 +20,20 @@ export class AuthService {
       return Observable.throw("Please insert credentials");
     } else {
       // At this point store the credentials to your backend!
-      this.angFire.auth.createUser;
-      return Observable.create(observer => {
-        observer.next(true);
-        observer.complete();
-      });
+      // this.angFire.auth.createUser;
+      // return Observable.create(observer => {
+      //   observer.next(true);
+      //   observer.complete();
+      // });
     }
   }
 
   public getUserInfo() {
-    return this.angFire.auth.getAuth();
+    
   }
 
   public logout() {
-    this.angFire.auth.logout();
+    
   }
 
 

@@ -27,13 +27,13 @@ export class DriverMapView {
   passedData:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public geolocation:Geolocation) {
-    this.passedData = this.navParams.get('location');
+    this.passedData = this.navParams.get('data');
   }
 
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DriverMapView');
-    console.log(this.passedData.primary_to);
+    console.log(this.passedData.primary.to);
     this.loadMap();
   }
 
@@ -77,7 +77,7 @@ export class DriverMapView {
   RoutePath(directionService,directionDisplay){
      return new Promise((resolve, reject) => {
       directionService.route({
-        origin:this.passedData.primary_from,
+        origin:this.passedData.primary.from,
         destination: {lat:this.geoPosition.lat,lng:this.geoPosition.lng},
         travelMode: 'DRIVING'
       },function(response,status){

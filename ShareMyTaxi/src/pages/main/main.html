@@ -1,4 +1,4 @@
-<ion-menu [content]="HomeContent">
+<ion-menu class="main-menu" [content]="HomeContent">
   <ion-content>
     <ion-list>
       <button ion-item menuClose (click)="openPage('Payment')">
@@ -22,8 +22,9 @@
       <button ion-item menuClose (click)="openPage('PaymentShared')">
         Payment Shared
       </button>
-
-
+      <button ion-item menuClose (click)="openPage('test')">
+        Test View
+      </button>
     </ion-list>
 
   </ion-content>

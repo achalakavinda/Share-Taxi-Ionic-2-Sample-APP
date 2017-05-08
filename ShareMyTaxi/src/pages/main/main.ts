@@ -10,6 +10,7 @@ import { ProfileHome } from  '../profile-home/profile-home';
 import { PaymentNormal } from '../payment-normal/payment-normal';
 import { PaymentDriver } from '../payment-driver/payment-driver';
 import { PaymentShared } from '../payment-shared/payment-shared';
+import { TestView } from '../test-view/test-view';
 
 
 /**
@@ -49,6 +50,8 @@ export class Main {
       this.navCtrl.push(PaymentNormal);
     }else if (PageName ==='PickRide'){
       this.navCtrl.push(DriverPickRide);
+    }else if(PageName === 'test'){
+      this.navCtrl.push(TestView);
     }
   }
 

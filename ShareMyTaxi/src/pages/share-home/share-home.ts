@@ -1,10 +1,9 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import {map} from "rxjs/operator/map";
+import { map } from "rxjs/operator/map";
 import { ActiveShareRide } from '../active-share-ride/active-share-ride';
-import {FireLoader } from '../../providers/fire-loader';
 import { AuthService } from '../../providers/auth-service';
-
+import { FirebasePusher } from '../../providers/firebase-pusher';
 
 declare var google;
 
@@ -26,21 +25,20 @@ export class ShareHome {
   directionsDisplay: any;
   mapService :any;
   wayPoint={from:'',to:''};
-  distanceDetails:any;
+  distanceDetails={distance:'0000',duration:'0000',distance_value:'0000',duration_value:'0000'};
   buttonDisabled:false;
-  UID:any;
-  bookingView:{booking_btn:'booking'};
-  passingValues = {username:'Achala Kavinda',distance:'75 KM',duration:'1 hr 24 min',type:'Shared',amount:'2500'};
+  UID='';
+  bookingView={booking_btn:'booking'};
+  passingValues = {username:'Achala Kavinda',distance:'00 KM',duration:'0 hr 00 min',type:'Shared',amount:'2500'};
 
 
-//share home constructor
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private Auth: AuthService,
-    private fireLoader:FireLoader,
     private loadingCtrl: LoadingController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private firePusher:FirebasePusher
     ) {
     this.response =this.navParams.get('response');
     this.wayPoint.from = this.navParams.get('from');
@@ -53,9 +51,14 @@ export class ShareHome {
     this.getUID();
   }
 
-  initFields(){
-    this.response.distance=this.distanceDetails.distance.text
-    this.response.duration=this.distanceDetails.duration.text;
+  initFields(response){
+    console.log('init feild called',response);
+    this.passingValues.distance=response.distance.text;
+    this.passingValues.duration=response.duration.text;  
+    this.distanceDetails.distance=response.distance.text;
+    this.distanceDetails.distance_value=response.distance.value;
+    this.distanceDetails.duration=response.duration.text;
+    this.distanceDetails.duration_value=response.duration.value;  
   }
 
 //initialize share taxi map view
@@ -85,17 +88,6 @@ export class ShareHome {
   }
 
   getDistance(){
-
-    /*
-    for (let key in waypoints) {
-      console.log(this.response.geocoded_waypoints[key].place_id);
-      if(x==0){
-        this.wayPointID.from=this.response.geocoded_waypoints[key].place_id;
-      }else if(x==1){
-         this.wayPointID.to=this.response.geocoded_waypoints[key].place_id;
-      }
-    }
-    */
     new Promise ((RES,RJCT)=>{
       this.mapService.getDistanceMatrix({
           origins: [this.wayPoint.to],
@@ -115,8 +107,7 @@ export class ShareHome {
 
       });
     }).then((s)=>{
-      this.distanceDetails=s;
-      this.initFields();
+      this.initFields(s);
     });
 
 
@@ -128,71 +119,47 @@ export class ShareHome {
   getUID(){
      let uid=this.Auth.getUserInfo();
      console.log(uid);
-     this.UID=uid.uid;
+    //  this.UID=uid.uid;
   }
 
   //add booking
   addBooking(){
     console.log(this.response);
     this.showLoading();
-
     let promise = new Promise((resolve,reject)=>{
-      /*
       let x= {
-        primary:{
-            UID:this.UID,
-            distanceMatrix:this.distanceDetails,
-            distance_amount:0,
-            tot_amount:0,
-            profit:0,
-            payment_verified:false
-           },
-        secondary:{
-          UID:this.UID,
-            distanceMatrix:0,
-            distance_amount:0,
-            tot_amount:0,
-            profit:0,
-            payment_verified:false
-          },
-
-        secondary_allocated:false,
-        driver_allocated:false,
-        driver_UID:'',
-        waypoint:this.wayPoint,
-        time:'12:01"05',
-        status:'active'
-      };*/
-
-      let x= {
+            id:'',
             primary_UID:this.UID,
-            primary_distance:this.distanceDetails.distance.text,
-            primary_duration:this.distanceDetails.duration.text,
-            primary_from:this.wayPoint.from,
-            primary_to:this.wayPoint.to,
-            primary_distance_amount:0,
-            primary_tot_amount:0,
-            primary_profit:0,
-            primary_payment_verified:false,
-
             secondary_UID:this.UID,
-            secondary_distance:'',
-            secondary_duration:'',
-            secondary_from:this.wayPoint.from,
-            secondary_to:this.wayPoint.to,
-            secondary_distance_amount:0,
-            secondary_tot_amount:0,
-            secondary_profit:0,
-            secondary_payment_verified:false,
-            secondary_allocated:false,
-            driver_allocated:false,
             driver_UID:'',
+            driver_allocated:false,
+            secondary_payment_verified:false,
+            secondary_allocated:false,            
             time:'12:01"05',
-            status:'active'
+            status:'active_!driver',
+            primary:{
+              distance:this.distanceDetails.distance,
+              duration:this.distanceDetails.duration,
+              from:this.wayPoint.from,
+              to:this.wayPoint.to,
+              distance_amount:0,
+              tot_amount:0,
+              profit:0,
+              payment_verified:false,
+            },
+            secondary:{
+              distance:'',
+              duration:'',
+              from:this.wayPoint.from,
+              to:this.wayPoint.to,
+              distance_amount:0,
+              tot_amount:0,
+              profit:0,
+            }           
       };
 
       console.log(x);
-      this.fireLoader.pushShareRide(x).then((success)=>{
+      this.firePusher.pushActiveShareRide(x).then((success)=>{
         console.log(success)
         resolve(success);
         this.loading.dismiss();
@@ -203,19 +170,16 @@ export class ShareHome {
       });
     });
 
-    promise.then((success)=>{
-      console.log(success);
-    }).catch((e)=>{
-      console.log(e);
-    });
+    // promise.then((success)=>{
+    //   console.log(success);
+    // }).catch((e)=>{
+    //   console.log(e);
+    // });
 
-    console.log("Join button click");
+    // console.log("Join button click");
 
   }
 
-  test(){
-    //console.log(this.fireLoader.getUserDetails(''));
-  }
   //show loading
   public showLoading(){
     this.loading = this.loadingCtrl.create({content: 'Please wait...'});
