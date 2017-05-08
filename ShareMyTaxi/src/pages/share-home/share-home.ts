@@ -4,6 +4,7 @@ import { map } from "rxjs/operator/map";
 import { ActiveShareRide } from '../active-share-ride/active-share-ride';
 import { AuthService } from '../../providers/auth-service';
 import { FirebasePusher } from '../../providers/firebase-pusher';
+import { PaymentGenerator } from '../../providers/payment-generator';
 
 declare var google;
 
@@ -29,7 +30,7 @@ export class ShareHome {
   buttonDisabled:false;
   UID='';
   bookingView={booking_btn:'booking'};
-  passingValues = {username:'Achala Kavinda',distance:'00 KM',duration:'0 hr 00 min',type:'Shared',amount:'2500'};
+  passingValues = {username:'Achala Kavinda',distance:'00 KM',duration:'0 hr 00 min',type:'Shared',amount:0};
 
 
   constructor(
@@ -38,7 +39,8 @@ export class ShareHome {
     private Auth: AuthService,
     private loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    private firePusher:FirebasePusher
+    private firePusher:FirebasePusher,
+    private paymentGenerator:PaymentGenerator
     ) {
     this.response =this.navParams.get('response');
     this.wayPoint.from = this.navParams.get('from');
@@ -59,6 +61,7 @@ export class ShareHome {
     this.distanceDetails.distance_value=response.distance.value;
     this.distanceDetails.duration=response.duration.text;
     this.distanceDetails.duration_value=response.duration.value;  
+    this.passingValues.amount=this.paymentGenerator.getPayment(response.distance.value);
   }
 
 //initialize share taxi map view
@@ -117,9 +120,7 @@ export class ShareHome {
 
 //get auth user UID
   getUID(){
-     let uid=this.Auth.getUserInfo();
-     console.log(uid);
-    //  this.UID=uid.uid;
+     
   }
 
   //add booking

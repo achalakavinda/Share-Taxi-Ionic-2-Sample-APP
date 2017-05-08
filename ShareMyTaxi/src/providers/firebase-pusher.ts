@@ -16,6 +16,14 @@ export class FirebasePusher {
     console.log('Hello FirebasePusher Provider');
   }
 
+//push users to table while registering
+  pushUserInfoWhileRegistering(elmVal){
+    let newPostKey = this.fireHandler.getFirebase().database().ref().child('users').push().key;
+    elmVal.id=newPostKey;
+    return this.fireHandler.getFirebase().database().ref('users/'+ newPostKey).set(elmVal);
+  }
+
+//push active share ride to data base
   pushActiveShareRide(elmVal){
     let newPostKey = this.fireHandler.getFirebase().database().ref().child('share_ride').push().key;
     elmVal.id=newPostKey;

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 /*
@@ -11,10 +10,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class PaymentGenerator {
 
-  RATE_FOR_1_KM=20;
-  RATE_FOR_REST_KM=15;
+  RATE_FOR_1_KM=0.05;
+  RATE_FOR_REST_KM=0.015;
 
-  constructor(public http: Http) {
+  constructor() {
     console.log('Hello PaymentGenerator Provider');
   }
 

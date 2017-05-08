@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController} from 'ionic-angular';
 import { MessageHander } from '../../providers/message-hander';
+import { AuthService } from '../../providers/auth-service';
+import { FirebasePusher } from '../../providers/firebase-pusher';
 
 /**
  * Generated class for the Register page.
@@ -27,39 +29,39 @@ export class Register {
 
   constructor(
     private nav: NavController,
-    private msgHandler:MessageHander
+    private msgHandler:MessageHander,
+    private auth:AuthService,
+    private firePusher:FirebasePusher
   ) {
     
 }
 register(){
     this.msgHandler.showLoading();
-  // this.angFire.auth.createUser({
-  //   email:this.registerCredentials.email ,
-  //   password:this.registerCredentials.password
-  // }).then(()=>{
-  //   let data= this.angFire.auth.getAuth();
-  //   console.log(this.registerCredentials.gender);
-  //   let imgURL ='';
-  //   if(this.registerCredentials.gender  === 'm'){
-  //     imgURL='http://homelasa.mi.infn.it/images/imageslasa/donna.png';
-  //   }else{
-  //     imgURL='http://www.iconsfind.com/wp-content/uploads/2015/10/20151012_561baed03a54e.png';
-  //   }
-
-  //    this.contactList.push({
-  //     uid:data.uid,
-  //     username:this.registerCredentials.username,
-  //     gender:this.registerCredentials.gender,
-  //     driver:false,
-  //     img:imgURL
-  //   }).then((()=>{
-  //     this.createSuccess = true;
-  //       this.showPopup("Success", "Account created.");
-  //      this.msgHandler.dissmisLoading();
-  //   }),error=>{
-  //     console.log(error);
-  //   });
-  // });
+    if(this.registerCredentials.email ==='' || this.registerCredentials.password ===''){
+      this.msgHandler.showError('Please Check input Fields');
+    }else{
+      this.auth.register(this.registerCredentials).then((response)=>{
+          console.log('New user Registered',response.uid);
+          let infoArray={
+             UID:response.uid,
+             username:this.registerCredentials.username,
+             email:this.registerCredentials.email,
+             gender:this.registerCredentials.gender,
+             img:'https://cdn.dribbble.com/users/102974/screenshots/2726841/head_bob.gif',
+             user_type:'Passenger'
+          };
+          this.firePusher.pushUserInfoWhileRegistering(infoArray).then(()=>{
+            this.msgHandler.dissmisLoading();
+            this.createSuccess=true;
+            this.showPopup('Successful!','You are Registered !');
+          }).catch( err=>{
+            this.msgHandler.showError(err.message);
+          });
+      }).catch(error=>{
+        console.log('Error',error);
+        this.msgHandler.showError(error.message);
+      });
+    }
 }
 
   showPopup(title, text) {
