@@ -18,10 +18,10 @@ import { FirebasePusher } from '../../providers/firebase-pusher';
 export class Register {
   createSuccess = false;
   registerCredentials = {
-    email: '',
-    username:'',
-    password: '',
-    comfirmPassword:'',
+    email: 'test_@gmail.com',
+    username:'test_',
+    password: 'test123!',
+    comfirmPassword:'test123!',
     gender:''
   };
 

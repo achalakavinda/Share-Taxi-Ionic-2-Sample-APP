@@ -1,6 +1,7 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { FirebaseHandler } from '../../providers/firebase-handler';
 
 /**
  * Generated class for the DriverMapView page.
@@ -19,14 +20,19 @@ declare var google;
 export class DriverMapView {
 
 @ViewChild('map') mapElement: ElementRef;
-
+  outData={pUsername:'----',pDistance:'----',pDuration:'-----',pAmount:'----',sUsername:'----',sDistance:'----',sDuration:'----',sAmount:'----'};
   map:any;
   directionsService:any;
   directionsDisplay:any;
   geoPosition={lat:0,lng:0};
   passedData:any;
+  driverMarker:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public geolocation:Geolocation) {
+  constructor(
+    public navCtrl: NavController,
+     public navParams: NavParams,
+     public geolocation:Geolocation,
+     private fireHandler:FirebaseHandler) {
     this.passedData = this.navParams.get('data');
   }
 
@@ -34,20 +40,17 @@ export class DriverMapView {
   ionViewDidLoad() {
     console.log('ionViewDidLoad DriverMapView');
     console.log(this.passedData.primary.to);
-    this.loadMap();
-  }
+    if(this.map == undefined){
+      console.log('Map Undefine so created',this.map);
+      this.initMap();     
+      this.datafiller(); 
+    }
 
-  loadMap(){
-    this.geolocation.getCurrentPosition().then((position)=>{
-        this.geoPosition.lng=position.coords.longitude;
-        this.geoPosition.lat=position.coords.latitude;
-        console.log(position.coords.latitude+" "+position.coords.longitude);
-        this.initMap();
-        this.DisplayRoute();
-      }
-    ).catch(()=>{
-      this.initMap();
-    });
+    setTimeout(()=>{
+      this.loadMap();      
+    },1000);
+    
+        
   }
 
   initMap(){
@@ -67,11 +70,30 @@ export class DriverMapView {
     this.directionsDisplay.setMap(this.map);
   }
 
+  loadMap(){
+    this.geolocation.getCurrentPosition().then((position)=>{
+        this.geoPosition.lng=position.coords.longitude;
+        this.geoPosition.lat=position.coords.latitude;
+        console.log(position.coords.latitude+" "+position.coords.longitude);        
+        this.DisplayRoute();
+        console.log('inner load map roue');
+      }
+    ).catch((e)=>{
+      this.geoPosition.lng=79.9733;
+      this.geoPosition.lat=6.9147;
+      this.DisplayRoute();
+      console.log('cannot load map roue',e);
+    });
+  }
+
+  
+
   DisplayRoute(){
     console.log("calcDisplay");
     this.RoutePath(this.directionsService,this.directionsDisplay).then((Success)=>{
       console.log('success');
-    })
+      this.showDriverPostion();
+    }).catch(()=>{});
   }
 
   RoutePath(directionService,directionDisplay){
@@ -93,13 +115,39 @@ export class DriverMapView {
     });
   }
 
-  getGeolocation(){
-    this.geolocation.getCurrentPosition().then((position)=>{
-       this.geoPosition.lng=position.coords.longitude;
-       this.geoPosition.lat=position.coords.latitude;
-        console.log(position.coords.latitude+" "+position.coords.longitude);
-      }
-    );
+  showDriverPostion(){
+    this.geolocation.watchPosition().subscribe((e)=>{
+        console.log('call geo change');
+        if(e.coords !== undefined){
+            this.addDriverPostion(e.coords.latitude,e.coords.longitude);
+        }        
+    });
+  }
+
+   addDriverPostion(latPara,lngPara){
+    let latLng = new google.maps.LatLng(latPara,lngPara); 
+    if(this.driverMarker!== undefined){
+      this.driverMarker.setMap(null);
+    }   
+    this.driverMarker = new google.maps.Marker({
+          position: latLng,
+          map: this.map,
+          icon:'assets/icon/taxiIcon.png'
+        });
+  }
+
+  datafiller(){
+    this.fireHandler.getFirebase().database().ref('/share_ride/'+this.passedData.id)
+    .once('value').then((snap)=>{
+         this.outData.pUsername = snap.child('primary/username').val();
+         this.outData.pDistance = snap.child('primary/distance').val(); 
+         this.outData.pAmount = snap.child('primary/distance_amount').val();  
+         this.outData.pDuration = snap.child('primary/duration').val();   
+         this.outData.sUsername = snap.child('secondary/username').val();
+         this.outData.sDistance = snap.child('secondary/distance').val(); 
+         this.outData.sAmount = snap.child('secondary/distance_amount').val();  
+         this.outData.sDuration = snap.child('secondary/duration').val(); 
+      });
   }
 
 }

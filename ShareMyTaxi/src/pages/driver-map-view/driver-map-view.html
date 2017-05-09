@@ -14,14 +14,25 @@
 <ion-content>
   <div #map id="map"></div>
   <ion-card>
+  <button ion-button full color="danger">Comfirm</button>
   <ion-card-header>
-    Estimations
+    Estimations Passenger 1
   </ion-card-header>
   <ion-list>
     <ion-item>
       <ion-icon name="cash" item-left></ion-icon>
+      <span left>Username : </span>
+      <span right> {{ outData.pUsername }} </span>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="bicycle" item-left></ion-icon>
+      <span left>Distance: </span>
+      <span right> {{ outData.pDistance }}  </span>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="cash" item-left></ion-icon>
       <span left>Cash : </span>
-      <span right> 2000 /= </span>
+      <span right> {{ outData.pAmount }} /= </span>
     </ion-item>
     <ion-item>
       <ion-icon name="alarm" item-left></ion-icon>
@@ -29,7 +40,7 @@
         Time : 
       </span>
       <span right>
-        24 min
+        {{ outData.pDuration }}
       </span>
     </ion-item>
 
@@ -43,6 +54,45 @@
       </span>
     </ion-item>
   </ion-list>
-  <button ion-button full color="danger">Comfirm</button>
+
+  <ion-card-header>
+    Estimations Passenger 2
+  </ion-card-header>
+ <ion-list>
+    <ion-item>
+      <ion-icon name="cash" item-left></ion-icon>
+      <span left>Username : </span>
+      <span right> {{ outData.sUsername }} </span>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="bicycle" item-left></ion-icon>
+      <span left>Distance: </span>
+      <span right> {{ outData.sDistance }}  </span>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="cash" item-left></ion-icon>
+      <span left>Cash : </span>
+      <span right> {{ outData.sAmount }} /= </span>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="alarm" item-left></ion-icon>
+      <span left>
+        Time : 
+      </span>
+      <span right>
+        {{ outData.sDuration }}
+      </span>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="contacts" item-left></ion-icon>
+      <span left>
+        Type : 
+      </span>
+      <span right>
+        Shared
+      </span>
+    </ion-item>
+  </ion-list>
 </ion-card>
 </ion-content>

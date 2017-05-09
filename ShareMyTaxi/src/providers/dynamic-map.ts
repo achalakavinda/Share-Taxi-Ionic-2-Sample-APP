@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-
+import { Geolocation } from '@ionic-native/geolocation';
+import { AuthService } from '../providers/auth-service';
+import { FirebaseHandler } from '../providers/firebase-handler';
 /*
   Generated class for the DynamicMap provider.
 
@@ -11,8 +12,15 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class DynamicMap {
 
-  constructor(public http: Http) {
+  //geolocation watcher
+  watch:any;
+
+  constructor(public geoLocation:Geolocation,private fireHander:FirebaseHandler,private auth:AuthService) {
     console.log('Hello DynamicMap Provider');
   }
 
+  
+
+
 }
+

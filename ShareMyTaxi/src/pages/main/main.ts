@@ -13,6 +13,9 @@ import { PaymentShared } from '../payment-shared/payment-shared';
 import { TestView } from '../test-view/test-view';
 
 
+//geolocation provider imported
+import { DynamicMap } from '../../providers/dynamic-map'
+
 /**
  * Generated class for the Main page.
  *
@@ -28,12 +31,23 @@ export class Main {
   private USER = true;
   private rootPage: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private localVariables: LocalVariables) {
+  constructor(
+    public navCtrl: NavController,
+     public navParams: NavParams, 
+     private localVariables: LocalVariables,
+     private dynamicMap:DynamicMap) {
+
     this.rootPage = General;
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Main');
+    this.realtimeGeo();
+  }
+
+
+  realtimeGeo(){
+   
   }
 
   openPage(PageName) {

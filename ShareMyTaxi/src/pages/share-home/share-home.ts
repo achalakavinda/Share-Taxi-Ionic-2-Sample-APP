@@ -30,7 +30,7 @@ export class ShareHome {
   buttonDisabled:false;
   UID='';
   bookingView={booking_btn:'booking'};
-  passingValues = {username:'Achala Kavinda',distance:'00 KM',duration:'0 hr 00 min',type:'Shared',amount:0};
+  passingValues = {username:'',distance:'00 KM',duration:'0 hr 00 min',type:'Shared',amount:0};
 
 
   constructor(
@@ -161,10 +161,9 @@ export class ShareHome {
 
       console.log(x);
       this.firePusher.pushActiveShareRide(x).then((success)=>{
-        console.log(success)
-        resolve(success);
         this.loading.dismiss();
-        this.navCtrl.setRoot(ActiveShareRide,{'from':this.wayPoint.from,'to':this.wayPoint.to});
+        console.log('new active share ride key',this.firePusher.post_key);
+        this.navCtrl.setRoot(ActiveShareRide,{id:this.firePusher.post_key,from:this.wayPoint.from,to:this.wayPoint.to});
       },(error)=>{
         reject(error);
         this.showError("Please Try Again request cannot be done !");

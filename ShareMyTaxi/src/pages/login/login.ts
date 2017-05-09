@@ -20,8 +20,8 @@ import { Main } from "../main/main";
 })
 export class Login {
   registerCredentials = {
-    email: 'achalakavinda25r@gmail.com',
-    password: 'Zte0811!'
+    email: 'test_@gmail.com',
+    password: 'test123!'
   };
 
   constructor(

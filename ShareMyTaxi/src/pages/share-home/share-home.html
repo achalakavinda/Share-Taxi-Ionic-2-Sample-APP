@@ -15,18 +15,8 @@
 
 <ion-content>
   <div #maps id="map"></div>
-
-
-  <div no-padding>
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="http://www.betera.es/fileadmin/Archivos/Areas_tematicas/Mujer/LOGOS/logos_material_design/skype2512x512.png">
-      </ion-avatar>
-      <h2> {{ passingValues.username }} </h2>
-    </ion-item>
-  </div>
    <ion-card>
-    <button  (click)="addBooking()" color="danger" ion-button full>Book</button>
+    <button  (click)="addBooking()" color="danger" ion-button full> Pick </button>
     <ion-card-header>
       Estimations
     </ion-card-header>
@@ -49,13 +39,6 @@
         <span right>
           {{ passingValues.duration }}
         </span>
-      </ion-item>
-      <ion-item>
-        <ion-select col-12 name="">
-         <ion-option value="Any" selected="true">Any</ion-option>
-         <ion-option value="Male" >Male</ion-option>
-         <ion-option value="female">Female</ion-option>
-        </ion-select>
       </ion-item>
     </ion-list>
 

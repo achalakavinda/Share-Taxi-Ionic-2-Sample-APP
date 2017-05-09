@@ -1,8 +1,5 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
-import {FireLoader } from '../../providers/fire-loader';
-import { AuthService } from '../../providers/auth-service';
-
 import { Main } from  '../main/main';
 
 
@@ -27,17 +24,16 @@ export class ActiveShareRide {
   wayPoint={from:'',to:''};
   buttonDisabled:false;
   UID:any;
-  passingValues = {username:'Achala Kavinda',distance:'75 KM',duration:'1 hr 24 min',type:'Shared',amount:'2500'};
-
+  push_id='0';
+  passingValues = {username:'----',distance:'---- KM',duration:'-- hr -- min',type:'Shared',amount:'----'};
+  driverPostions=[];
+  driverMarker:any;
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
-    private Auth: AuthService,
-    private fireLoader:FireLoader,
-    private loadingCtrl: LoadingController,
-    public alertCtrl: AlertController) {
+    public navParams: NavParams) {
     this.wayPoint.from = this.navParams.get('from');
     this.wayPoint.to = this.navParams.get('to');
+    this.push_id = this.navParams.get('id');
   }
 
   ionViewDidLoad() {
@@ -60,34 +56,40 @@ export class ActiveShareRide {
     }
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     this.directionsDisplay.setMap(this.map);
+    this.DisplayRoute();
   }
 
   DisplayRoute(){
-    console.log("calcDisplay");
-    this.RoutePath(this.directionsService,this.directionsDisplay).then((Success)=>{
-      console.log('success');
-    })
+    this.RoutePath(this.directionsService,this.directionsDisplay);
   }
 
   RoutePath(directionService,directionDisplay){
-    return new Promise((resolve, reject) => {
       directionService.route({
-        origin:this.wayPoint.from,
-        destination:this.wayPoint,
+        origin:'malabe',
+        destination:'kotte',
         travelMode: 'DRIVING'
       },function(response,status){
         if(status == 'OK'){
           directionDisplay.setDirections(response);
-          resolve(response);
           console.log("google response ok");
+          
         }else{
           console.log(status);
-          reject(status);
         }
       });
-    });
   }
 
+  addDriverPostion(){
+    var myLatLng ={lat:6.9271, lng: 79.8612}
+    this.driverMarker = new google.maps.Marker({
+          position: myLatLng,
+          map: this.map,
+          icon:'assets/icon/taxiIcon.png'
+        });
+        // setTimeout(()=>{
+        //   marker.setMap(null);
+        // },5000);
+  }
 
 
   //go back
@@ -95,21 +97,6 @@ export class ActiveShareRide {
       this.navCtrl.setRoot(Main);
   }
 
-  //show loading
-  public showLoading(){
-    this.loading = this.loadingCtrl.create({content: 'Please wait...'});
-    this.loading.present();
-  }
-  private showError(text) {
-    setTimeout(() => {
-      this.loading.dismiss();
-    });
-    let alert = this.alertCtrl.create({
-      title: 'Fail',
-      subTitle: text,
-      buttons: ['OK']
-    });
-    alert.present(prompt);
-  }
+
 
 }
