@@ -37,9 +37,13 @@ export class DriverShareRideUpcoming {
     let shareRide = this.fireHandler.getFirebase().database().ref('share_ride');
     let query = shareRide.orderByChild('status').equalTo('active_!driver');
     query.on('value',(snap)=>{
-      this.ShareRides=[];
+      console.log('getting active rider called');
       console.log('called',snap);
       query.once('value').then((snap)=>{
+        let x =this.ShareRides.length;
+        for(let y=0;y<x;y++){
+          this.ShareRides.pop();
+        }
       snap.forEach((child)=>{         
           this.ShareRides.push(child.val());          
       });

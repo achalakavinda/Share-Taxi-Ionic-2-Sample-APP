@@ -4,7 +4,9 @@ import { map } from "rxjs/operator/map";
 import { ActiveShareRide } from '../active-share-ride/active-share-ride';
 import { AuthService } from '../../providers/auth-service';
 import { FirebasePusher } from '../../providers/firebase-pusher';
+import { FirebaseHandler } from '../../providers/firebase-handler';
 import { PaymentGenerator } from '../../providers/payment-generator';
+import { MessageHander } from '../../providers/message-hander';
 
 declare var google;
 
@@ -25,12 +27,15 @@ export class ShareHome {
   directionsService: any;
   directionsDisplay: any;
   mapService :any;
+
   wayPoint={from:'',to:''};
   distanceDetails={distance:'0000',duration:'0000',distance_value:'0000',duration_value:'0000'};
   buttonDisabled:false;
   UID='';
+  UserInfo={username:'',imgUrl:'',tel:'',nic:''};
   bookingView={booking_btn:'booking'};
   passingValues = {username:'',distance:'00 KM',duration:'0 hr 00 min',type:'Shared',amount:0};
+
 
 
   constructor(
@@ -40,7 +45,9 @@ export class ShareHome {
     private loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     private firePusher:FirebasePusher,
-    private paymentGenerator:PaymentGenerator
+    private paymentGenerator:PaymentGenerator,
+    private fireHandler:FirebaseHandler,
+    private msgHandler:MessageHander
     ) {
     this.response =this.navParams.get('response');
     this.wayPoint.from = this.navParams.get('from');
@@ -50,7 +57,8 @@ export class ShareHome {
   ionViewDidLoad() {
     this.initMap();
     this.getDistance();
-    this.getUID();
+    this.getUserinfo();
+    console.log("ionViewDidLoad Share-Home");
   }
 
   initFields(response){
@@ -66,10 +74,6 @@ export class ShareHome {
 
 //initialize share taxi map view
   initMap(){
-    this.showLoading();
-    setTimeout(()=>{
-      this.loading.dismiss();
-    },1000);
     let latLng = new google.maps.LatLng(6.9271,79.8612);
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       center:latLng,
@@ -88,6 +92,7 @@ export class ShareHome {
   setRoute(){
     this.directionsDisplay.setMap(this.map);
     this.directionsDisplay.setDirections(this.response);
+    
   }
 
   getDistance(){
@@ -112,26 +117,39 @@ export class ShareHome {
     }).then((s)=>{
       this.initFields(s);
     });
-
-
-
-
 }
 
 //get auth user UID
-  getUID(){
-     
+  getUserinfo(){
+    let user=this.Auth.getUid();
+    if(user){
+      this.UID=user.uid;
+    }
+    console.log('user id is',this.UID);
+     this.fireHandler.getFirebase().database().ref('users').orderByChild('UID')
+     .equalTo(this.UID).once('value').then((snap)=>{
+       snap.forEach(childData => {         
+         this.UserInfo.username=childData.val().username;
+         this.UserInfo.imgUrl=childData.val().img;
+        //  this.UserInfo.nic=childData.val().nic;
+        //  this.UserInfo.tel=childData.val().tel;
+        console.log('fetch user info',this.UserInfo);
+       });
+     }).catch((e)=>{
+       console.log('error geting user info',e);
+       this.UserInfo={username:'',imgUrl:'',tel:'',nic:''};
+     });
   }
 
   //add booking
   addBooking(){
     console.log(this.response);
-    this.showLoading();
+    this.msgHandler.showLoading();
     let promise = new Promise((resolve,reject)=>{
       let x= {
             id:'',
             primary_UID:this.UID,
-            secondary_UID:this.UID,
+            secondary_UID:'',
             driver_UID:'',
             driver_allocated:false,
             secondary_payment_verified:false,
@@ -139,29 +157,32 @@ export class ShareHome {
             time:'12:01"05',
             status:'active_!driver',
             primary:{
+              username:this.UserInfo.username,
+              imgUrl:this.UserInfo.imgUrl,
+              nic:this.UserInfo.nic,
+              tel:this.UserInfo.tel,
               distance:this.distanceDetails.distance,
               duration:this.distanceDetails.duration,
               from:this.wayPoint.from,
               to:this.wayPoint.to,
-              distance_amount:0,
-              tot_amount:0,
-              profit:0,
+              distance_amount:this.passingValues.amount,
               payment_verified:false,
             },
             secondary:{
+              username:'',
+              imgUrl:'',
+              nic:'',
+              tel:'',
               distance:'',
               duration:'',
               from:this.wayPoint.from,
               to:this.wayPoint.to,
               distance_amount:0,
-              tot_amount:0,
-              profit:0,
             }           
       };
-
-      console.log(x);
+      console.log("Pushing array",x);
       this.firePusher.pushActiveShareRide(x).then((success)=>{
-        this.loading.dismiss();
+        this.msgHandler.dissmisLoading();
         console.log('new active share ride key',this.firePusher.post_key);
         this.navCtrl.setRoot(ActiveShareRide,{id:this.firePusher.post_key,from:this.wayPoint.from,to:this.wayPoint.to});
       },(error)=>{
@@ -180,12 +201,7 @@ export class ShareHome {
 
   }
 
-  //show loading
-  public showLoading(){
-    this.loading = this.loadingCtrl.create({content: 'Please wait...'});
-    this.loading.present();
-  }
-  private showError(text) {
+private showError(text) {
     setTimeout(() => {
       this.loading.dismiss();
     });

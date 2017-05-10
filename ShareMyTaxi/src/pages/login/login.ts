@@ -28,9 +28,8 @@ export class Login {
     public nav: NavController,
     private auth: AuthService,
     private msgHandler:MessageHander,
-    public navParams: NavParams,
+    public navParams: NavParams
   ) {
-
   }
 
 

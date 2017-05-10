@@ -4,7 +4,7 @@ import { LocalVariables } from '../../providers/local-variables';
 
 //page import
 import { General } from '../general/general';
-import { DriverShareTabs } from '../driver-share-tabs/driver-share-tabs';
+import { DriverShareRideUpcoming } from '../driver-share-ride-upcoming/driver-share-ride-upcoming';
 import { DriverPickRide } from '../driver-pick-ride/driver-pick-ride';
 import { ProfileHome } from  '../profile-home/profile-home';
 import { PaymentNormal } from '../payment-normal/payment-normal';
@@ -53,7 +53,7 @@ export class Main {
   openPage(PageName) {
 
     if (PageName == 'DriverShareTabs') {
-      this.navCtrl.push(DriverShareTabs);
+      this.navCtrl.push(DriverShareRideUpcoming);
     } else if (PageName === 'Profile') {
       this.navCtrl.push(ProfileHome);
     } else if (PageName === 'DriverPayment') {

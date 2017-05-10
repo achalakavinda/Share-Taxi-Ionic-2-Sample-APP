@@ -2,6 +2,7 @@ import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { FirebaseHandler } from '../../providers/firebase-handler';
+import { ActiveDriverShareRide } from '../active-driver-share-ride/active-driver-share-ride'
 
 /**
  * Generated class for the DriverMapView page.
@@ -20,7 +21,7 @@ declare var google;
 export class DriverMapView {
 
 @ViewChild('map') mapElement: ElementRef;
-  outData={pUsername:'----',pDistance:'----',pDuration:'-----',pAmount:'----',sUsername:'----',sDistance:'----',sDuration:'----',sAmount:'----'};
+  outData={id:'',pUsername:'----',pDistance:'----',pDuration:'-----',pAmount:'----',sUsername:'----',sDistance:'----',sDuration:'----',sAmount:'----'};
   map:any;
   directionsService:any;
   directionsDisplay:any;
@@ -46,9 +47,7 @@ export class DriverMapView {
       this.datafiller(); 
     }
 
-    setTimeout(()=>{
-      this.loadMap();      
-    },1000);
+    this.loadMap();
     
         
   }
@@ -138,7 +137,8 @@ export class DriverMapView {
 
   datafiller(){
     this.fireHandler.getFirebase().database().ref('/share_ride/'+this.passedData.id)
-    .once('value').then((snap)=>{
+    .on('value',(snap)=>{
+         this.outData.id = snap.child('id').val();
          this.outData.pUsername = snap.child('primary/username').val();
          this.outData.pDistance = snap.child('primary/distance').val(); 
          this.outData.pAmount = snap.child('primary/distance_amount').val();  
@@ -148,6 +148,12 @@ export class DriverMapView {
          this.outData.sAmount = snap.child('secondary/distance_amount').val();  
          this.outData.sDuration = snap.child('secondary/duration').val(); 
       });
+  }
+
+  allocateDriver(){
+    // console.log('Value from share_ride Db',this.outData);
+    // console.log('driver confirmed');
+      this.navCtrl.setRoot(ActiveDriverShareRide,{id:this.passedData.id});
   }
 
 }

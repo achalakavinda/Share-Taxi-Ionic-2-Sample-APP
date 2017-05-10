@@ -6,21 +6,17 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title></ion-title>
+  <ion-navbar  color="AppColor">
+    <ion-title>Available Rides</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
-  <ion-searchbar>
-  
-</ion-searchbar>
-   <ion-card  *ngFor="let shareRide of ShareRides" >    
+   <ion-card  *ngFor="let shareRide of ShareRides" >
       <div no-padding>
         <ion-item>
           <span item-left>From :</span>
-          <span item-left>{{ shareRide.primary.from }}</span>          
+          <span item-left>{{ shareRide.primary.from }}</span>
         </ion-item>
         <ion-item>
           <span item-left>To :</span>
@@ -28,16 +24,16 @@
         </ion-item>
         <ion-item>
           <span item-left >Distance: </span>
-          <span item-left>{{ shareRide.primary.distance }}</span>        
+          <span item-left>{{ shareRide.primary.distance }}</span>
         </ion-item>
         <ion-item>
           <span item-left>Duration :</span>
-          <span item-left>{{shareRide.primary.duration}}</span>  
-        </ion-item> 
+          <span item-left>{{shareRide.primary.duration}}</span>
+        </ion-item>
         <ion-item>
           <span item-left>Amount :</span>
-          <span item-left>{{shareRide.primary_distance_amount}}/=</span>  
-        </ion-item>  
+          <span item-left>{{shareRide.primary_distance_amount}}/=</span>
+        </ion-item>
 
         <button (click)="onClick(shareRide)" ion-button full color="danger"> PICk </button>
       </div>
