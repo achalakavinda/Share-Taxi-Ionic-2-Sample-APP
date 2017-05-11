@@ -145,6 +145,9 @@ export class ShareHome {
   addBooking(){
     console.log(this.response);
     this.msgHandler.showLoading();
+    let currentdate = new Date(); 
+    let date =currentdate.getDate() +"/" +currentdate.getMonth()+"/"+currentdate.getFullYear();  
+    let time =currentdate.getHours() +":"+ currentdate.getMinutes() + ":"+ currentdate.getSeconds();
     let promise = new Promise((resolve,reject)=>{
       let x= {
             id:'',
@@ -152,10 +155,11 @@ export class ShareHome {
             secondary_UID:'',
             driver_UID:'',
             driver_allocated:false,
-            secondary_payment_verified:false,
-            secondary_allocated:false,            
-            time:'12:01"05',
+            secondary_allocated:false,   
+            date:date,         
+            time:time,
             status:'active_!driver',
+            joinable:true,
             primary:{
               username:this.UserInfo.username,
               imgUrl:this.UserInfo.imgUrl,
@@ -163,9 +167,12 @@ export class ShareHome {
               tel:this.UserInfo.tel,
               distance:this.distanceDetails.distance,
               duration:this.distanceDetails.duration,
+              distance_value:this.distanceDetails.distance_value,
+              duration_value:this.distanceDetails.duration_value,
               from:this.wayPoint.from,
               to:this.wayPoint.to,
-              distance_amount:this.passingValues.amount,
+              amount:this.passingValues.amount,
+              amount_to_pay:this.passingValues.amount,
               payment_verified:false,
             },
             secondary:{
@@ -175,9 +182,13 @@ export class ShareHome {
               tel:'',
               distance:'',
               duration:'',
-              from:this.wayPoint.from,
-              to:this.wayPoint.to,
-              distance_amount:0,
+              distance_value:'',
+              duration_value:'',
+              from:'',
+              to:'',
+              amount:0,
+              amount_to_pay:0,
+              payment_verified:false,
             }           
       };
       console.log("Pushing array",x);

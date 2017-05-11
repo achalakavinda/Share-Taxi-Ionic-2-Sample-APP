@@ -45,7 +45,6 @@ getUserFromUsers(UID){
     if(user){
       console.log('logged in',user.uid);
       this.uid=user.uid;
-      this.getUserFromUsers(user.uid);
     }else{
         console.log('not logged in');
     }

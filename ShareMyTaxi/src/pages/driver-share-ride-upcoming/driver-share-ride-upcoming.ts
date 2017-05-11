@@ -34,7 +34,7 @@ export class DriverShareRideUpcoming {
   }
 
    getAllActiveShareRideForDrivers(){      
-    let shareRide = this.fireHandler.getFirebase().database().ref('share_ride');
+    let shareRide = this.fireHandler.getFirebase().database().ref('ride/share');
     let query = shareRide.orderByChild('status').equalTo('active_!driver');
     query.on('value',(snap)=>{
       console.log('getting active rider called');

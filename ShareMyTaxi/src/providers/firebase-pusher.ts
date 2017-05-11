@@ -28,10 +28,10 @@ export class FirebasePusher {
 //push active share ride to data base
   pushActiveShareRide(elmVal){
     this.post_key='';
-    let newPostKey = this.fireHandler.getFirebase().database().ref().child('share_ride').push().key;
+    let newPostKey = this.fireHandler.getFirebase().database().ref().child('ride/share').push().key;
     elmVal.id=newPostKey;
     this.post_key=newPostKey;
-    return this.fireHandler.getFirebase().database().ref('share_ride/'+ newPostKey).set(elmVal);
+    return this.fireHandler.getFirebase().database().ref('ride/share/'+ newPostKey).set(elmVal);
   }
 
 }

@@ -18,20 +18,21 @@
       <ion-item>
         <ion-icon name="bicycle" item-left></ion-icon>
         <span left>Distance : </span>
-        <span right>  </span>
+        <span right> {{outData.pDistance}}  </span>
       </ion-item>
       <ion-item>
         <ion-icon name="clock" item-left></ion-icon>
         <span left>Duration : </span>
-        <span right>  </span>
+        <span right> {{outData.pDuration}}  </span>
       </ion-item>
     </ion-list>
+    <button [disabled]="btn.complete_disable" (click)="comfirmRide()"  ion-button full [color]="btn.complete_color">{{btn.complete_name}}</button>
   </ion-card>
   <ion-card>
   <ion-card-header>
     Primary : {{outData.pUsername}}
   </ion-card-header>
-  <button (click)="allocateDriver(1)" ion-button full color="danger">Accept Payment</button>
+  <button [disabled]="btn.disable_1" (click)="allocateDriver(1)" ion-button full [color]="btn.color_1">{{btn.name_1}}</button>
   <ion-list>
     <ion-item>
       <ion-icon name="bicycle" item-left></ion-icon>
@@ -41,7 +42,7 @@
     <ion-item>
       <ion-icon name="cash" item-left></ion-icon>
       <span left>Cash : </span>
-      <span right> {{outData.pAmount}} /= </span>
+      <span right> {{outData.pAmount_to_pay}} /= </span>
     </ion-item>
     <ion-item>
       <ion-icon name="alarm" item-left></ion-icon>
@@ -57,17 +58,17 @@
   <ion-card-header>
     Secondary : 
   </ion-card-header>
-  <button (click)="allocateDriver(2)" ion-button full color="danger">Accept Payment</button>
+  <button [disabled]="btn.disable_2" (click)="allocateDriver(2)" ion-button full [color]="btn.color_2">{{btn.name_2}}</button>
  <ion-list>
     <ion-item>
       <ion-icon name="bicycle" item-left></ion-icon>
       <span left>Distance: </span>
-      <span right>   </span>
+      <span right> {{outData.sDistance}}   </span>
     </ion-item>
     <ion-item>
       <ion-icon name="cash" item-left></ion-icon>
       <span left>Cash : </span>
-      <span right>  /= </span>
+      <span right> {{outData.sAmount_to_pay}} /= </span>
     </ion-item>
     <ion-item>
       <ion-icon name="alarm" item-left></ion-icon>
@@ -75,9 +76,9 @@
         Time :
       </span>
       <span right>
-       
+        Time : {{outData.sDuration}}
       </span>
     </ion-item>
-  </ion-list>
+  </ion-list>  
 </ion-card>
 </ion-content>
