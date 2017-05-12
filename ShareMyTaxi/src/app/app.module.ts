@@ -4,10 +4,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
-
 /*
  * All the important services are imports in here
- *
  * */
 import { AngularFireModule } from 'angularfire2';
 import { HttpModule } from "@angular/http";
@@ -26,13 +24,6 @@ import { LocalVariables } from '../providers/local-variables';
 import { MessageHander } from '../providers/message-hander';
 import { PaymentGenerator } from '../providers/payment-generator';
 import { UserHandler } from '../providers/user-handler';
-
-
-
-
-
-
-
 //Active panels for the both of passenger and driver are imported bellow!
 import { ActiveShareRide } from '../pages/active-share-ride/active-share-ride';
 import { ActivePickRide } from '../pages/active-pick-ride/active-pick-ride';
@@ -46,6 +37,8 @@ import { HomePage } from '../pages/home/home';
 import { ProfileHome } from '../pages/profile-home/profile-home';
 import { ShareRatio } from '../pages/share-ratio/share-ratio';
 import { ShareHome } from '../pages/share-home/share-home';
+import { ShareRideJoin } from '../pages/share-ride-join/share-ride-join';
+import { JoinMapView } from '../pages/join-map-view/join-map-view';
 import { DriverMapView } from '../pages/driver-map-view/driver-map-view';
 import { DriverShareTabs } from '../pages/driver-share-tabs/driver-share-tabs';
 import { DriverShareRide } from '../pages/driver-share-ride/driver-share-ride';
@@ -74,6 +67,8 @@ import { TestView } from '../pages/test-view/test-view';
     Tabs,
     ShareHome,
     ShareRatio,
+    ShareRideJoin,
+    JoinMapView,
     DriverMapView,
     DriverShareTabs,
     DriverShareRide,
@@ -107,7 +102,9 @@ import { TestView } from '../pages/test-view/test-view';
     Register,
     Tabs,
     ShareHome,
+    ShareRideJoin,
     ShareRatio,
+    JoinMapView,
     DriverMapView,
     DriverShareTabs,
     DriverShareRide,

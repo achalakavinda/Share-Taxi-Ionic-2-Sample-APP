@@ -14,6 +14,7 @@ import { AuthService } from '../../providers/auth-service';
 
 declare var google;
 
+
 @IonicPage()
 @Component({
   selector: 'page-driver-map-view',
