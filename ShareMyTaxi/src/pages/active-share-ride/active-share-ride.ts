@@ -2,6 +2,8 @@ import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Main } from  '../main/main';
 import { FirebaseHandler } from '../../providers/firebase-handler'; 
+import { MessageHander } from '../../providers/message-hander';
+import { AuthService } from '../../providers/auth-service';
 
 
 declare var google;
@@ -46,12 +48,13 @@ export class ActiveShareRide {
       dImgUrl:''
     };
   driverPostions=[];
-  driverMarker:any;
+  driverMarker:any;  
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private fireHandler:FirebaseHandler
+    private fireHandler:FirebaseHandler,
+    private msgHandler:MessageHander
     ) {
 
     this.wayPoint.from = this.navParams.get('from');
@@ -113,16 +116,21 @@ export class ActiveShareRide {
       this.outData.pTo =  snap.child('/primary/to').val();
       this.outData.pAmount_to_pay = snap.child('/primary/amount_to_pay').val();
 
-      this.outData.sImg =  snap.child('/secondary/imgUrl').val();
-      this.outData.sUsername =  snap.child('/secondary/username').val();
-      this.outData.sFrom =  snap.child('/secondary/from').val();
-      this.outData.sTo =  snap.child('/secondary/to').val();
-      this.outData.sAmount_to_pay = snap.child('//amount_to_pay').val();
+      this.outData.sImg = snap.child('/secondary/imgUrl').val();
+      this.outData.sUsername = snap.child('/secondary/username').val();
+      this.outData.sFrom = snap.child('/secondary/from').val();
+      this.outData.sTo = snap.child('/secondary/to').val();
+      this.outData.sAmount_to_pay = snap.child('/amount_to_pay').val();
+
+      this.outData.dImgUrl = snap.child('driver_img_url').val();
+      this.outData.dUsername = snap.child('driver_username').val();
 
        
        console.log(snap.val());
       });
   }
+
+
 
   addDriverPostion(){
     var myLatLng ={lat:6.9271, lng: 79.8612}
@@ -137,6 +145,7 @@ export class ActiveShareRide {
   //go back
   gooBack(){
       this.navCtrl.setRoot(Main);
+      this.fireHandler.getFirebase().database().ref('/ride/share/'+this.push_id+'/status').set('done_driver');
   }
 
 

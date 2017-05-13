@@ -4,6 +4,7 @@ import { FirebaseHandler } from '../../providers/firebase-handler';
 import { ActiveShareRide } from '../active-share-ride/active-share-ride';
 import { PaymentGenerator } from '../../providers/payment-generator';
 import { MessageHander } from '../../providers/message-hander';
+import { AuthService } from '../../providers/auth-service';
 
 
 declare var google;
@@ -30,13 +31,15 @@ export class JoinMapView {
   marker:any;
   latLng = new google.maps.LatLng(6.9271,79.8612);
   outData={id:'',PUsername:'',imgURL:'',to:'',from:'',distance:'',duration:'',amount:'',toPay:''};
-  
+  userInfo={imgURL:'',nic:'',tel:'',username:''}
+
   constructor(
     public navCtrl: NavController,
      public navParams: NavParams,
      private fireHandler:FirebaseHandler,
      private PaymentGenerator:PaymentGenerator,
-     private msgHandler:MessageHander) {
+     private msgHandler:MessageHander,
+    private Auth:AuthService) {
     this.ID = navParams.get('id');
     console.log('Get query id : ',this.ID);
   }
@@ -111,12 +114,6 @@ export class JoinMapView {
         }
     }
 
-    
-  joinToRide(elmVal){
-    console.log(elmVal);
-    this.navCtrl.setRoot(ActiveShareRide,{id:elmVal.id,from:elmVal.from,to:elmVal.to})
-  }
-
    //data filler
    datafiller(){
     this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID)
@@ -136,6 +133,42 @@ export class JoinMapView {
         this.DisplayRoute();
         console.log(snap.val());
       });
+  }
+
+    getUserInfo(){
+    let uid=this.Auth.getUid().uid;
+    this.Auth.getUserFromUsers(uid).then((snap)=>{
+        snap.forEach(child=>{
+          console.log(child.val());
+          this.userInfo.username=child.val().username;
+          this.userInfo.imgURL=child.val().img;
+          // this.userInfo.nic=child.val().nic;
+          // this.userInfo.tel=child.val().tel;
+          console.log('user details',this.userInfo);
+        });
+        this.msgHandler.dissmisLoading();
+    }).catch(err=>{
+      console.log('error while geting user info',err);
+      this.msgHandler.showError(err.message);
+    });
+  }
+
+  joinToRide(elmVal){
+    console.log(elmVal);
+
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/joinable').set('false');   
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/primary/amount_to_pay').set(this.outData.toPay);
+
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/secondary/amount').set(this.outData.amount);
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/secondary/amount_to_pay').set(this.outData.toPay); 
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/secondary/distance').set(this.outData.distance); 
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/secondary/duration').set(this.outData.duration);
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/secondary/from').set(this.outData.from);
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/secondary/to').set(this.outData.to);   
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/secondary/imgUrl').set(this.userInfo.imgURL);
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID+'/secondary/username').set(this.userInfo.username);
+
+    this.navCtrl.setRoot(ActiveShareRide,{id:elmVal.id,from:elmVal.from,to:elmVal.to});
   }
 
 }
