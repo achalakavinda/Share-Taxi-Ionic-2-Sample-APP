@@ -162,9 +162,7 @@ export class PickHome {
   }
 
   getUID(){
-    let uid=this.Auth.getUserInfo();
-    console.log(uid);
-    // this.UID=uid.uid;
+   this.UID='';
   }
 
 }

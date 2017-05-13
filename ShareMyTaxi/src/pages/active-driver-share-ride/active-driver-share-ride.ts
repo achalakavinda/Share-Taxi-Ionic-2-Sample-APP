@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FirebaseHandler } from '../../providers/firebase-handler';
 import { MessageHander } from '../../providers/message-hander';
 import { AuthService } from '../../providers/auth-service';
+import { Main } from '../main/main';
 
 /**
  * Generated class for the ActiveDriverShareRide page.
@@ -199,8 +200,14 @@ export class ActiveDriverShareRide {
         }
         this.PassengerShareRideHistoryPusher(x);
         console.log("Yes there is secondary passenger");
-
       }
+
+      this.msgHandler.showLoading();
+
+      setTimeout(()=>{
+        this.msgHandler.dissmisLoading();
+        this.navCtrl.setRoot(Main);
+      },1500);
   }
 
 //driver history pusher
@@ -234,15 +241,12 @@ export class ActiveDriverShareRide {
       }
     }
     let newPostKey = this.fireHandler.getFirebase().database().ref().child('history/driver/ride/share').push().key;
-    this.fireHandler.getFirebase().database().ref('history/driver/ride/share/'+ newPostKey).set(Passenger).then(response=>{
-
-    });
+    return this.fireHandler.getFirebase().database().ref('history/driver/ride/share/'+ newPostKey).set(Passenger);
   }
 
   PassengerShareRideHistoryPusher(Passenger){
     let newPostKey = this.fireHandler.getFirebase().database().ref().child('history/passenger/ride/share').push().key;
-    this.fireHandler.getFirebase().database().ref('history/passenger/ride/share/'+ newPostKey).set(Passenger).then(response=>{
-    });
+    return this.fireHandler.getFirebase().database().ref('history/passenger/ride/share/'+ newPostKey).set(Passenger);
   }
 
 }
