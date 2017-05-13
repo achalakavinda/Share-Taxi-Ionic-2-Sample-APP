@@ -1,6 +1,7 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { Main } from  '../main/main';
+import { FirebaseHandler } from '../../providers/firebase-handler'; 
 
 
 declare var google;
@@ -25,20 +26,44 @@ export class ActiveShareRide {
   buttonDisabled:false;
   UID:any;
   push_id='0';
-  passingValues = {username:'----',distance:'---- KM',duration:'-- hr -- min',type:'Shared',amount:'----'};
+  outData = {
+      pUsername:'',      
+      pFrom:'',
+      pTo:'',
+      pDistnace:'',
+      pAmount_to_pay:'',
+      pImg:'',
+
+      sUsername:'',
+      sFrom:'',
+      sTo:'',
+      sDistnace:'',
+      sAmount_to_pay:'',
+      sImg:'',
+
+      dUsername:'',
+      dTel:'',
+      dImgUrl:''
+    };
   driverPostions=[];
   driverMarker:any;
+
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    private fireHandler:FirebaseHandler
+    ) {
+
     this.wayPoint.from = this.navParams.get('from');
     this.wayPoint.to = this.navParams.get('to');
     this.push_id = this.navParams.get('id');
+    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ActiveShareRide');
     this.initMap();
+    this.datafiller();
   }
 
   initMap(){
@@ -47,7 +72,6 @@ export class ActiveShareRide {
     this.directionsDisplay = new google.maps.DirectionsRenderer({
       draggable: false
     });
-
     let mapOptions = {
       center: latLng,
       zoom: 13,
@@ -79,6 +103,27 @@ export class ActiveShareRide {
       });
   }
 
+   datafiller(){
+    this.fireHandler.getFirebase().database().ref('/ride/share/'+this.push_id)
+    .on('value',(snap)=>{
+
+      this.outData.pImg =  snap.child('/primary/imgUrl').val();
+      this.outData.pUsername =  snap.child('/primary/username').val();
+      this.outData.pFrom =  snap.child('/primary/from').val();
+      this.outData.pTo =  snap.child('/primary/to').val();
+      this.outData.pAmount_to_pay = snap.child('/primary/amount_to_pay').val();
+
+      this.outData.sImg =  snap.child('/secondary/imgUrl').val();
+      this.outData.sUsername =  snap.child('/secondary/username').val();
+      this.outData.sFrom =  snap.child('/secondary/from').val();
+      this.outData.sTo =  snap.child('/secondary/to').val();
+      this.outData.sAmount_to_pay = snap.child('//amount_to_pay').val();
+
+       
+       console.log(snap.val());
+      });
+  }
+
   addDriverPostion(){
     var myLatLng ={lat:6.9271, lng: 79.8612}
     this.driverMarker = new google.maps.Marker({
@@ -86,9 +131,6 @@ export class ActiveShareRide {
           map: this.map,
           icon:'assets/icon/taxiIcon.png'
         });
-        // setTimeout(()=>{
-        //   marker.setMap(null);
-        // },5000);
   }
 
 

@@ -1,6 +1,9 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FirebaseHandler } from '../../providers/firebase-handler';
+import { ActiveShareRide } from '../active-share-ride/active-share-ride';
+import { PaymentGenerator } from '../../providers/payment-generator';
+import { MessageHander } from '../../providers/message-hander';
 
 
 declare var google;
@@ -26,12 +29,14 @@ export class JoinMapView {
   map:any;
   marker:any;
   latLng = new google.maps.LatLng(6.9271,79.8612);
-  outData={id:'',Pusername:'',to:'',from:'',distance:'',duration:'',amount:'',toPay:''};
+  outData={id:'',PUsername:'',imgURL:'',to:'',from:'',distance:'',duration:'',amount:'',toPay:''};
   
   constructor(
     public navCtrl: NavController,
      public navParams: NavParams,
-     private fireHandler:FirebaseHandler) {
+     private fireHandler:FirebaseHandler,
+     private PaymentGenerator:PaymentGenerator,
+     private msgHandler:MessageHander) {
     this.ID = navParams.get('id');
     console.log('Get query id : ',this.ID);
   }
@@ -56,7 +61,7 @@ export class JoinMapView {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    this.directionsDisplay.setMap(this.map);    
+    this.directionsDisplay.setMap(this.map);        
     
   }
 
@@ -72,8 +77,30 @@ export class JoinMapView {
         
       }
 
-  getPickerGeoLocation(){
+    DisplayRoute(){
+    console.log("calcDisplay");
+    this.RoutePath(this.directionsService,this.directionsDisplay).then((Success)=>{
+      console.log('success');
+    }).catch(()=>{});
+  }
 
+  RoutePath(directionService,directionDisplay){
+     return new Promise((resolve, reject) => {
+      directionService.route({
+        origin:this.outData.from,
+        destination:this.outData.to,
+        travelMode: 'DRIVING'
+      },function(response,status){
+        if(status == 'OK'){
+          directionDisplay.setDirections(response);
+          resolve(response);
+          console.log("google response ok");
+        }else{
+          console.log(status);
+          reject(status);
+        }
+      });
+    });
   }
 
   toggleBounce() {
@@ -85,16 +112,29 @@ export class JoinMapView {
     }
 
     
-  joinToRide(){
-
+  joinToRide(elmVal){
+    console.log(elmVal);
+    this.navCtrl.setRoot(ActiveShareRide,{id:elmVal.id,from:elmVal.from,to:elmVal.to})
   }
 
    //data filler
    datafiller(){
     this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID)
     .on('value',(snap)=>{
-        //  this.outData.id        = snap.child('id').val();        
-         console.log(snap.val());
+        this.outData.id  = snap.child('id').val();
+        this.outData.PUsername  = snap.child('/primary/username').val();   
+        this.outData.distance  = snap.child('/primary/distance').val();    
+        this.outData.duration  = snap.child('/primary/duration').val();
+         this.outData.amount  = snap.child('/primary/amount').val();  
+        this.outData. from  = snap.child('/primary/from').val(); 
+        this.outData.to  = snap.child('/primary/to').val(); 
+        this.outData.imgURL  = snap.child('/primary/imgUrl').val(); 
+
+        let amounts =this.PaymentGenerator.getSharedPayment(snap.child('/primary/distance_value').val(),snap.child('/primary/distance_value').val());
+
+        this.outData.toPay = amounts.SA.toString();
+        this.DisplayRoute();
+        console.log(snap.val());
       });
   }
 

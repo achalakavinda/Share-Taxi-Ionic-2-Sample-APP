@@ -19,42 +19,41 @@
     <ion-list>
       <ion-item>
         <ion-avatar item-left>
-          <img src="img/avatar-cher.png">
+          <img src="{{outData.imgURL}}">
         </ion-avatar>
         <h2>Achala Kavinda</h2>
       </ion-item>
       <ion-item>
         <ion-icon item-left large name="bicycle"></ion-icon>
         <span left>From : </span>
-        <span right>  </span>
+        <span right> {{outData.from}} </span>
       </ion-item>
       <ion-item>
         <ion-icon item-left large name="bicycle"></ion-icon>
         <span left>To : </span>
-        <span right>  </span>
+        <span right> {{ outData.to }} </span>
       </ion-item>
       <ion-item>
           <ion-icon item-left large name="analytics"></ion-icon>
         <span left>Distance : </span>
-        <span right>  </span>
+        <span right> {{ outData.distance }} </span>
       </ion-item>
       <ion-item>
         <ion-icon item-left large name="alarm"></ion-icon>
         <span left>Duration : </span>
-        <span right>  </span>
+        <span right> {{ outData.duration }} </span>
       </ion-item>
       <ion-item>
         <ion-icon item-left large name="logo-usd"></ion-icon>
         <span left>Amount : </span>
-        <span right>  </span>
+        <span right> {{ outData.amount }} </span>
       </ion-item>
       <ion-item>
         <ion-icon item-left large name="card"></ion-icon>
         <span left>To Pay : </span>
-        <span right>  </span>
+        <span right> {{ outData.toPay }} </span>
       </ion-item>
-
     </ion-list>
-    <button (click)="joinToRide()" ion-button full color="danger">Comfirm Join </button>
+    <button (click)="joinToRide(outData)" ion-button full color="danger">Comfirm Join </button>
 </ion-card>
 </ion-content>

@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 export class PaymentGenerator {
 
   RATE_FOR_1_KM=0.05;
-  RATE_FOR_REST_KM=0.015;
+  RATE_FOR_REST_KM=0.04;
 
   constructor() {
     console.log('Hello PaymentGenerator Provider');
@@ -19,20 +19,28 @@ export class PaymentGenerator {
 
   public getPayment(distance_in_meters){
     let x=0;
-    //implement algo here
+    if(distance_in_meters<=1000){
+      x=this.RATE_FOR_1_KM*1000;
+    }else {
+      x=this.RATE_FOR_1_KM*1000;
+    }
+    if(distance_in_meters>1000){
+      distance_in_meters=distance_in_meters-1000;
+      x = x + distance_in_meters*this.RATE_FOR_REST_KM;
+    }
 
-    x=distance_in_meters*this.RATE_FOR_1_KM;
-    return x;
+    return Math.round(x*100)/100;
   }
 
-  public getSharedPaymentPrimary(tot_distance,primary_distance){
-    //implemet here
-    return 0;
-  }
-
-  public getSharedPaymentSecondary(tot_distance,primary_distance){
-    //implement here
-    return 0;
+  public getSharedPayment(primary_distance,secondary_distance){
+    let elmArr={PA:0,SA:0};
+    let amount_1 = this.getPayment(primary_distance);
+    let amount_2 = this.getPayment(secondary_distance);
+    let value = amount_1/2;
+    elmArr.PA=Math.round(value*100)/100;;
+    elmArr.SA=Math.round(value*100)/100;;
+    
+    return elmArr;
   }
 
 }
