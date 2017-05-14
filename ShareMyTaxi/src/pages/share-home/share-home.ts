@@ -126,14 +126,15 @@ export class ShareHome {
       this.UID=user.uid;
     }
     console.log('user id is',this.UID);
-     this.fireHandler.getFirebase().database().ref('users').orderByChild('UID')
+     this.fireHandler.getFirebase().database().ref('users').limitToFirst(1).orderByChild('UID')
      .equalTo(this.UID).once('value').then((snap)=>{
+        console.log('fetch user info',snap);
        snap.forEach(childData => {         
          this.UserInfo.username=childData.val().username;
          this.UserInfo.imgUrl=childData.val().img;
         //  this.UserInfo.nic=childData.val().nic;
         //  this.UserInfo.tel=childData.val().tel;
-        console.log('fetch user info',this.UserInfo);
+        console.log('fetch user info from array',this.UserInfo);
        });
      }).catch((e)=>{
        console.log('error geting user info',e);
@@ -154,6 +155,8 @@ export class ShareHome {
             primary_UID:this.UID,
             secondary_UID:'',
             driver_UID:'',
+            driver_username:'',
+            driver_tel:'',
             driver_allocated:false,
             secondary_allocated:false,   
             date:date,         
@@ -201,15 +204,6 @@ export class ShareHome {
         this.showError("Please Try Again request cannot be done !");
       });
     });
-
-    // promise.then((success)=>{
-    //   console.log(success);
-    // }).catch((e)=>{
-    //   console.log(e);
-    // });
-
-    // console.log("Join button click");
-
   }
 
 private showError(text) {

@@ -22,11 +22,11 @@ export class ShareRideJoin {
     public navCtrl: NavController, 
     public navParams: NavParams,
     private fireHandler:FirebaseHandler) {
-      this.getAllActiveShareRideForDrivers();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ShareRideJoin');
+    this.getAllActiveShareRideForDrivers();
   }
 
     getAllActiveShareRideForDrivers(){      

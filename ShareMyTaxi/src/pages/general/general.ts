@@ -54,6 +54,7 @@ export class General {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad General');
+    this.Auth.getUid();
   }
 
   loadMap(){

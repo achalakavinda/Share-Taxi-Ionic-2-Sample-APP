@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Login } from '../login/login';
 
 import { FirebaseGetter } from '../../providers/firebase-getter';
 
@@ -22,6 +23,10 @@ export class TestView {
   ionViewDidLoad() {
     console.log('ionViewDidLoad TestView');
     console.log(this.fireGetter.getAllActiveShareRideForDrivers());
+  }
+
+  loger(){
+    this.navCtrl.setRoot(Login);
   }
 
 }

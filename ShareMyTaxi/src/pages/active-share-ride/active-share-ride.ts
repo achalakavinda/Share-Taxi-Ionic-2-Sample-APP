@@ -28,6 +28,7 @@ export class ActiveShareRide {
   buttonDisabled:false;
   UID:any;
   push_id='0';
+  user_id='';
   outData = {
       pUsername:'',      
       pFrom:'',
@@ -54,7 +55,9 @@ export class ActiveShareRide {
     public navCtrl: NavController,
     public navParams: NavParams,
     private fireHandler:FirebaseHandler,
-    private msgHandler:MessageHander
+    private msgHandler:MessageHander,
+    private alertCtrl:AlertController,
+    private Auth:AuthService
     ) {
 
     this.wayPoint.from = this.navParams.get('from');
@@ -109,6 +112,7 @@ export class ActiveShareRide {
    datafiller(){
     this.fireHandler.getFirebase().database().ref('/ride/share/'+this.push_id)
     .on('value',(snap)=>{
+      this.getUserID();
 
       this.outData.pImg =  snap.child('/primary/imgUrl').val();
       this.outData.pUsername =  snap.child('/primary/username').val();
@@ -120,15 +124,84 @@ export class ActiveShareRide {
       this.outData.sUsername = snap.child('/secondary/username').val();
       this.outData.sFrom = snap.child('/secondary/from').val();
       this.outData.sTo = snap.child('/secondary/to').val();
-      this.outData.sAmount_to_pay = snap.child('/amount_to_pay').val();
+      this.outData.sAmount_to_pay = snap.child('/secondary/amount_to_pay').val();
 
       this.outData.dImgUrl = snap.child('driver_img_url').val();
       this.outData.dUsername = snap.child('driver_username').val();
+      this.outData.dTel = snap.child('driver_tel').val();
+
+      if(this.outData.dUsername===''){
+        console.log('Looking on driver allocation');
+        setTimeout(()=>{
+          if(this.outData.dUsername===''){
+            console.log('Driver is not allocated for 5 min/ data deleting auto');
+             this. presentAlert('This Ride this no longer available, No Driver Availble');
+             this.fireHandler.getFirebase().database().ref('/ride/share/'+this.push_id).remove();
+          }else{
+            console.log('driver allocated');
+          }
+        },100000);
+      }
+      if(snap.child('/primary_UID').val()===this.user_id){
+        console.log("Am the primary user");
+        if(snap.child('primary/payment_verified').val()==='true'){
+          this.customeAlert('Succes',"Your payment has successfuly verifies");
+        }else{
+          console.log('Payment Not done yet');
+        }
+      }
+
+      if(snap.child('/secondary_UID').val()===this.user_id){
+        console.log("Am the Secondary user");
+         if(snap.child('secondary/payment_verified').val()==='true'){
+          this.customeAlert('Succes',"Your payment has successfuly verifies");
+        }else{
+          console.log('Payment Not done yet');
+        }
+      }
 
        
        console.log(snap.val());
+       if(snap.val()===null){
+        this. presentAlert('This Ride this no longer available');
+       }
       });
   }
+
+
+
+      getUserID(){
+        let users=this.Auth.getUid();
+        if(users){
+          this.user_id = users.uid;
+        }else{
+          this.user_id='';
+        }
+        console.log('Here is user id',this.user_id)
+        
+      }
+
+
+
+  presentAlert(title) {
+  let alert = this.alertCtrl.create({
+    title: 'Ride Cancel',
+    subTitle: title,
+    buttons: ['Dismiss']
+  });
+  alert.present();
+  this.navCtrl.setRoot(Main);
+}
+ customeAlert(title,subTitle) {
+  let alert = this.alertCtrl.create({
+    title:title,
+    subTitle: subTitle,
+    buttons: ['Dismiss']
+  });
+  alert.present();
+  this.navCtrl.setRoot(Main);
+}
+
 
 
 

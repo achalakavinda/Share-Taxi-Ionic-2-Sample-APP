@@ -15,6 +15,16 @@
 
 <ion-content>
   <div #maps id="map"></div>
+   <ion-card> 
+    <ion-list>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="{{outData.dImgUrl}}">
+        </ion-avatar>
+        <h2> Driver : {{outData.dUsername}} </h2>
+      </ion-item> 
+    </ion-list>
+  </ion-card>
   <ion-card>    
     <ion-list>
       <ion-item>
@@ -59,22 +69,6 @@
       </ion-item>
     </ion-list>
   </ion-card>
-
-   <ion-card> 
-    <ion-list>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="{{outData.dImgUrl}}">
-        </ion-avatar>
-        <h2> Driver : {{outData.dUsername}} </h2>
-      </ion-item> 
-      <ion-item>
-        <span left>Tel  : </span>
-        <span right> {{outData.dTel}}</span>
-      </ion-item>
-    </ion-list>
-  </ion-card>
-
   <ion-card>
     <ion-list>
       <ion-item>

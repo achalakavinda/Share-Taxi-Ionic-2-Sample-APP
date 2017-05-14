@@ -25,6 +25,7 @@ import { MessageHander } from '../providers/message-hander';
 import { PaymentGenerator } from '../providers/payment-generator';
 import { UserHandler } from '../providers/user-handler';
 //Active panels for the both of passenger and driver are imported bellow!
+import { Loading } from '../pages/loading/loading'
 import { ActiveShareRide } from '../pages/active-share-ride/active-share-ride';
 import { ActivePickRide } from '../pages/active-pick-ride/active-pick-ride';
 import { ActiveDriverShareRide } from '../pages/active-driver-share-ride/active-driver-share-ride';
@@ -56,6 +57,7 @@ import { TestView } from '../pages/test-view/test-view';
 @NgModule({
   declarations: [
     MyApp,
+    Loading,
     Main,
     General,
     ActiveShareRide,
@@ -92,6 +94,7 @@ import { TestView } from '../pages/test-view/test-view';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    Loading,
     Main,
     General,
     ActiveShareRide,

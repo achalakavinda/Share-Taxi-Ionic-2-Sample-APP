@@ -32,11 +32,23 @@ export class Login {
   ) {
   }
 
+    ionViewDidLoad() {
+    console.log('ionViewDidLoad Login');
+    this.loginValidator();    
+  }
+
 
 
   //client registration new page
  createAccount(){
     this.nav.push(Register);
+}
+
+loginValidator(){
+  let user=this.auth.getUid();
+  if(user){
+    this.nav.setRoot(Main);
+  }
 }
 
    login(){

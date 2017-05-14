@@ -116,6 +116,7 @@ export class JoinMapView {
 
    //data filler
    datafiller(){
+     console.log('This is share ride ID : ',this.ID);
     this.fireHandler.getFirebase().database().ref('/ride/share/'+this.ID)
     .on('value',(snap)=>{
         this.outData.id  = snap.child('id').val();
@@ -132,6 +133,7 @@ export class JoinMapView {
         this.outData.toPay = amounts.SA.toString();
         this.DisplayRoute();
         console.log(snap.val());
+        this.getUserInfo();
       });
   }
 
@@ -139,7 +141,6 @@ export class JoinMapView {
     let uid=this.Auth.getUid().uid;
     this.Auth.getUserFromUsers(uid).then((snap)=>{
         snap.forEach(child=>{
-          console.log(child.val());
           this.userInfo.username=child.val().username;
           this.userInfo.imgURL=child.val().img;
           // this.userInfo.nic=child.val().nic;

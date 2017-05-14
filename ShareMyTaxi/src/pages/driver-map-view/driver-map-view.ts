@@ -206,12 +206,13 @@ export class DriverMapView {
   }
 
   allocateDriver(){
-    // console.log('Value from share_ride Db',this.outData);
-    // console.log('driver confirmed');
+    console.log('Value from share_ride Db',this.outData);
+    console.log('driver confirmed');
     let field=this.fireHandler.getFirebase().database().ref('ride/share/'+this.passedData.id);
        field.child('driver_allocated').set('true');
        field.child('status').set('active_driver');
        field.child('driver_UID').set(this.uid);
+       field.child('driver_username').set(this.driverInfo.username);
        field.child('driver_img_url').set(this.driverInfo.imgURL);
        field.child('driver_tel').set(this.driverInfo.tel);
        field.child('driver_nic').set(this.driverInfo.nic);       
