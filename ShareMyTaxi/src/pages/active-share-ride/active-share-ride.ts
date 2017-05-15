@@ -43,6 +43,9 @@ export class ActiveShareRide {
       sDistnace:'',
       sAmount_to_pay:'',
       sImg:'',
+      
+      joinable:true,
+
 
       dUsername:'',
       dTel:'',
@@ -126,6 +129,8 @@ export class ActiveShareRide {
       this.outData.sTo = snap.child('/secondary/to').val();
       this.outData.sAmount_to_pay = snap.child('/secondary/amount_to_pay').val();
 
+      this.outData.joinable = snap.child('/joinable').val();
+
       this.outData.dImgUrl = snap.child('driver_img_url').val();
       this.outData.dUsername = snap.child('driver_username').val();
       this.outData.dTel = snap.child('driver_tel').val();
@@ -140,8 +145,28 @@ export class ActiveShareRide {
           }else{
             console.log('driver allocated');
           }
-        },100000);
+        },12000);
       }
+
+      if(snap.child('/joinable').val()=='true'){
+        console.log('Looking for patner');        
+          if(snap.child('/joinable').val()=='true'){
+            setTimeout(()=>{
+              if(snap.child('/joinable').val()=='true'){
+               let alert = this.alertCtrl.create({
+                  title: 'No partner join yet',
+                  subTitle: "No partner join yet !",
+                  buttons: ['Dismiss']
+                });
+                alert.present();
+                this.fireHandler.getFirebase().database().ref('/ride/share/'+this.push_id+'/joinable').set(false);
+              }
+            },5000);
+          }else{
+            console.log('partner has join');
+          }
+      }
+
       if(snap.child('/primary_UID').val()===this.user_id){
         console.log("Am the primary user");
         if(snap.child('primary/payment_verified').val()==='true'){
@@ -167,6 +192,9 @@ export class ActiveShareRide {
        }
       });
   }
+
+
+  
 
 
 

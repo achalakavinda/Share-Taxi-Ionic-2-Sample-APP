@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage} from 'ionic-angular';
-//import pages Home,Payments,Profile
-import { HomePage } from '../home/home';
-import { ProfileHome } from '../profile-home/profile-home';
 
+import { GeneralDriver } from '../general-driver/general-driver';
+import { DriverUpcomingWindow } from '../driver-upcoming-window/driver-upcoming-window';
+import { DriverPaymentWindow } from '../driver-payment-window/driver-payment-window';
 
 /**
  * Generated class for the Tabs page.
@@ -17,10 +17,13 @@ import { ProfileHome } from '../profile-home/profile-home';
   templateUrl: 'tabs.html',
 })
 export class Tabs {
+  homePage = GeneralDriver;
+  paymentPage = DriverPaymentWindow;
+  upComingPage =  DriverUpcomingWindow;
 
-  constructor(){}
-  homePage = HomePage;
-  paymentPage = HomePage;
-  proflePage = ProfileHome;
+  constructor(){
+
+  }
+  
 
 }

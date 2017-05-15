@@ -19,13 +19,12 @@ export class Loading {
     platform.ready().then(() => {
       console.log("Platform loaded");
       setTimeout(()=>{
-        this.navCtrl.push(Login);
-      },1000);
+        this.navCtrl.setRoot(Login);
+      },2000);
     });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad Loading');
   }
 
 }

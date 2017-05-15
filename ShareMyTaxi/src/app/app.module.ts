@@ -31,6 +31,7 @@ import { ActivePickRide } from '../pages/active-pick-ride/active-pick-ride';
 import { ActiveDriverShareRide } from '../pages/active-driver-share-ride/active-driver-share-ride';
 import { Main } from '../pages/main/main';
 import { General } from '../pages/general/general';
+import { GeneralDriver } from '../pages/general-driver/general-driver';
 import { Login } from '../pages/login/login';
 import { Register } from '../pages/register/register';
 import { Tabs } from '../pages/tabs/tabs';
@@ -40,6 +41,8 @@ import { ShareRatio } from '../pages/share-ratio/share-ratio';
 import { ShareHome } from '../pages/share-home/share-home';
 import { ShareRideJoin } from '../pages/share-ride-join/share-ride-join';
 import { JoinMapView } from '../pages/join-map-view/join-map-view';
+import { DriverUpcomingWindow } from '../pages/driver-upcoming-window/driver-upcoming-window';
+import { DriverPaymentWindow } from '../pages/driver-payment-window/driver-payment-window';
 import { DriverMapView } from '../pages/driver-map-view/driver-map-view';
 import { DriverShareTabs } from '../pages/driver-share-tabs/driver-share-tabs';
 import { DriverShareRide } from '../pages/driver-share-ride/driver-share-ride';
@@ -60,6 +63,7 @@ import { TestView } from '../pages/test-view/test-view';
     Loading,
     Main,
     General,
+    GeneralDriver,
     ActiveShareRide,
     ActivePickRide,
     ActiveDriverShareRide,
@@ -71,6 +75,8 @@ import { TestView } from '../pages/test-view/test-view';
     ShareRatio,
     ShareRideJoin,
     JoinMapView,
+    DriverUpcomingWindow,
+    DriverPaymentWindow,
     DriverMapView,
     DriverShareTabs,
     DriverShareRide,
@@ -97,6 +103,7 @@ import { TestView } from '../pages/test-view/test-view';
     Loading,
     Main,
     General,
+    GeneralDriver,
     ActiveShareRide,
     ActivePickRide,
     ActiveDriverShareRide,
@@ -108,6 +115,8 @@ import { TestView } from '../pages/test-view/test-view';
     ShareRideJoin,
     ShareRatio,
     JoinMapView,
+    DriverPaymentWindow,
+    DriverUpcomingWindow,
     DriverMapView,
     DriverShareTabs,
     DriverShareRide,

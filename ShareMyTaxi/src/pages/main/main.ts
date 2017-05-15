@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LocalVariables } from '../../providers/local-variables';
+import { AuthService } from '../../providers/auth-service';
 
 //page import
 import { General } from '../general/general';
+import { Tabs } from '../tabs/tabs';
 import { DriverShareRideUpcoming } from '../driver-share-ride-upcoming/driver-share-ride-upcoming';
 import { DriverPickRide } from '../driver-pick-ride/driver-pick-ride';
 import { ProfileHome } from  '../profile-home/profile-home';
@@ -31,24 +32,39 @@ import { DynamicMap } from '../../providers/dynamic-map'
 export class Main {
   private USER = true;
   private rootPage: any;
+  private uid='';
+  private type=null;
 
   constructor(
     public navCtrl: NavController,
-     public navParams: NavParams, 
-     private localVariables: LocalVariables,
-     private dynamicMap:DynamicMap) {
-
-    this.rootPage = General;
+     public navParams: NavParams,
+     private dynamicMap:DynamicMap,
+     private Auth:AuthService) {
+     this.checkUserType();    
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad Main');
-    this.realtimeGeo();
+   
   }
 
 
-  realtimeGeo(){
-   
+  checkUserType(){
+    let user=this.Auth.getUid();
+    if(user){
+      this.uid=user.uid;
+      this.Auth.getUserFromUsers(user.uid).then((response)=>{
+        response.forEach(element => {
+          console.log("user type",element.val().user_type);
+          this.type=element.val().user_type;
+          if(this.type==='Passenger'){
+            this.rootPage = General;
+          }else{
+            this.rootPage = Tabs;
+          }
+        });
+      });
+    }
   }
 
   openPage(PageName) {
