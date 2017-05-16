@@ -197,8 +197,8 @@ export class ShareHome {
       console.log("Pushing array",x);
       this.firePusher.pushActiveShareRide(x).then((success)=>{
         this.msgHandler.dissmisLoading();
-        console.log('new active share ride key',this.firePusher.post_key);
-        this.navCtrl.setRoot(ActiveShareRide,{id:this.firePusher.post_key,from:this.wayPoint.from,to:this.wayPoint.to});
+        console.log('new active share ride key',this.firePusher.post_key_share);
+        this.navCtrl.setRoot(ActiveShareRide,{id:this.firePusher.post_key_share,from:this.wayPoint.from,to:this.wayPoint.to});
       },(error)=>{
         reject(error);
         this.showError("Please Try Again request cannot be done !");

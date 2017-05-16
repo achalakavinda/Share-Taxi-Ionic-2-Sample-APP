@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams ,AlertController, LoadingController
 import { Geolocation } from '@ionic-native/geolocation'
 
 import { ShareHome } from '../share-home/share-home';
+import { PickHome } from '../pick-home/pick-home';
 
 
 declare var google;
@@ -116,8 +117,8 @@ public  presentActionSheet() {
         {
           text: 'Pick',
           handler: () =>{
-            
-
+            console.log('Agree clicked | Pick Home ');
+            this.navCtrl.push(PickHome,{response:this.response,from:this.waypoint.from,to:this.waypoint.to});
           }
         },
         {
@@ -231,8 +232,9 @@ public  presentActionSheet() {
   this.map = new google.maps.Map(document.getElementById('map'), {
     mapTypeControl: false,
     center: myLatLng,
-    zoom: 18,
-    disableDefaultUI: true
+    zoom:10,
+    disableDefaultUI: true,
+    minZoom: 7
   });
 
   var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';

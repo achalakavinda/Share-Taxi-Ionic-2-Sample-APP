@@ -1,9 +1,12 @@
 import { Component,ViewChild,ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {FireLoader } from '../../providers/fire-loader';
 import { AuthService } from '../../providers/auth-service';
 import { Main } from '../main/main';
 import { ActiveShareRide } from '../active-share-ride/active-share-ride';
+import { PaymentGenerator } from '../../providers/payment-generator';
+import { MessageHander } from '../../providers/message-hander';
+import { FirebaseHandler } from '../../providers/firebase-handler';
+import { ActivePickRide } from '../active-pick-ride/active-pick-ride';
 
 /**
  * Generated class for the PickHome page.
@@ -29,17 +32,37 @@ export class PickHome {
   directionsDisplay: any;
   mapService :any;
   wayPoint={from:'',to:''};
-  distanceDetails:any;
+  distanceDetails={distance:'0000',duration:'0000',distance_value:'0000',duration_value:'0000'};
   buttonDisabled:false;
-  UID:any;
-  ride:'pick';
-  dateTime:'';
-  milege: String;
+  UID='';
+  ride='pick';
+  outData={from:'',to:'',driver:'Not Allocated',distance:'',duration:'',amount:0,date:'',min_date:'2017-01-17',max_date:'2018-01-01'};
+  date_validator:any;
+  time_validator:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,private Auth: AuthService,private fireLoader:FireLoader) {
+  constructor(
+    public navCtrl: NavController,
+     public navParams: NavParams,
+     private Auth: AuthService,
+     private paymentGenerator:PaymentGenerator,
+     private msgHandler:MessageHander,
+     private fireHandler:FirebaseHandler
+     ) {
     this.response =this.navParams.get('response');
     this.wayPoint.from = this.navParams.get('from');
     this.wayPoint.to = this.navParams.get('to');
+        console.log(this.outData.min_date);
+        this.dateSetor();
+  }
+
+  dateSetor(){
+    let currentdate=new Date();
+    this.date_validator = currentdate.getFullYear()+'-'+currentdate.getMonth()+'-'+currentdate.getDate();  
+    this.time_validator = currentdate.getHours() +":"+ currentdate.getMinutes() + ":"+currentdate.getSeconds();
+    this.outData.min_date = currentdate.getFullYear()+'-0'+currentdate.getMonth()+'-'+(currentdate.getDate()+1);
+    this.outData.max_date = currentdate.getFullYear()+'-0'+currentdate.getMonth()+'-'+(currentdate.getDate()+5);
+    console.log('min date',this.outData.min_date);
+    console.log('max date',this.outData.max_date);
   }
 
   ionViewDidLoad() {
@@ -56,7 +79,8 @@ export class PickHome {
     this.map = new google.maps.Map(this.mapElement.nativeElement, {
       center:latLng,
       disableDefaultUI: true,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      minZoom: 7
     });
     this.mapService = new google.maps.DistanceMatrixService;
     this.directionsService = new google.maps.DirectionsService;
@@ -64,6 +88,7 @@ export class PickHome {
       draggable: false
     });
     this.setRoute();
+    this.getDistance();
   }
 
 //set map route with response
@@ -75,58 +100,110 @@ export class PickHome {
 
   addRide(){
     console.log('add ride method called');
-    let promise = new Promise((resolve,reject)=>{
+    if(this.UID===''){
+     this.msgHandler.showError('Sorry cannot add a booking , please try again !');
+   }else{
+    new Promise((resolve,reject)=>{
       let x= {
-        UID:this.UID,
-        distance:this.distanceDetails.distance.text,
-        duration:this.distanceDetails.duration.text,
-        from:this.wayPoint.from,
-        to:this.wayPoint.to,
-        distance_amount:0,
-        tot_amount:0,
-        payment_verified:false,
-        driver_allocated:false,
-        driver_UID:'',
-        time:'12:01"05',
-        status:'active'
+       UID:this.UID,
+       distance:this.distanceDetails.distance,
+       duration:this.distanceDetails.duration,
+       distance_value:this.distanceDetails.distance_value,
+       from:this.wayPoint.from,
+       to:this.wayPoint.to,
+       distance_amount:this.outData.amount,
+       payment_verified:false,
+       driver_allocated:false,
+       driver_UID:'',
+       driver_username:'',
+       driver_tel:'',
+       driver_nic:'',
+       driver_img:'',
+       date:this.date_validator,
+       status:'active'
       }
-      console.log(x);
-      // this.fireLoader.pushPickRide(x).then((succes)=>{
-      //   console.log('add ride sucess');
-      //   this.navCtrl.setRoot(ActiveShareRide);
-      // },(err)=>{
-      //   console.log('add rides unsucessful'+err);
-      // });
+      console.log('add pick ride saving array',x);
+     let newPostKey = this.fireHandler.getFirebase().database().ref().child('ride/pick').push().key;
+     let pusher=this.fireHandler.getFirebase().database().ref('ride/pick/'+ newPostKey).set(x);
+     pusher.then((success)=>{
+        this.msgHandler.dissmisLoading();
+        console.log('new pick  key',newPostKey);
+        let alert =this.msgHandler.alertCtrl.create({
+          title:'Successfull',
+          subTitle: 'You have succesfully pick a ride !',
+          buttons: ['Dismiss']
+        });        
+        alert.present();
+        this.navCtrl.setRoot(ActivePickRide,{id:newPostKey,from:this.wayPoint.from,to:this.wayPoint.to});
+      },(error)=>{
+        reject(error);
+        this.msgHandler.showError("Please Try Again request cannot be done !");
+      });      
     });
+   }
 
   }
 
  addBook(){
-   console.log('Book ride method called');
-   let promise = new Promise((resolve,reject)=>{
+   console.log('Book ride method called',this.outData.date);
+   if(this.UID===''){
+     this.msgHandler.showError('Sorry cannot add a booking , please try again !');
+   }else if (this.outData.date===''){
+     this.msgHandler.showError('Please Select a time and date !');
+   }else{
+     let promise = new Promise((resolve,reject)=>{
      let x= {
        UID:this.UID,
-       distance:this.distanceDetails.distance.text,
-       duration:this.distanceDetails.duration.text,
+       distance:this.distanceDetails.distance,
+       duration:this.distanceDetails.duration,
+       distance_value:this.distanceDetails.distance_value,
        from:this.wayPoint.from,
        to:this.wayPoint.to,
-       distance_amount:0,
-       tot_amount:0,
+       distance_amount:this.outData.amount,
        payment_verified:false,
        driver_allocated:false,
        driver_UID:'',
-       date:'tomorrow',
-       time:'12:01"05',
+       driver_username:'',
+       driver_tel:'',
+       driver_nic:'',
+       driver_img:'',
+       date:this.date_validator,
+       time:this.time_validator,
+       date_time:this.outData.date,
        status:'active'
      }
-     console.log(x);
-    //  this.fireLoader.pushBookRide(x).then((succes)=>{
-    //    console.log('book ride ride sucess');
+     console.log('Add booking saving array ',x);
+     let newPostKey = this.fireHandler.getFirebase().database().ref().child('ride/book').push().key;
+     let pusher=this.fireHandler.getFirebase().database().ref('ride/book/'+ newPostKey).set(x);
+     pusher.then((success)=>{
+        this.msgHandler.dissmisLoading();
+        console.log('new booking  key',newPostKey);
+        let alert =this.msgHandler.alertCtrl.create({
+          title:'Successfull',
+          subTitle: 'You have succesfully book a ride !',
+          buttons: ['Dismiss']
+        });        
+        alert.present();
+        this.navCtrl.setRoot(Main);
+      },(error)=>{
+        reject(error);
+        this.msgHandler.showError("Please Try Again request cannot be done !");
+      });
+    });
+   }   
+  }
 
-    //  },(err)=>{
-    //    console.log('add rides unsucessful'+err);
-    //  });
-   });
+  initFields(response){
+    console.log('init feild called',response);
+    this.outData.from=this.wayPoint.from;
+    this.outData.to=this.wayPoint.to;
+    this.outData.distance=response.distance.text;
+    this.outData.duration=response.duration.text;  
+    this.distanceDetails.distance=response.distance.text;
+    this.distanceDetails.distance_value=response.distance.value;
+    this.distanceDetails.duration=response.duration.text;
+    this.distanceDetails.duration_value=response.duration.value;  
+    this.outData.amount = this.paymentGenerator.getPayment(response.distance.value);
   }
 
   getDistance(){
@@ -143,27 +220,29 @@ export class PickHome {
           console.log('Error was: ' + status);
           RJCT(status);
         } else {
+          console.log("inside form result");
           RES(response.rows[0].elements[0]);
-          console.log(response.rows[0].elements[0]);
         }
 
       });
-    }).then((s)=>{
-      this.distanceDetails=s;
+    }).then((response)=>{
+      this.initFields(response);
     });
-
-
-
-
-
   }
+
+
+
   cancelation(){
     this.navCtrl.setRoot(Main);
     console.log("cancelation called");
   }
 
   getUID(){
-   this.UID='';
+   let user = this.Auth.getUid();
+   if(user){
+     this.UID = user.uid;
+     console.log('fetch uid here');
+   }
   }
 
 }

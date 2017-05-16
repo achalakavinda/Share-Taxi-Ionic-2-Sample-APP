@@ -12,14 +12,14 @@ import { FirebaseHandler } from '../providers/firebase-handler';
 @Injectable()
 export class FirebasePusher {
   //this key can be access from anywhere if you new last push key
-  public post_key='';
+  public post_key_share='';
   constructor(private fireHandler:FirebaseHandler) {
     console.log('Hello FirebasePusher Provider');
   }
 
 //push users to table while registering
   pushUserInfoWhileRegistering(elmVal){
-    this.post_key='';
+    // this.post_key_share='';
     let newPostKey = this.fireHandler.getFirebase().database().ref().child('users').push().key;
     elmVal.id=newPostKey;
     return this.fireHandler.getFirebase().database().ref('users/'+ newPostKey).set(elmVal);
@@ -27,10 +27,10 @@ export class FirebasePusher {
 
 //push active share ride to data base
   pushActiveShareRide(elmVal){
-    this.post_key='';
+    this.post_key_share='';
     let newPostKey = this.fireHandler.getFirebase().database().ref().child('ride/share').push().key;
     elmVal.id=newPostKey;
-    this.post_key=newPostKey;
+    this.post_key_share=newPostKey;
     return this.fireHandler.getFirebase().database().ref('ride/share/'+ newPostKey).set(elmVal);
   }
 

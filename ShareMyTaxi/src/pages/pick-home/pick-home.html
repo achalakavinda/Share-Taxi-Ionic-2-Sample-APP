@@ -8,71 +8,85 @@
   <ion-navbar color="AppColor">
     <ion-title>Pick</ion-title>
   </ion-navbar>
-</ion-header>
-
-<ion-content>
-  <div #map id="map"></div>
-
-  <ion-card>    
-    <ion-item>
-      <ion-segment [(ngModel)]="ride" color="secondary">
+  <ion-toolbar color="AppColor">
+    <ion-segment [(ngModel)]="ride" color="secondary">
         <ion-segment-button  value="pick">
           Pick
         </ion-segment-button>
-        <ion-segment-button value="book" (click)="testRun()">
-          Booking
+        <ion-segment-button value="book">
+          Book
         </ion-segment-button>
       </ion-segment>
-    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div #map id="map"></div>
+<ion-card>    
     <div [ngSwitch]="ride">
       <ion-list *ngSwitchCase="'pick'">
         <ion-item>
+          <ion-icon name="bicycle" item-left large></ion-icon>
+          <h2>From</h2><p>{{outData.from}}</p>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="bicycle" item-left large></ion-icon>
+          <h2>To</h2><p>{{outData.to}}</p>
+        </ion-item>
+        <ion-item>
           <ion-icon name="person" item-left large></ion-icon>
-          <h2>Driver</h2>
-          <p>Not Allocated Yet</p>
+          <h2>Driver</h2><p>{{outData.driver}}</p>
         </ion-item>
         <ion-item>
           <ion-icon name="speedometer" item-left large></ion-icon>
           <h2>Milege</h2>
-          <p>Total milege of tour aprx : 10Km</p>
+          <p> {{outData.distance}}</p>
         </ion-item>
         <ion-item>
           <ion-icon name="cash" item-left large></ion-icon>
           <h2>Aproximate Fee</h2>
-          <p>Aproximate fee range: 2000</p>
+          <p>{{outData.amount}}</p>
         </ion-item>
         <ion-item>
           <span item-left>
-          <button (click)="addRide()"  colspan ion-button icon-left item-right small color="primary">Confirmation</button>
+          <button (click)="addRide()"  colspan ion-button icon-left item-right small color="primary">confirm</button>
           </span>
-          <button (click)="cancelation()"  ion-button icon-left item-right small color="danger">Cancelation</button>
+          <button (click)="cancelation()"  ion-button icon-left item-right small color="danger">cancel</button>
         </ion-item>
       </ion-list>
 
 
      <ion-list *ngSwitchCase="'book'" >
+       <ion-item>
+          <ion-icon name="bicycle" item-left large></ion-icon>
+          <h2>From</h2><p>{{outData.from}}</p>
+        </ion-item>
         <ion-item>
-          <ion-icon name="speedometer" item-left large [(ngModel)]="milege" ngDefaultControl></ion-icon>
+          <ion-icon name="bicycle" item-left large></ion-icon>
+          <h2>To</h2><p>{{outData.to}}</p>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="speedometer" item-left large></ion-icon>
           <h2>Milege</h2>
-          <p>{{this.milege}}</p>
+          <p>{{outData.distance}}</p>
         </ion-item>
         <ion-item>
           <ion-icon name="cash" item-left large.></ion-icon>
           <h2>Aproximate Fee</h2>
-          <p>Aproximate fee range : 2800/=</p>
+          <p>{{outData.amount}}</p>
         </ion-item>
 
         <ion-item>
-          <ion-icon name="calendar" item-left >Date Time</ion-icon>
-
-          <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="myDate" min=2017 max=2020></ion-datetime>
+          <ion-icon name="calendar" item-left large></ion-icon>
+          <ion-label>Date Time</ion-label>
+          <ion-datetime displayFormat="hh:mm:A DD/MM/YY"  [(ngModel)]="outData.date" min={{outData.min_date}} max={{outData.max_date}}></ion-datetime>
         </ion-item>
 
         <ion-item>
           <span item-left>
-          <button (click)="addBook()" colspan ion-button icon-left item-right small color="primary">Confirmation</button>
+          <button (click)="addBook()" colspan ion-button icon-left item-right small color="primary">Confirm</button>
           </span>
-          <button (click)="cancelation()"  ion-button icon-left item-right small color="danger">Cancelation</button>
+          <button (click)="cancelation()"  ion-button icon-left item-right small color="danger">Cancel</button>
         </ion-item>
       </ion-list>
     </div>

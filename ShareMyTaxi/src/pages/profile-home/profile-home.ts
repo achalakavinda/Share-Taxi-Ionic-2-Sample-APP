@@ -16,7 +16,7 @@ import { MessageHander } from '../../providers/message-hander';
   templateUrl: 'profile-home.html',
 })
 export class ProfileHome {
-  profile={username:'------',email:'-----',img:'#',user_type:'----'};
+  profile={username:'------',email:'-----',img:'#',user_type:'----',nic:'---',tel:''};
   constructor(public navCtrl: NavController, public navParams: NavParams,private Auth:AuthService,private msgHandler:MessageHander) {
   }
 
@@ -35,6 +35,8 @@ export class ProfileHome {
           this.profile.email=child.val().email;
           this.profile.img=child.val().img;
           this.profile.user_type=child.val().user_type;
+          this.profile.nic=child.val().nic;
+          this.profile.tel=child.val().tel;
         });
         this.msgHandler.dissmisLoading();
     }).catch(err=>{
