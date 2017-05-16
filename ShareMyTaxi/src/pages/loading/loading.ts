@@ -20,7 +20,7 @@ export class Loading {
       console.log("Platform loaded");
       setTimeout(()=>{
         this.navCtrl.setRoot(Login);
-      },2000);
+      },5000);
     });
   }
 

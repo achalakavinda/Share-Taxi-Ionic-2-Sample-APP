@@ -20,8 +20,8 @@ import { Main } from "../main/main";
 })
 export class Login {
   registerCredentials = {
-    email: 'test_@gmail.com',
-    password: 'test123!'
+    email: 'achalakavinda@gmail.com',
+    password: 'admin123'
   };
 
   constructor(
@@ -58,7 +58,6 @@ loginValidator(){
       this.msgHandler.dissmisLoading();
       this.nav.setRoot(Main);
     }).catch((err)=>{
-      let valueArray=JSON.parse(JSON.stringify(err));
       this.msgHandler.dissmisLoading();
       this.msgHandler.showError(err.message);
     });

@@ -4,6 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { FirebaseHandler } from '../../providers/firebase-handler';
 import { ActiveDriverShareRide } from '../active-driver-share-ride/active-driver-share-ride'
 import { AuthService } from '../../providers/auth-service';
+import { MessageHander  } from '../../providers/message-hander';
 
 /**
  * Generated class for the DriverMapView page.
@@ -56,7 +57,8 @@ export class DriverMapView {
      public navParams: NavParams,
      public geolocation:Geolocation,
      private fireHandler:FirebaseHandler,
-     private Auth:AuthService) {
+     private Auth:AuthService,
+     private msgHandler:MessageHander) {
       this.passedData = this.navParams.get('data');
   }
 

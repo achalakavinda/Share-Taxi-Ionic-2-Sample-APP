@@ -34,6 +34,7 @@ export class PickHome {
   UID:any;
   ride:'pick';
   dateTime:'';
+  milege: String;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,private Auth: AuthService,private fireLoader:FireLoader) {
     this.response =this.navParams.get('response');

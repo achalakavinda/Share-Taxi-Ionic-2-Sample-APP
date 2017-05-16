@@ -97,9 +97,10 @@ export class ActiveShareRide {
   }
 
   RoutePath(directionService,directionDisplay){
+    console.log('waypoint from active share ride direct passing ',this.wayPoint);
       directionService.route({
-        origin:'malabe',
-        destination:'kotte',
+        origin:this.wayPoint.to,
+        destination:this.wayPoint.from,
         travelMode: 'DRIVING'
       },function(response,status){
         if(status == 'OK'){

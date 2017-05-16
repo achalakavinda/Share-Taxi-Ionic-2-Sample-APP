@@ -14,6 +14,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { AuthService } from '../providers/auth-service';
 import { DynamicMap } from '../providers/dynamic-map';
+import { DraggableMap } from '../pages/draggable-map/draggable-map';
 import { FireLoader } from '../providers/fire-loader';
 import { FirebaseHandler } from '../providers/firebase-handler';
 import { FirebaseGetter } from '../providers/firebase-getter';
@@ -83,6 +84,7 @@ import { TestView } from '../pages/test-view/test-view';
     DriverShareRideUpcoming,
     DriverShareRideSelected,
     DriverPickRide,
+    DraggableMap,
     ProfileHome,
     PickHome,
     PaymentNormal,
@@ -123,6 +125,7 @@ import { TestView } from '../pages/test-view/test-view';
     DriverShareRideUpcoming,
     DriverShareRideSelected,
     DriverPickRide,
+    DraggableMap,
     ProfileHome,
     PickHome,
     PaymentNormal,

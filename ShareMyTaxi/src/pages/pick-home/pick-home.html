@@ -11,26 +11,25 @@
 </ion-header>
 
 <ion-content>
-  <ion-card>
+  <div #map id="map"></div>
+
+  <ion-card>    
     <ion-item>
       <ion-segment [(ngModel)]="ride" color="secondary">
         <ion-segment-button  value="pick">
           Pick
         </ion-segment-button>
-        <ion-segment-button value="book">
+        <ion-segment-button value="book" (click)="testRun()">
           Booking
         </ion-segment-button>
       </ion-segment>
     </ion-item>
-
-    <div #map id="map"></div>
-
     <div [ngSwitch]="ride">
       <ion-list *ngSwitchCase="'pick'">
         <ion-item>
           <ion-icon name="person" item-left large></ion-icon>
           <h2>Driver</h2>
-          <p>Not Allocated Yet.</p>
+          <p>Not Allocated Yet</p>
         </ion-item>
         <ion-item>
           <ion-icon name="speedometer" item-left large></ion-icon>
@@ -51,22 +50,24 @@
       </ion-list>
 
 
-     <ion-list *ngSwitchCase="'book'">
+     <ion-list *ngSwitchCase="'book'" >
         <ion-item>
-          <ion-icon name="speedometer" item-left large></ion-icon>
+          <ion-icon name="speedometer" item-left large [(ngModel)]="milege" ngDefaultControl></ion-icon>
           <h2>Milege</h2>
-          <p>Total milege of tour aprx : 20KM</p>
+          <p>{{this.milege}}</p>
         </ion-item>
         <ion-item>
-          <ion-icon name="cash" item-left large></ion-icon>
+          <ion-icon name="cash" item-left large.></ion-icon>
           <h2>Aproximate Fee</h2>
           <p>Aproximate fee range : 2800/=</p>
         </ion-item>
+
         <ion-item>
-          <ion-icon name="calendar" item-left large></ion-icon>
-           <h2>Date</h2>
-          <ion-datetime displayFormat="HH:mm"></ion-datetime>
+          <ion-icon name="calendar" item-left >Date Time</ion-icon>
+
+          <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [(ngModel)]="myDate" min=2017 max=2020></ion-datetime>
         </ion-item>
+
         <ion-item>
           <span item-left>
           <button (click)="addBook()" colspan ion-button icon-left item-right small color="primary">Confirmation</button>

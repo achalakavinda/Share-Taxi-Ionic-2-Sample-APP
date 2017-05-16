@@ -24,6 +24,7 @@
       <ion-input [(ngModel)]="homeMap.to" type="text"></ion-input>
     </ion-item>
     <button (click)="homeMapSearchBtn()" ion-button icon-right outline>Pick</button>
+    <button (click)="DraggableBtn()" ion-button icon-right outline>Drag</button>
   </ion-row>
   <div #map id="map"> </div>
 </ion-content>

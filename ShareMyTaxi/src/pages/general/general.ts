@@ -6,6 +6,7 @@ import { ShareHome } from  '../share-home/share-home';
 import { PickHome } from '../pick-home/pick-home';
 import { AuthService } from '../../providers/auth-service';
 import { MessageHander } from '../../providers/message-hander';
+import { DraggableMap } from '../draggable-map/draggable-map';
 
 declare var google;
 /**
@@ -162,7 +163,8 @@ export class General {
      this.navCtrl.push(PickHome,{'from':this.homeMap.from,'to':this.homeMap.to,response:this.mapRouteResponse});
   }
 
-
-
+  DraggableBtn(){
+    this.navCtrl.setRoot(DraggableMap)
+  }
 
 }

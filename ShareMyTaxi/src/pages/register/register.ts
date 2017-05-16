@@ -18,10 +18,12 @@ import { FirebasePusher } from '../../providers/firebase-pusher';
 export class Register {
   createSuccess = false;
   registerCredentials = {
-    email: 'test_@gmail.com',
-    username:'test_',
-    password: 'test123!',
-    comfirmPassword:'test123!',
+    email: '',
+    username:'',
+    password: '',
+    comfirmPassword:'',
+    nic:'',
+    phone:'',
     gender:''
   };
 
@@ -47,6 +49,8 @@ register(){
              username:this.registerCredentials.username,
              email:this.registerCredentials.email,
              gender:this.registerCredentials.gender,
+             nic:this.registerCredentials.nic,
+             tel:this.registerCredentials.phone,
              img:'https://cdn.dribbble.com/users/102974/screenshots/2726841/head_bob.gif',
              user_type:'Passenger'
           };

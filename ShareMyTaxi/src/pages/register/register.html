@@ -15,7 +15,6 @@
       <ion-row>
         <ion-col>
           <ion-list inset>
-
             <ion-item>
               <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="registerCredentials.email" required></ion-input>
             </ion-item>
@@ -28,6 +27,12 @@
             <ion-item>
               <ion-input type="password" placeholder="Comfirmation Password" name="comfirmPassword" [(ngModel)]="registerCredentials.comfirmPassword" required></ion-input>
             </ion-item>
+             <ion-item>
+              <ion-input  placeholder="NIC" type="text" name="nic" [(ngModel)]="registerCredentials.nic" required></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input placeholder="Phone No" type="numbers" name="phone" [(ngModel)]="registerCredentials.phone" required></ion-input>
+            </ion-item>
             <ion-item>
             <ion-label>Gender</ion-label>
             <ion-select name="gender" [(ngModel)]="registerCredentials.gender" required>
@@ -35,7 +40,6 @@
               <ion-option value="m">Male</ion-option>
             </ion-select>
           </ion-item>
-
           </ion-list>
         </ion-col>
       </ion-row>
