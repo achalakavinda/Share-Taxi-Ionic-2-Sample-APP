@@ -30,6 +30,7 @@ import { Loading } from '../pages/loading/loading'
 import { ActiveShareRide } from '../pages/active-share-ride/active-share-ride';
 import { ActivePickRide } from '../pages/active-pick-ride/active-pick-ride';
 import { ActiveDriverShareRide } from '../pages/active-driver-share-ride/active-driver-share-ride';
+import { ActiveDriverPickRide } from '../pages/active-driver-pick-ride/active-driver-pick-ride';
 import { Main } from '../pages/main/main';
 import { General } from '../pages/general/general';
 import { GeneralDriver } from '../pages/general-driver/general-driver';
@@ -45,6 +46,8 @@ import { JoinMapView } from '../pages/join-map-view/join-map-view';
 import { DriverUpcomingWindow } from '../pages/driver-upcoming-window/driver-upcoming-window';
 import { DriverPaymentWindow } from '../pages/driver-payment-window/driver-payment-window';
 import { DriverMapView } from '../pages/driver-map-view/driver-map-view';
+import { DriverMapViewPick } from '../pages/driver-map-view-pick/driver-map-view-pick';
+import { DriverMapViewBook } from '../pages/driver-map-view-book/driver-map-view-book';
 import { DriverShareTabs } from '../pages/driver-share-tabs/driver-share-tabs';
 import { DriverShareRide } from '../pages/driver-share-ride/driver-share-ride';
 import { DriverShareRideUpcoming } from '../pages/driver-share-ride-upcoming/driver-share-ride-upcoming';
@@ -68,6 +71,7 @@ import { TestView } from '../pages/test-view/test-view';
     ActiveShareRide,
     ActivePickRide,
     ActiveDriverShareRide,
+    ActiveDriverPickRide,
     HomePage,
     Login,
     Register,
@@ -79,6 +83,8 @@ import { TestView } from '../pages/test-view/test-view';
     DriverUpcomingWindow,
     DriverPaymentWindow,
     DriverMapView,
+    DriverMapViewPick,
+    DriverMapViewBook,
     DriverShareTabs,
     DriverShareRide,
     DriverShareRideUpcoming,
@@ -109,6 +115,7 @@ import { TestView } from '../pages/test-view/test-view';
     ActiveShareRide,
     ActivePickRide,
     ActiveDriverShareRide,
+    ActiveDriverPickRide,
     HomePage,
     Login,
     Register,
@@ -120,6 +127,8 @@ import { TestView } from '../pages/test-view/test-view';
     DriverPaymentWindow,
     DriverUpcomingWindow,
     DriverMapView,
+    DriverMapViewPick,
+    DriverMapViewBook,
     DriverShareTabs,
     DriverShareRide,
     DriverShareRideUpcoming,

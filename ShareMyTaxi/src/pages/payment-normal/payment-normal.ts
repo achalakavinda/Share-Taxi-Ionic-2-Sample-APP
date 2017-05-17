@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams , ActionSheet } from 'ionic-angular';
 import { Platform, ActionSheetController } from 'ionic-angular';
+
+import { AuthService } from '../../providers/auth-service';
+import { FirebaseHandler } from '../../providers/firebase-handler';
 /**
  * Generated class for the PaymentNormal page.
  *
@@ -14,14 +17,94 @@ import { Platform, ActionSheetController } from 'ionic-angular';
 })
 export class PaymentNormal {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams , public actionsheetCtrl: ActionSheetController,public platform: Platform) {
+  ride='share';
+   UID='';
+    HistoryShareRides=[];
+    HistoryBookRides=[];
+    HistoryPickRides=[];
+
+  constructor(
+    public navCtrl: NavController,
+     public navParams: NavParams ,
+     public actionsheetCtrl: ActionSheetController,
+     public platform: Platform,
+     private Auth:AuthService,
+     private fireHandler:FirebaseHandler) {
+       this.getUID();
   }
   
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad PaymentNormal');
   }
+
+  getUID(){
+    let user = this.Auth.getUid();
+    if(user){
+      this.UID=user.uid;
+      this.getDriverShareRideHistory();
+      this.getDriverPickRideHistory();
+      this.getDriverBookRideHistory();
+    }
+  }
+
+   getDriverShareRideHistory(){      
+    let shareRide = this.fireHandler.getFirebase().database().ref('history/passenger/ride/share');
+    let query = shareRide.orderByChild('uid').equalTo(this.UID);
+    query.on('value',(snap)=>{
+      console.log('getting active share ride history  called');
+      console.log('called',snap.val());
+      query.once('value').then((snap)=>{
+        let x =this.HistoryShareRides.length;
+        for(let y=0;y<x;y++){
+          this.HistoryShareRides.pop();
+        }
+      snap.forEach((child)=>{         
+          this.HistoryShareRides.push(child.val());          
+      });
+      console.log(this.HistoryShareRides)
+    });
+    });    
+  }
    
+   getDriverBookRideHistory(){
+     let shareRide = this.fireHandler.getFirebase().database().ref('history/passenger/ride/book');
+    let query = shareRide.orderByChild('uid').equalTo(this.UID);
+    query.on('value',(snap)=>{
+      console.log('getting active book ride history  called');
+      console.log('called',snap.val());
+      query.once('value').then((snap)=>{
+        let x =this.HistoryBookRides.length;
+        for(let y=0;y<x;y++){
+          this.HistoryShareRides.pop();
+        }
+      snap.forEach((child)=>{         
+          this.HistoryBookRides.push(child.val());          
+      });
+      console.log(this.HistoryBookRides)
+    });
+    });
+   }
+
+   getDriverPickRideHistory(){
+     let shareRide = this.fireHandler.getFirebase().database().ref('history/passenger/ride/pick');
+    let query = shareRide.orderByChild('uid').equalTo(this.UID);
+    query.on('value',(snap)=>{
+      console.log('getting active pick ride history  called');
+      console.log('called',snap.val());
+      query.once('value').then((snap)=>{
+        let x =this.HistoryPickRides.length;
+        for(let y=0;y<x;y++){
+          this.HistoryPickRides.pop();
+        }
+      snap.forEach((child)=>{         
+          this.HistoryPickRides.push(child.val());          
+      });
+      console.log(this.HistoryPickRides)
+    });
+    });
+   }
+
    openMenu() {
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Rate Me..',
