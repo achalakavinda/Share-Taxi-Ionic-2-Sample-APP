@@ -16,6 +16,9 @@
       <ion-segment-button value="pick">
         Pick
       </ion-segment-button>
+      <ion-segment-button value="book">
+        Book
+      </ion-segment-button>
       <ion-segment-button value="share">
         Share
       </ion-segment-button>
@@ -24,15 +27,68 @@
 </ion-header>
 
 
-<ion-content padding>
-<div [(ngSwitch)]="segments">
+<ion-content [(ngSwitch)]="segments">
       <ion-list *ngSwitchCase="'pick'">
-       
+        <ion-item  *ngFor="let HistoryPickRide of HistoryPickRides">
+          <ion-card>
+            <div no-padding>
+              <ion-item>
+                <span item-left>From :</span>
+                <span item-left>{{ HistoryPickRide.from }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left>To :</span>
+                <span item-left>{{ HistoryPickRide.to }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left >Distance: </span>
+                <span item-left>{{ HistoryPickRide.distance }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left>Duration :</span>
+                <span item-left>{{HistoryPickRide.duration}}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left>Amount :</span>
+                <span item-left>{{ HistoryPickRide.amount }}/=</span>
+              </ion-item>
+            </div>
+          </ion-card>
+       </ion-item>
+      </ion-list>
+      
+      <ion-list *ngSwitchCase="'book'">
+        <ion-item  *ngFor="let HistoryBookRide of HistoryBookRides">
+          <ion-card>
+            <div no-padding>
+              <ion-item>
+                <span item-left>From :</span>
+                <span item-left>{{ HistoryBookRide.from }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left>To :</span>
+                <span item-left>{{ HistoryBookRide.to }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left >Distance: </span>
+                <span item-left>{{ HistoryBookRide.distance }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left>Duration :</span>
+                <span item-left>{{HistoryBookRide.duration}}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left>Amount :</span>
+                <span item-left>{{ HistoryBookRide.amount }}/=</span>
+              </ion-item>
+            </div>
+          </ion-card>
+       </ion-item>
       </ion-list>
 
-
      <ion-list *ngSwitchCase="'share'">
-          <ion-card *ngFor="let HistoryShareRide of HistoryShareRides">
+       <ion-item  *ngFor="let HistoryShareRide of HistoryShareRides">
+          <ion-card>
             <div no-padding>
               <ion-item>
                 <span item-left>From :</span>
@@ -56,6 +112,6 @@
               </ion-item>
             </div>
           </ion-card>
+       </ion-item>
       </ion-list>
-  </div>
 </ion-content>

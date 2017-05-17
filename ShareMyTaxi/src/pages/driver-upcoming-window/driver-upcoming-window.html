@@ -12,9 +12,12 @@
     </button>
   </ion-navbar>
   <ion-toolbar color="AppColor">
-    <ion-segment [(ngModel)]="segments">
+    <ion-segment  [(ngModel)]="segments">
       <ion-segment-button value="pick">
         Pick
+      </ion-segment-button>
+      <ion-segment-button value="book">
+        Book
       </ion-segment-button>
       <ion-segment-button value="share">
         Share
@@ -23,34 +26,68 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div [(ngSwitch)]="segments">
+<ion-content [(ngSwitch)]="segments">
       <ion-list *ngSwitchCase="'pick'">
        <ion-item  *ngFor="let pickRide of pickRides">
           <ion-card>
             <div no-padding>
               <ion-item>
                 <span item-left>From :</span>
-                <span item-left>{{ pickRide.primary.from }}</span>
+                <span item-left>{{ pickRide.from }}</span>
               </ion-item>
               <ion-item>
                 <span item-left>To :</span>
-                <span item-left>{{ pickRide.primary.to }}</span>
+                <span item-left>{{ pickRide.to }}</span>
               </ion-item>
               <ion-item>
                 <span item-left >Distance: </span>
-                <span item-left>{{ pickRide.primary.distance }}</span>
+                <span item-left>{{ pickRide.distance }}</span>
               </ion-item>
               <ion-item>
                 <span item-left>Duration :</span>
-                <span item-left>{{pickRide.primary.duration}}</span>
+                <span item-left>{{pickRide.duration}}</span>
               </ion-item>
               <ion-item>
                 <span item-left>Amount :</span>
-                <span item-left>{{ pickRide.primary.amount_to_pay }}/=</span>
+                <span item-left>{{ pickRide.distance_amount }}/=</span>
               </ion-item>
 
-              <button (click)="onClickPick(shareRide)" ion-button full color="danger"> PICk </button>
+              <button (click)="onClickPick(pickRide)" ion-button full color="danger"> Comfirm </button>
+            </div>
+          </ion-card>
+        </ion-item> 
+      </ion-list>
+
+      <ion-list *ngSwitchCase="'book'">
+       <ion-item  *ngFor="let bookRide of bookRides">
+          <ion-card>
+            <div no-padding>
+              <ion-item>
+                <span item-left>From :</span>
+                <span item-left>{{ bookRide.from }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left>To :</span>
+                <span item-left>{{ bookRide.to }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left >Distance: </span>
+                <span item-left>{{ bookRide.distance }}</span>
+              </ion-item>
+              <ion-item>
+                <span item-left>Duration :</span>
+                <span item-left>{{ bookRide.duration }}</span>
+              </ion-item> 
+              <ion-item>
+                <span item-left>Date :</span>
+                <span item-left>{{ bookRide.date_time }}</span>
+              </ion-item> 
+              <ion-item>
+                <span item-left>Amount :</span>
+                <span item-left>{{ bookRide.distance_amount }}/=</span>
+              </ion-item>
+
+              <button (click)="onClickBook(bookRide)" ion-button full color="danger"> Get it </button>
             </div>
           </ion-card>
         </ion-item> 
@@ -87,5 +124,4 @@
           </ion-card>
         </ion-item> 
       </ion-list>
-  </div>
 </ion-content>

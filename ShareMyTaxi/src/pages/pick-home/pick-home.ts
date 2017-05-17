@@ -106,6 +106,7 @@ export class PickHome {
     new Promise((resolve,reject)=>{
       let x= {
        UID:this.UID,
+       id:'',
        distance:this.distanceDetails.distance,
        duration:this.distanceDetails.duration,
        distance_value:this.distanceDetails.distance_value,
@@ -120,10 +121,11 @@ export class PickHome {
        driver_nic:'',
        driver_img:'',
        date:this.date_validator,
-       status:'active'
+       status:'active_!driver'
       }
       console.log('add pick ride saving array',x);
      let newPostKey = this.fireHandler.getFirebase().database().ref().child('ride/pick').push().key;
+     x.id=newPostKey;
      let pusher=this.fireHandler.getFirebase().database().ref('ride/pick/'+ newPostKey).set(x);
      pusher.then((success)=>{
         this.msgHandler.dissmisLoading();
@@ -154,6 +156,7 @@ export class PickHome {
      let promise = new Promise((resolve,reject)=>{
      let x= {
        UID:this.UID,
+       id:'',
        distance:this.distanceDetails.distance,
        duration:this.distanceDetails.duration,
        distance_value:this.distanceDetails.distance_value,
@@ -170,10 +173,11 @@ export class PickHome {
        date:this.date_validator,
        time:this.time_validator,
        date_time:this.outData.date,
-       status:'active'
+       status:'active_!driver'
      }
      console.log('Add booking saving array ',x);
      let newPostKey = this.fireHandler.getFirebase().database().ref().child('ride/book').push().key;
+     x.id=newPostKey;
      let pusher=this.fireHandler.getFirebase().database().ref('ride/book/'+ newPostKey).set(x);
      pusher.then((success)=>{
         this.msgHandler.dissmisLoading();

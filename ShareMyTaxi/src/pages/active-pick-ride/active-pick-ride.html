@@ -7,50 +7,54 @@
 <ion-header>
 
   <ion-navbar  color="AppColor">
-    <ion-title>Active Share Ride </ion-title>
+    <ion-title>Active Pick Ride </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-  <div #maps id="map"></div>
-  <ion-card>
-    <ion-card-header>
-      Details
-    </ion-card-header>
-    <div no-padding>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="http://www.betera.es/fileadmin/Archivos/Areas_tematicas/Mujer/LOGOS/logos_material_design/skype2512x512.png">
-        </ion-avatar>
-        <h2> Driver : test name </h2>
-      </ion-item>
-      <ion-item>
-        <ion-avatar item-left>
-          <img src="http://www.betera.es/fileadmin/Archivos/Areas_tematicas/Mujer/LOGOS/logos_material_design/skype2512x512.png">
-        </ion-avatar>
-        <h2> Partner : Not Join Yet </h2>
-      </ion-item>
-    </div>
+ <div #maps id="map"></div>
+   <ion-card> 
     <ion-list>
-
       <ion-item>
-        <span left>From : </span>
-        <span right>Malabe</span>
+        <ion-avatar item-left>
+          <img src="{{outData.dImgUrl}}">
+        </ion-avatar>
+        <h2> Driver : {{outData.dUsername}} </h2>
+      </ion-item> 
+      <ion-item>
+        <span left>Tel :  </span>
+        <span right>{{outData.dTel}}</span>
       </ion-item>
-
+    </ion-list>
+  </ion-card>
+  <ion-card>    
+    <ion-list>
+      <ion-item>
+        <span left>From :  </span>
+        <span right>{{outData.From}}</span>
+      </ion-item>
       <ion-item>
         <span left>To : </span>
-        <span right> Sliit </span>
+        <span right> {{outData.To}} </span>
       </ion-item>
-
+      <ion-item>
+        <span left>Duration : </span>
+        <span right> {{outData.duration}} </span>
+      </ion-item>
       <ion-item>
         <span left>Amount  : </span>
-        <span right> 120 /= </span>
+        <span right> {{outData.amount}} /= </span>
       </ion-item>
-
     </ion-list>
-    <button  (click)="gooBack()" color="danger" ion-button full>Cancel</button>
   </ion-card>
+  <ion-card>
+    <ion-list>
+      <ion-item>
+          <button  (click)="gooBack()" color="danger" ion-button full>Cancel</button>
+      </ion-item>
+    </ion-list>    
+  </ion-card>
+
 </ion-content>

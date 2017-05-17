@@ -16,6 +16,8 @@ import { FirebaseHandler } from '../../providers/firebase-handler';
 export class DriverPaymentWindow {
   UID='';
   HistoryShareRides=[];
+  HistoryBookRides=[];
+  HistoryPickRides=[];
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
