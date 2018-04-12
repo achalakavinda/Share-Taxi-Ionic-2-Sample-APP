@@ -1,0 +1,11 @@
+page-share-home {
+  #map {
+    position: relative;
+    height:50%;
+  }
+  .container{
+    height:50%;
+    z-index: 100;
+    background-color: rgba(0,0,0,0.5);
+  }
+}

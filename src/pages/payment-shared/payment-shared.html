@@ -1,0 +1,39 @@
+<!--
+  Generated template for the PaymentShared page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>Payment Shared Ride</ion-title>
+    </ion-navbar>
+
+</ion-header>
+<ion-content class="payment-content">
+    <ion-card *ngFor="let payment of shared_ride_payment  | async">
+        <div class="image">
+            <ion-thumbnail item-left>
+                <ion-img style="width:50px;height:50px" src="https://lh3.googleusercontent.com/Kb739IIZG0c2HkGpiXDm9frX2mOMtMrAkSuKYEZs6-1pidZLQCg0mekK_fHTfC5Dmg=w300"></ion-img>
+            </ion-thumbnail>
+        </div>
+        <hr/>
+
+        <ion-item>
+            <span left>Patner : </span>
+            <span right>{{ payment.partner_name }}</span>
+        </ion-item>
+        <ion-item>
+            <ion-label>Distance</ion-label>
+            <ion-label>{{ payment.primary_distance }}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label>Fee</ion-label>
+            <ion-label>{{ payment.primary_payment }}</ion-label>
+        </ion-item>     
+    </ion-card>
+    <ion-card>
+        <button ion-button block (click)="openMenu()"> Rate My Ride</button>
+    </ion-card>
+</ion-content>
